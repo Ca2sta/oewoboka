@@ -19,20 +19,3 @@ final class FeatureViewModel {
         FeatureCellModel(image: UIImage(systemName: "pencil"), title: "뜻 받아쓰기")
     ]
 }
-
-
-
-
-
-struct FeatureCellModel {
-    var image: UIImage?
-    var title: String
-    lazy var description = "\(self.title)를 하며 단어를 외워요!"
-}
-
-
-struct Constant {
-    static let screenWidth = UIScreen.main.bounds.width
-    static let screenHeight = UIScreen.main.bounds.height
-    static let defalutPadding: CGFloat = 16
-}
