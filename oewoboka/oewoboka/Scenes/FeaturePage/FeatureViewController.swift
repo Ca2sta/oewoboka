@@ -11,8 +11,6 @@ import SnapKit
 
 final class FeatureViewController: UIViewController {
     
-    var testAry = [1,2,3,4,5,6]
-    
     private let viewModel = FeatureViewModel()
     
     private let featureCollectionView: UICollectionView = {
@@ -81,7 +79,7 @@ private extension FeatureViewController {
 extension FeatureViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        testAry.count
+        viewModel.testAry.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
