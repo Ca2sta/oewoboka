@@ -18,6 +18,9 @@
 		18E0D2172AC133A2005DDA6F /* FeatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D2162AC133A2005DDA6F /* FeatureViewController.swift */; };
 		18E0D2192AC133AD005DDA6F /* VocaListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D2182AC133AD005DDA6F /* VocaListViewController.swift */; };
 		18E0D21B2AC133FE005DDA6F /* AddVocabularyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D21A2AC133FE005DDA6F /* AddVocabularyViewController.swift */; };
+		9B15E4B42AC16C46000DFCEC /* VocaListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B15E4B32AC16C46000DFCEC /* VocaListTableViewCell.swift */; };
+		9B15E4B82AC19770000DFCEC /* VocaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B15E4B72AC19770000DFCEC /* VocaViewController.swift */; };
+		9B15E4BA2AC19784000DFCEC /* VocaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B15E4B92AC19784000DFCEC /* VocaTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +36,9 @@
 		18E0D2162AC133A2005DDA6F /* FeatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureViewController.swift; sourceTree = "<group>"; };
 		18E0D2182AC133AD005DDA6F /* VocaListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaListViewController.swift; sourceTree = "<group>"; };
 		18E0D21A2AC133FE005DDA6F /* AddVocabularyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVocabularyViewController.swift; sourceTree = "<group>"; };
+		9B15E4B32AC16C46000DFCEC /* VocaListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaListTableViewCell.swift; sourceTree = "<group>"; };
+		9B15E4B72AC19770000DFCEC /* VocaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaViewController.swift; sourceTree = "<group>"; };
+		9B15E4B92AC19784000DFCEC /* VocaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +107,9 @@
 			isa = PBXGroup;
 			children = (
 				18E0D2182AC133AD005DDA6F /* VocaListViewController.swift */,
+				9B15E4B32AC16C46000DFCEC /* VocaListTableViewCell.swift */,
+				9B15E4B72AC19770000DFCEC /* VocaViewController.swift */,
+				9B15E4B92AC19784000DFCEC /* VocaTableViewCell.swift */,
 			);
 			path = VocaListPage;
 			sourceTree = "<group>";
@@ -230,11 +239,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				18E0D2172AC133A2005DDA6F /* FeatureViewController.swift in Sources */,
+				9B15E4B82AC19770000DFCEC /* VocaViewController.swift in Sources */,
 				18E0D20D2AC13264005DDA6F /* AddVocaViewController.swift in Sources */,
 				18E0D2192AC133AD005DDA6F /* VocaListViewController.swift in Sources */,
 				18E0D2132AC13388005DDA6F /* QuizViewController.swift in Sources */,
 				18E0D21B2AC133FE005DDA6F /* AddVocabularyViewController.swift in Sources */,
+				9B15E4B42AC16C46000DFCEC /* VocaListTableViewCell.swift in Sources */,
 				18E0D1F52AC1305D005DDA6F /* TabBarController.swift in Sources */,
+				9B15E4BA2AC19784000DFCEC /* VocaTableViewCell.swift in Sources */,
 				18E0D1F12AC1305D005DDA6F /* AppDelegate.swift in Sources */,
 				18E0D1F32AC1305D005DDA6F /* SceneDelegate.swift in Sources */,
 			);
