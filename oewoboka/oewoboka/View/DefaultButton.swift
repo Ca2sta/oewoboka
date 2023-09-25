@@ -13,11 +13,11 @@ final class DefaultButton: UIButton {
         case center
         case noBorder
         case left
-        case arrow
+        case rightImage(UIImage?)
     }
     
     // MARK: - Property
-    private var arrowImageView: UIImageView? = nil
+    private var trailingImageView: UIImageView? = nil
     
     var text: String? = nil {
         didSet {
@@ -36,7 +36,7 @@ final class DefaultButton: UIButton {
         didSet {
             imageView?.tintColor = isHighlighted ? .systemRed : .black
             layer.borderColor = isHighlighted ? UIColor.systemRed.cgColor : UIColor.black.cgColor
-            if let arrowImageView { arrowImageView.tintColor = isHighlighted ? .systemRed : .black }
+            if let trailingImageView { trailingImageView.tintColor = isHighlighted ? .systemRed : .black }
         }
     }
     
@@ -91,9 +91,9 @@ extension DefaultButton {
         case .noBorder:
             layer.borderWidth = 0
             titleEdgeInsets.left = spacing
-        case .arrow:
+        case .rightImage(let rightImage):
             titleEdgeInsets.left = spacing
-            if arrowImageView == nil { addArrowImageView() }
+            if trailingImageView == nil { addArrowImageView(rightImage) }
         }
     }
     
@@ -106,18 +106,19 @@ extension DefaultButton {
         layer.borderColor = UIColor.black.cgColor
     }
     
-    private func addArrowImageView() {
-        self.arrowImageView = createArrowImageView()
-        addSubview(arrowImageView!)
+    private func addArrowImageView(_ rightImage: UIImage?) {
+        self.trailingImageView = createArrowImageView(rightImage)
+        addSubview(trailingImageView!)
         
-        arrowImageView!.snp.makeConstraints { make in
+        trailingImageView!.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().inset(8)
         }
     }
     
-    private func createArrowImageView() -> UIImageView {
-        let imageView = UIImageView(image: UIImage(systemName: "chevron.right"))
+    private func createArrowImageView(_ rightImage: UIImage?) -> UIImageView {
+        let imageView = UIImageView()
+        imageView.image = rightImage == nil ? UIImage(systemName: "chevron.right") : rightImage
         imageView.tintColor = .black
         return imageView
     }
