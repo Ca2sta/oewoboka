@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		084C45EB2AC1934D002999DF /* FeatureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C45EA2AC1934D002999DF /* FeatureViewModel.swift */; };
+		084C45ED2AC1943E002999DF /* FeatureCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C45EC2AC1943E002999DF /* FeatureCollectionViewCell.swift */; };
+		084C45F22AC1A9CB002999DF /* FeatureCellModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C45F12AC1A9CB002999DF /* FeatureCellModels.swift */; };
+		084C45F52AC1A9FA002999DF /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C45F42AC1A9FA002999DF /* Constant.swift */; };
 		18E0D1F12AC1305D005DDA6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D1F02AC1305D005DDA6F /* AppDelegate.swift */; };
 		18E0D1F32AC1305D005DDA6F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D1F22AC1305D005DDA6F /* SceneDelegate.swift */; };
 		18E0D1F52AC1305D005DDA6F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D1F42AC1305D005DDA6F /* TabBarController.swift */; };
@@ -21,6 +25,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		084C45EA2AC1934D002999DF /* FeatureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureViewModel.swift; sourceTree = "<group>"; };
+		084C45EC2AC1943E002999DF /* FeatureCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureCollectionViewCell.swift; sourceTree = "<group>"; };
+		084C45F12AC1A9CB002999DF /* FeatureCellModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureCellModels.swift; sourceTree = "<group>"; };
+		084C45F42AC1A9FA002999DF /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		18E0D1ED2AC1305D005DDA6F /* oewoboka.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = oewoboka.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E0D1F02AC1305D005DDA6F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18E0D1F22AC1305D005DDA6F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -47,6 +55,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		084C45F02AC1A9B6002999DF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				084C45F12AC1A9CB002999DF /* FeatureCellModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		084C45F32AC1A9E2002999DF /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				084C45F42AC1A9FA002999DF /* Constant.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		18E0D1E42AC1305D005DDA6F = {
 			isa = PBXGroup;
 			children = (
@@ -66,6 +90,7 @@
 		18E0D1EF2AC1305D005DDA6F /* oewoboka */ = {
 			isa = PBXGroup;
 			children = (
+				084C45F32AC1A9E2002999DF /* Helper */,
 				18E0D20B2AC13237005DDA6F /* Resource */,
 				18E0D20A2AC13232005DDA6F /* Model */,
 				18E0D2072AC131B9005DDA6F /* Scenes */,
@@ -132,7 +157,10 @@
 		18E0D20F2AC1330A005DDA6F /* FeaturePage */ = {
 			isa = PBXGroup;
 			children = (
+				084C45F02AC1A9B6002999DF /* Models */,
 				18E0D2162AC133A2005DDA6F /* FeatureViewController.swift */,
+				084C45EA2AC1934D002999DF /* FeatureViewModel.swift */,
+				084C45EC2AC1943E002999DF /* FeatureCollectionViewCell.swift */,
 			);
 			path = FeaturePage;
 			sourceTree = "<group>";
@@ -230,6 +258,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				18E0D2172AC133A2005DDA6F /* FeatureViewController.swift in Sources */,
+				084C45ED2AC1943E002999DF /* FeatureCollectionViewCell.swift in Sources */,
+				084C45EB2AC1934D002999DF /* FeatureViewModel.swift in Sources */,
+				084C45F22AC1A9CB002999DF /* FeatureCellModels.swift in Sources */,
 				18E0D20D2AC13264005DDA6F /* AddVocaViewController.swift in Sources */,
 				18E0D2192AC133AD005DDA6F /* VocaListViewController.swift in Sources */,
 				18E0D2132AC13388005DDA6F /* QuizViewController.swift in Sources */,
@@ -237,6 +268,7 @@
 				18E0D1F52AC1305D005DDA6F /* TabBarController.swift in Sources */,
 				18E0D1F12AC1305D005DDA6F /* AppDelegate.swift in Sources */,
 				18E0D1F32AC1305D005DDA6F /* SceneDelegate.swift in Sources */,
+				084C45F52AC1A9FA002999DF /* Constant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
