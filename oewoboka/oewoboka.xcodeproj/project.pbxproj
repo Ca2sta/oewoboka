@@ -18,6 +18,12 @@
 		18E0D2172AC133A2005DDA6F /* FeatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D2162AC133A2005DDA6F /* FeatureViewController.swift */; };
 		18E0D2192AC133AD005DDA6F /* VocaListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D2182AC133AD005DDA6F /* VocaListViewController.swift */; };
 		18E0D21B2AC133FE005DDA6F /* AddVocabularyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D21A2AC133FE005DDA6F /* AddVocabularyViewController.swift */; };
+		18E0D21E2AC17E94005DDA6F /* Vocabulary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D21D2AC17E94005DDA6F /* Vocabulary.swift */; };
+		18E0D2202AC17ED7005DDA6F /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D21F2AC17ED7005DDA6F /* Word.swift */; };
+		18E0D2232AC181CB005DDA6F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D2222AC181CB005DDA6F /* CardView.swift */; };
+		18E0D2252AC18B90005DDA6F /* QuizControlStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D2242AC18B90005DDA6F /* QuizControlStackView.swift */; };
+		18E0D2282AC1930F005DDA6F /* QuizCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D2272AC1930F005DDA6F /* QuizCompleteViewController.swift */; };
+		18E0D22B2AC19344005DDA6F /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D22A2AC19344005DDA6F /* ResultView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +39,12 @@
 		18E0D2162AC133A2005DDA6F /* FeatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureViewController.swift; sourceTree = "<group>"; };
 		18E0D2182AC133AD005DDA6F /* VocaListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaListViewController.swift; sourceTree = "<group>"; };
 		18E0D21A2AC133FE005DDA6F /* AddVocabularyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVocabularyViewController.swift; sourceTree = "<group>"; };
+		18E0D21D2AC17E94005DDA6F /* Vocabulary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vocabulary.swift; sourceTree = "<group>"; };
+		18E0D21F2AC17ED7005DDA6F /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
+		18E0D2222AC181CB005DDA6F /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		18E0D2242AC18B90005DDA6F /* QuizControlStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizControlStackView.swift; sourceTree = "<group>"; };
+		18E0D2272AC1930F005DDA6F /* QuizCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCompleteViewController.swift; sourceTree = "<group>"; };
+		18E0D22A2AC19344005DDA6F /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				18E0D1F42AC1305D005DDA6F /* TabBarController.swift */,
+				18E0D2262AC192EC005DDA6F /* QuizCompletePage */,
 				18E0D2112AC1336A005DDA6F /* QuizPage */,
 				18E0D2102AC13322005DDA6F /* AddVocabularyPage */,
 				18E0D20F2AC1330A005DDA6F /* FeaturePage */,
@@ -148,9 +161,46 @@
 		18E0D2112AC1336A005DDA6F /* QuizPage */ = {
 			isa = PBXGroup;
 			children = (
+				18E0D2212AC17FF9005DDA6F /* View */,
+				18E0D21C2AC17E43005DDA6F /* Model */,
 				18E0D2122AC13388005DDA6F /* QuizViewController.swift */,
 			);
 			path = QuizPage;
+			sourceTree = "<group>";
+		};
+		18E0D21C2AC17E43005DDA6F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				18E0D21D2AC17E94005DDA6F /* Vocabulary.swift */,
+				18E0D21F2AC17ED7005DDA6F /* Word.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		18E0D2212AC17FF9005DDA6F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				18E0D2222AC181CB005DDA6F /* CardView.swift */,
+				18E0D2242AC18B90005DDA6F /* QuizControlStackView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		18E0D2262AC192EC005DDA6F /* QuizCompletePage */ = {
+			isa = PBXGroup;
+			children = (
+				18E0D2292AC1932F005DDA6F /* View */,
+				18E0D2272AC1930F005DDA6F /* QuizCompleteViewController.swift */,
+			);
+			path = QuizCompletePage;
+			sourceTree = "<group>";
+		};
+		18E0D2292AC1932F005DDA6F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				18E0D22A2AC19344005DDA6F /* ResultView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,12 +280,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				18E0D2172AC133A2005DDA6F /* FeatureViewController.swift in Sources */,
+				18E0D2282AC1930F005DDA6F /* QuizCompleteViewController.swift in Sources */,
 				18E0D20D2AC13264005DDA6F /* AddVocaViewController.swift in Sources */,
 				18E0D2192AC133AD005DDA6F /* VocaListViewController.swift in Sources */,
 				18E0D2132AC13388005DDA6F /* QuizViewController.swift in Sources */,
+				18E0D22B2AC19344005DDA6F /* ResultView.swift in Sources */,
+				18E0D21E2AC17E94005DDA6F /* Vocabulary.swift in Sources */,
 				18E0D21B2AC133FE005DDA6F /* AddVocabularyViewController.swift in Sources */,
 				18E0D1F52AC1305D005DDA6F /* TabBarController.swift in Sources */,
+				18E0D2202AC17ED7005DDA6F /* Word.swift in Sources */,
+				18E0D2252AC18B90005DDA6F /* QuizControlStackView.swift in Sources */,
 				18E0D1F12AC1305D005DDA6F /* AppDelegate.swift in Sources */,
+				18E0D2232AC181CB005DDA6F /* CardView.swift in Sources */,
 				18E0D1F32AC1305D005DDA6F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
