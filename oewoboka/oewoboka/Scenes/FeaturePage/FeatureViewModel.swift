@@ -11,11 +11,16 @@ import UIKit
 final class FeatureViewModel {
     
     let minItemSpacing: CGFloat = 40
-    let cellSize = CGSize(width: UIScreen.main.bounds.width - 100, height: UIScreen.main.bounds.height - 400)
+    
+    let cellSize = CGSize(width: UIScreen.main.bounds.width * 0.6, height: UIScreen.main.bounds.height * 0.5)
+    
     var previousIndex = 0
+    
     var testAry:[FeatureCellModel] = [
-        FeatureCellModel(image: UIImage(systemName: "pencil"), title: "카드 스와이프"),
-        FeatureCellModel(image: UIImage(systemName: "pencil"), title: "뜻 받아쓰기"),
-        FeatureCellModel(image: UIImage(systemName: "pencil"), title: "뜻 받아쓰기")
+        FeatureCellModel(image: UIImage(systemName: "menucard"), title: "카드 스와이프"),
+        FeatureCellModel(image: UIImage(systemName: "pencil.line"), title: "받아쓰기"),
+//        FeatureCellModel(image: UIImage(systemName: "pencil.line"), title: "단어 받아쓰기")
     ]
+    
+    
 }
