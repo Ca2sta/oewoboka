@@ -13,22 +13,33 @@ final class FeatureViewController: UIViewController {
     
     private let viewModel = FeatureViewModel()
     
-//    private let titleLabel = UILabel()
-    
-    private let divider = UIView()
-    
-    private let featureCollectionView: UICollectionView = {
-        let flowLayout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        flowLayout.scrollDirection = .horizontal
-        return collectionView
+    private let divider: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray
+        return view
     }()
     
+    lazy var featureCollectionView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        let cellWidth: CGFloat = floor(viewModel.cellSize.width)
+        let insetX = (view.bounds.width - cellWidth) / 2.0
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: insetX, bottom: 0, right: insetX)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.decelerationRate = .fast
+        return collectionView
+    }()
+}
+
+extension FeatureViewController {
+    // MARK: - LifeCycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
     }
-    
 }
 
 private extension FeatureViewController {
@@ -41,20 +52,8 @@ private extension FeatureViewController {
         setUpFeatureCollectionView()
     }
     
-//    func setUpTitleLabel() {
-//        view.addSubview(titleLabel)
-//        titleLabel.text = "퀴즈"
-//        titleLabel.font = Typography.title2Medium.font
-//        titleLabel.textAlignment = .center
-//        titleLabel.snp.makeConstraints { make in
-//            make.top.equalTo(view.safeAreaLayoutGuide)
-//            make.left.right.equalToSuperview()
-//        }
-//    }
-    
     func setUpDividerView() {
         view.addSubview(divider)
-        divider.backgroundColor = .systemGray
         divider.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.left.right.equalToSuperview()
@@ -64,12 +63,6 @@ private extension FeatureViewController {
     
     func setUpFeatureCollectionView() {
         view.addSubview(featureCollectionView)
-        let cellWidth: CGFloat = floor(viewModel.cellSize.width)
-        let insetX = (view.bounds.width - cellWidth) / 2.0
-        
-        featureCollectionView.contentInset = UIEdgeInsets(top: 0, left: insetX, bottom: 0, right: insetX)
-        featureCollectionView.showsHorizontalScrollIndicator = false
-        featureCollectionView.decelerationRate = .fast
         featureCollectionView.register(
             FeatureCollectionViewCell.self,
             forCellWithReuseIdentifier: FeatureCollectionViewCell.identifier
@@ -109,14 +102,14 @@ private extension FeatureViewController {
 extension FeatureViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.testAry.count
+        viewModel.features.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = self.featureCollectionView.dequeueReusableCell(withReuseIdentifier: FeatureCollectionViewCell.identifier, for: indexPath) as? FeatureCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.bind(data: viewModel.testAry[indexPath.row])
+        cell.bind(data: viewModel.features[indexPath.row])
         return cell
     }
 }

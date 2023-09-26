@@ -16,10 +16,9 @@ final class FeatureViewModel {
     
     var previousIndex = 0
     
-    var testAry:[FeatureCellModel] = [
+    var features:[FeatureCellModel] = [
         FeatureCellModel(image: UIImage(systemName: "menucard"), title: "카드 스와이프"),
         FeatureCellModel(image: UIImage(systemName: "pencil.line"), title: "받아쓰기"),
-//        FeatureCellModel(image: UIImage(systemName: "pencil.line"), title: "단어 받아쓰기")
     ]
     
     

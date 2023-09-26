@@ -12,11 +12,27 @@ final class FeatureCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "FeatureCollectionViewCell"
     
-    lazy var imageView = UIImageView()
+    lazy var imageView: UIImageView = {
+        let view = UIImageView()
+        view.tintColor = .systemGray
+        return view
+    }()
     
-    private let titleLabel = UILabel()
+    private let titleLabel: UILabel = {
+        let view = UILabel()
+        view.font = Typography.title2Medium.font
+        view.textAlignment = .center
+        view.textColor = .systemPink
+        return view
+    }()
     
-    private let descriptionLabel = UILabel()
+    private let descriptionLabel: UILabel = {
+        let view = UILabel()
+        view.font = Typography.body2.font
+        view.textAlignment = .center
+        view.textColor = .systemPink
+        return view
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,7 +63,6 @@ private extension FeatureCollectionViewCell {
     
     func setUpImageView() {
         contentView.addSubview(imageView)
-        imageView.tintColor = .systemGray
         imageView.snp.makeConstraints { make in
             make.height.width.equalTo(Constant.screenWidth * 0.2)
             make.centerX.equalToSuperview()
@@ -57,9 +72,6 @@ private extension FeatureCollectionViewCell {
     
     func setUpTitleLabel() {
         contentView.addSubview(titleLabel)
-        titleLabel.font = Typography.title2Medium.font
-        titleLabel.textAlignment = .center
-        titleLabel.textColor = .systemPink
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(Constant.defalutPadding)
             make.left.right.equalToSuperview()
@@ -68,9 +80,6 @@ private extension FeatureCollectionViewCell {
     
     func setUpDescriptionLabel() {
         contentView.addSubview(descriptionLabel)
-        descriptionLabel.font = Typography.body2.font
-        descriptionLabel.textAlignment = .center
-        descriptionLabel.textColor = .systemPink
         descriptionLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(Constant.defalutPadding)
             make.left.right.equalToSuperview()
