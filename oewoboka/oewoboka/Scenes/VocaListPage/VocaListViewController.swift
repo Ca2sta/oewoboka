@@ -20,12 +20,13 @@ final class VocaListViewController: UIViewController {
         setUpUI()
         vocaSearchController.delegate = self
         vocaSearchController.searchBar.placeholder = "단어 검색"
+
         
         vocaListTableView.delegate = self
         vocaListTableView.dataSource = self
         vocaListTableView.register(VocaListTableViewCell.self, forCellReuseIdentifier: "ListCell")
-   
     }
+
     
     func setUpUI() {
         self.view.addSubview(vocaListTableView)
@@ -53,6 +54,7 @@ final class VocaListViewController: UIViewController {
 }
 extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate {
 
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
@@ -75,7 +77,7 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vocaViewController = VocaViewController()
-
+        
         self.navigationController?.pushViewController(vocaViewController, animated: true)
     }
 }

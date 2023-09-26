@@ -51,6 +51,7 @@ class VocaViewController: UIViewController {
 
 }
 extension VocaViewController: UITableViewDelegate,UITableViewDataSource,UISearchControllerDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
@@ -61,5 +62,8 @@ extension VocaViewController: UITableViewDelegate,UITableViewDataSource,UISearch
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+    }
+
 }

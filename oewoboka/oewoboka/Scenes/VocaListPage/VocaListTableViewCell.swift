@@ -1,9 +1,11 @@
 //
-//  VocaListTableViewCell.swift
+
+//  vocaListTableViewCell.swift
 //  oewoboka
 //
-//  Created by Lee on 2023/09/26.
+//  Created by Lee on 2023/09/25.
 //
+
 import UIKit
 import SnapKit
 
@@ -39,6 +41,7 @@ class VocaListTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUpUI()
         setButton.addTarget(self, action: #selector(setButtonTapped), for: .touchUpInside)
+
         setButton.setImage(UIImage(systemName: "text.justify"), for: .normal)
 
 
@@ -49,18 +52,17 @@ class VocaListTableViewCell: UITableViewCell {
     }
     
     func setUpUI() {
-        contentView.addSubview(setButton)
-        addSubview(setButton)
-        addSubview(vocaListLabel)
-        addSubview(vocaNumbersLabel)
-        addSubview(uncompleteNumbersLabel)
-        addSubview(completeNumbersLabel)
-        addSubview(achievementRate)
         
+        contentView.addSubview(setButton)
+        contentView.addSubview(vocaListLabel)
+        contentView.addSubview(vocaNumbersLabel)
+        contentView.addSubview(uncompleteNumbersLabel)
+        contentView.addSubview(completeNumbersLabel)
+        contentView.addSubview(achievementRate)
         
         setButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
-            make.right.equalToSuperview().offset(-15)
+            make.right.equalToSuperview().offset(-10)
             make.width.equalTo(30)
             make.height.equalTo(30)
         }
@@ -93,7 +95,7 @@ class VocaListTableViewCell: UITableViewCell {
         vocaListLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.left.equalToSuperview().offset(10)
-            make.right.equalTo(setButton.snp.left).offset(-10)
+            make.right.equalTo(setButton.snp.left).offset(-15)
             make.bottom.equalTo(vocaNumbersLabel.snp.top).offset(-10)
         }
 

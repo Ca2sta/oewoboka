@@ -2,14 +2,11 @@
 //  VocaTableViewCell.swift
 //  oewoboka
 //
-//  Created by Lee on 2023/09/26.
-//
-
 import UIKit
+import SnapKit
 
 class VocaTableViewCell: UITableViewCell {
     static let identifier = "VocaCell"
-
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
