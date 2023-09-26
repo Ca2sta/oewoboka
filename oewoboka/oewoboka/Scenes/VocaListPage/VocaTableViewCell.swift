@@ -8,7 +8,7 @@
 import UIKit
 
 class VocaTableViewCell: UITableViewCell {
-    static let identifier = "ListCell"
+    static let identifier = "VocaCell"
 
     override func awakeFromNib() {
         super.awakeFromNib()
