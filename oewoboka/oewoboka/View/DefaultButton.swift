@@ -84,7 +84,7 @@ extension DefaultButton {
         contentEdgeInsets = UIEdgeInsets(top: verticalPadding, left: horizontalPadding, bottom: verticalPadding, right: horizontalPadding)
         switch type {
         case .center:
-            let leftEdgeInset = bounds.width/2 - (titleLabel?.bounds.width ?? 0)
+            let leftEdgeInset = bounds.width/2 - (titleLabel?.bounds.width ?? 0)/2 - (imageView?.bounds.width ?? 0)  - spacing
             titleEdgeInsets.left = leftEdgeInset
         case .left:
             titleEdgeInsets.left = spacing

@@ -11,27 +11,34 @@ final class ResultView: UIView {
     
     private let correctRateLabel: UILabel = {
         let label = UILabel()
-        label.text = "50"
         label.font = .systemFont(ofSize: 40, weight: .bold)
         label.textColor = .black
         return label
     }()
     private let allCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "2 / 4"
         label.font = .systemFont(ofSize: 24, weight: .regular)
         label.textColor = .black
         return label
     }()
     private var count: Int = 0
-    private let endValue: Int = 50
-    private let duration: CGFloat = 2
-    private let quizRate: CGFloat = 0.5
+    private let endValue: Double
+    private let startValue: Double = 0
+    private let duration: CGFloat = 1
+    private let quizRate: CGFloat
     private var displayLink: CADisplayLink?
+    private var animationStartDate: Date? = nil
 
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(correctRate: CGFloat, allWordCount: Int, isMemorizeCount: Int) {
+        quizRate = correctRate
+        endValue = correctRate * 100
+        
+        self.correctRateLabel.text = "0"
+        self.allCountLabel.text = "\(isMemorizeCount) / \(allWordCount)"
+        
+        super.init(frame: .zero)
+        
         setup()
     }
     
@@ -103,7 +110,7 @@ extension ResultView {
     private func startDisplayLink() {
         stopDisplayLink()
         displayLink = CADisplayLink(target: self, selector: #selector(countLabelUpdate))
-        displayLink?.preferredFramesPerSecond = 100
+        animationStartDate = Date()
         displayLink?.add(to: .main, forMode: .default)
     }
     
@@ -113,8 +120,18 @@ extension ResultView {
     }
     
     @objc private func countLabelUpdate() {
-        count += 1
-        if count >= endValue { stopDisplayLink() }
+        guard let animationStartDate else { return }
+        let now = Date()
+        let time = now.timeIntervalSince(animationStartDate)
+        
+        if time > duration {
+            stopDisplayLink()
+            correctRateLabel.text = "\(Int(endValue))"
+            return
+        }
+        let percentage = time / duration
+        let value = percentage * (endValue - startValue)
+        count = Int(value)
         correctRateLabel.text = "\(count)"
     }
 }

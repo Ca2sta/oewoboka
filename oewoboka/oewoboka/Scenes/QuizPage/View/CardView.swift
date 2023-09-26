@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class CardView: UIView {
-    private let wordCountLabel: UILabel = {
+    let wordCountLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .bold)
         label.textColor = .lightGray

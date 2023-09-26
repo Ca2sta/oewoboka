@@ -11,5 +11,5 @@ struct Word {
     let id: UUID
     let english: String
     let korea: String
-    let isMemorize: Bool
+    var isMemorize: Bool
 }

@@ -14,7 +14,10 @@ final class QuizViewController: UIViewController {
     private let backgroundCardView: CardView = CardView()
     private let quizControlView: QuizControlStackView = QuizControlStackView(buttonSize: CGSize(width: 52.0, height: 52.0))
     private let margin: CGFloat = 24
-    let vocablularyList: [Vocabulary] = []
+    private var currentIndex: Int = 0
+    
+    let vocablularyList: Vocabulary = Vocabulary(id: UUID(), context: "Title", words: [Word(id: UUID(), english: "english", korea: "한국어", isMemorize: false),Word(id: UUID(), english: "english2", korea: "한국어2", isMemorize: false), Word(id: UUID(), english: "english3", korea: "한국어3", isMemorize: false)])
+    private var quizResultWords: [Word] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +31,8 @@ private extension QuizViewController {
     func setup() {
         addViews()
         navigationSetup()
-        cardViewSetup()
+        initCardView()
+        cardViewSetup(index: currentIndex)
         autoLayoutSetup()
     }
     
@@ -39,27 +43,49 @@ private extension QuizViewController {
     }
     
     func navigationSetup() {
-        title = vocablularyList.first?.context
+        title = vocablularyList.context
     }
     
-    func cardViewSetup() {
-//        guard let vocabulary = vocablularyList.first,
-//              let word = vocabulary.words.first else { return }
-//        cardView.englishLabel.text = word.english
-//        cardView.koreaLabel.text = word.korea
-        frontCardView.englishLabel.text = "영어"
-        frontCardView.koreaLabel.text = "한글"
+    func initCardView() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(cardMove(sender:)))
+        frontCardView.isUserInteractionEnabled = true
+        frontCardView.addGestureRecognizer(panGesture)
+        
         frontCardView.layer.borderWidth = 1
         frontCardView.layer.borderColor = UIColor.black.cgColor
         frontCardView.layer.cornerRadius = 10
         frontCardView.layer.masksToBounds = true
         
-        backgroundCardView.englishLabel.text = "영어2"
-        backgroundCardView.koreaLabel.text = "한글2"
         backgroundCardView.layer.borderWidth = 1
         backgroundCardView.layer.borderColor = UIColor.black.cgColor
         backgroundCardView.layer.cornerRadius = 10
         backgroundCardView.layer.masksToBounds = true
+    }
+    
+    func cardViewSetup(index: Int) {
+        let words = vocablularyList.words
+        guard index >= 0 else { return }
+        guard index < words.count else {
+            navigationPushQuizCompletePage()
+            return
+        }
+        let word = words[index]
+        let countText = "\(index + 1) / \(words.count)"
+        frontCardView.englishLabel.text = word.english
+        frontCardView.koreaLabel.text = word.korea
+        frontCardView.wordCountLabel.text = countText
+        
+        let nextIndex = index + 1
+        guard nextIndex  < words.count else {
+            backgroundCardView.isHidden = true
+            return
+        }
+        
+        let nextWord = words[nextIndex]
+        let nextCountText = "\(nextIndex + 1) / \(words.count)"
+        backgroundCardView.wordCountLabel.text = nextCountText
+        backgroundCardView.englishLabel.text = nextWord.english
+        backgroundCardView.koreaLabel.text = nextWord.korea
     }
     
     func autoLayoutSetup() {
@@ -74,6 +100,45 @@ private extension QuizViewController {
             make.top.equalTo(frontCardView.snp.bottom).offset(margin)
             make.height.equalTo(52)
             make.left.right.bottom.equalTo(safeArea).inset(margin)
+        }
+    }
+    
+    private func navigationPushQuizCompletePage() {
+        let vc = QuizCompleteViewController(words: quizResultWords)
+        navigationController?.pushViewController(vc, animated: false)
+    }
+    
+    @objc private func cardMove(sender: UIPanGestureRecognizer) {
+        guard let moveView = sender.view else { return }
+        let point = sender.translation(in: view)
+        moveView.center = CGPoint(x: view.center.x + point.x, y: moveView.center.y)
+        
+        var word = vocablularyList.words[currentIndex]
+        
+        if sender.state == .ended {
+            if moveView.center.x < 75 {
+                UIView.animate(withDuration: 0.3) {
+                    moveView.center = CGPoint(x: moveView.center.x - moveView.bounds.width, y: moveView.center.y)
+                } completion: { _ in
+                    word.isMemorize = false
+                    self.quizResultWords.append(word)
+                    self.currentIndex += 1
+                    self.cardViewSetup(index: self.currentIndex)
+                }
+            } else if moveView.center.x > (view.bounds.width - 75) {
+                UIView.animate(withDuration: 0.3) {
+                    moveView.center = CGPoint(x: moveView.center.x + moveView.bounds.width, y: moveView.center.y)
+                } completion: { _ in
+                    word.isMemorize = true
+                    self.quizResultWords.append(word)
+                    self.currentIndex += 1
+                    self.cardViewSetup(index: self.currentIndex)
+                }
+            } else {
+                UIView.animate(withDuration: 0.3) {
+                    moveView.center = self.backgroundCardView.center
+                }
+            }
         }
     }
 }
