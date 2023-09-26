@@ -13,21 +13,18 @@ final class FeedBackStackView: UIStackView {
         let button = DefaultButton()
         button.image = UIImage(systemName: "exclamationmark.bubble")
         button.text = "퀴즈 정답보기"
-        button.type = .center
         return button
     }()
     private let reloadQuizButton: DefaultButton = {
         let button = DefaultButton()
         button.image = UIImage(systemName: "arrow.clockwise")
         button.text = "다시하기"
-        button.type = .center
         return button
     }()
     private let noMemoryWorkReloadButton: DefaultButton = {
         let button = DefaultButton()
         button.image = UIImage(systemName: "arrow.clockwise")
         button.text = "모르는 문제 다시 풀기"
-        button.type = .center
         return button
     }()
     var noMemoryCount: Int = 0 {
