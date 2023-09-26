@@ -33,13 +33,11 @@ private extension FeatureViewController {
 
     func setUp() {
         view.addSubview(featureCollectionView)
-//        featureCollectionView.backgroundColor = .blue
         let cellWidth: CGFloat = floor(viewModel.cellSize.width)
         let insetX = (view.bounds.width - cellWidth) / 2.0
         
         featureCollectionView.contentInset = UIEdgeInsets(top: 0, left: insetX, bottom: 0, right: insetX)
         featureCollectionView.showsHorizontalScrollIndicator = false
-//        featureCollectionView.backgroundColor = .clear
         featureCollectionView.decelerationRate = .fast
         featureCollectionView.register(
             FeatureCollectionViewCell.self,
@@ -86,7 +84,6 @@ extension FeatureViewController: UICollectionViewDataSource{
         guard let cell = self.featureCollectionView.dequeueReusableCell(withReuseIdentifier: FeatureCollectionViewCell.identifier, for: indexPath) as? FeatureCollectionViewCell else {
             return UICollectionViewCell()
         }
-//        cell.imageView.image = imageDatas[indexPath.row]
         return cell
     }
 }
@@ -110,7 +107,6 @@ extension FeatureViewController: UICollectionViewDelegateFlowLayout, UICollectio
         let roundedIndex: CGFloat = round(index)
         offset = CGPoint(x: roundedIndex * cellWidthIncludeSpacing - scrollView.contentInset.left, y: scrollView.contentInset.top)
         targetContentOffset.pointee = offset
-//        imageView.image = imageDatas[Int(roundedIndex)]
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
@@ -123,7 +119,6 @@ extension FeatureViewController: UICollectionViewDelegateFlowLayout, UICollectio
             guard let self = self else {return}
             guard let cell = featureCollectionView.cellForItem(at: indexPath) else { print("fail");return }
             animateZoomforCell(zoomCell: cell)
-//            imageView.image = imageDatas[Int(roundedIndex)]
         }
         if Int(roundedIndex) != viewModel.previousIndex {
             let preIndexPath = IndexPath(item: viewModel.previousIndex, section: 0)
