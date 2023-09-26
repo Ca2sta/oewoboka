@@ -123,6 +123,8 @@ extension FeatureViewController: UICollectionViewDataSource{
 
 extension FeatureViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     
+    // MARK: - CollectionView Method
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return viewModel.minItemSpacing
     }
@@ -135,6 +137,7 @@ extension FeatureViewController: UICollectionViewDelegateFlowLayout, UICollectio
         print(indexPath.row)
     }
     
+    // MARK: - ScrollView Method
     // MARK: Paging Effect
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let cellWidthIncludeSpacing = viewModel.cellSize.width + viewModel.minItemSpacing
