@@ -135,6 +135,9 @@ extension FeatureViewController: UICollectionViewDelegateFlowLayout, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
+        let vc = FTOPViewController()
+        vc.modalPresentationStyle = .pageSheet
+        self.present(vc, animated: true)
     }
     
     // MARK: - ScrollView Method
