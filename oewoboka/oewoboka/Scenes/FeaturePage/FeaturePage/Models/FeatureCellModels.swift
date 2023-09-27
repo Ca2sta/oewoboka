@@ -11,5 +11,5 @@ import UIKit
 struct FeatureCellModel {
     var image: UIImage?
     var title: String
-    var description: String { "\(self.title)를 하며 단어를 외워요!" }
+    var description: String
 }
