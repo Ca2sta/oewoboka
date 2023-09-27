@@ -149,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				18E0D1F42AC1305D005DDA6F /* TabBarController.swift */,
+				085F516F2AC3F5AA0039CB25 /* PresentationController.swift */,
 				18E0D2112AC1336A005DDA6F /* QuizPage */,
 				18E0D2102AC13322005DDA6F /* AddVocabularyPage */,
 				18E0D20F2AC1330A005DDA6F /* FeaturePage */,
@@ -204,7 +205,6 @@
 			children = (
 				08872FE22AC2CAC600FC3469 /* FeaturePage */,
 				08872FE42AC2CB3C00FC3469 /* FeatureOpPage */,
-				085F516F2AC3F5AA0039CB25 /* PresentationController.swift */,
 			);
 			path = FeaturePage;
 			sourceTree = "<group>";

@@ -171,6 +171,6 @@ extension FeatureViewController: UICollectionViewDelegateFlowLayout, UICollectio
 extension FeatureViewController: UIViewControllerTransitioningDelegate {
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        PresentationController(presentedViewController: presented, presenting: presenting)
+        PresentationController(presentedViewController: presented, presenting: presenting, size: 0.5)
     }
 }

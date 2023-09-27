@@ -8,25 +8,29 @@
 import Foundation
 import UIKit
 
-class PresentationController: UIPresentationController {
+final class PresentationController: UIPresentationController {
     
     let blurEffectView: UIVisualEffectView!
     var tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
+    var size: CGFloat
     
-    override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
+    init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?, size: CGFloat) {
         let blurEffect = UIBlurEffect(style: .dark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
-        super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
-        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissController))
+//        super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
+        
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.blurEffectView.isUserInteractionEnabled = true
         self.blurEffectView.addGestureRecognizer(tapGestureRecognizer)
+        self.size = size
+        super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissController))
     }
     
     override var frameOfPresentedViewInContainerView: CGRect {
-        CGRect(origin: CGPoint(x: 0, y: self.containerView!.frame.height * 0.2),
+        CGRect(origin: CGPoint(x: 0, y: self.containerView!.frame.height * (1 - size)),
                size: CGSize(width: self.containerView!.frame.width,
-                            height: self.containerView!.frame.height * 0.8))
+                            height: self.containerView!.frame.height * size))
     }
     
     override func presentationTransitionWillBegin() {
