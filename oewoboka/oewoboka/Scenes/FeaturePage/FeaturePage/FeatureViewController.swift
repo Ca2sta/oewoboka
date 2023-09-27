@@ -127,10 +127,10 @@ extension FeatureViewController: UICollectionViewDelegateFlowLayout, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
-        let vc = FTOPViewController()
-        vc.modalPresentationStyle = .pageSheet
-        self.present(vc, animated: true)
+        let yourVC = FTOPViewController()
+        yourVC.modalPresentationStyle = .custom
+        yourVC.transitioningDelegate = self
+        self.present(yourVC, animated: true, completion: nil)
     }
     
     // MARK: - ScrollView Method
@@ -166,5 +166,11 @@ extension FeatureViewController: UICollectionViewDelegateFlowLayout, UICollectio
             }
             viewModel.previousIndex = indexPath.item
         }
+    }
+}
+extension FeatureViewController: UIViewControllerTransitioningDelegate {
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        PresentationController(presentedViewController: presented, presenting: presenting)
     }
 }

@@ -6,15 +6,34 @@
 //
 
 import UIKit
+import SnapKit
 
-class FTOPViewController: UIViewController {
+final class FTOPViewController: UIViewController {
+    
+    private let testView = UIView()
+}
 
+extension FTOPViewController {
+    // MARK: - LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        if let sheetPresentationController = sheetPresentationController {
-            sheetPresentationController.detents = [.medium(), .large()]
+        view.backgroundColor = .white
+        setUp()
+    }
+}
+
+private extension FTOPViewController {
+    // MARK: - SetUp
+    
+    func setUp() {
+        testView.backgroundColor = .black
+        view.addSubview(testView)
+        testView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide).inset(16)
         }
     }
-
+    
 }
+
+
