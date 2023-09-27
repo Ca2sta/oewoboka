@@ -9,6 +9,13 @@ import UIKit
 import SnapKit
 
 final class CardView: UIView {
+    let topLineStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+        return stackView
+    }()
     let wordCountLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .bold)
@@ -18,7 +25,7 @@ final class CardView: UIView {
     private let cardStateStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.alignment = .center
+        stackView.alignment = .fill
         stackView.distribution = .fillEqually
         stackView.spacing = 12
         return stackView
@@ -32,9 +39,12 @@ final class CardView: UIView {
     }()
     private let stateButton: UIButton = {
         let button = UIButton()
-        button.setTitle("?", for: .normal)
-        button.setTitle("!", for: .selected)
-        button.setTitleColor(.black, for: .normal)
+        let contentVerticalInset: CGFloat = 3
+        let contentHorzontalInset: CGFloat = contentVerticalInset * 2
+        button.contentEdgeInsets = UIEdgeInsets(top: contentVerticalInset, left: contentHorzontalInset, bottom: contentVerticalInset, right: contentHorzontalInset)
+        button.setImage(UIImage(systemName: "questionmark"), for: .normal)
+        button.setImage(UIImage(systemName: "exclamationmark"), for: .selected)
+        button.tintColor = .black
         return button
     }()
     private let wordStackView: UIStackView = {
@@ -85,8 +95,9 @@ private extension CardView {
     }
     
     func addViews() {
-        addSubview(wordCountLabel)
-        addSubview(cardStateStackView)
+        addSubview(topLineStackView)
+        topLineStackView.addArrangedSubview(wordCountLabel)
+        topLineStackView.addArrangedSubview(cardStateStackView)
         cardStateStackView.addArrangedSubview(bookMarkButton)
         cardStateStackView.addArrangedSubview(stateButton)
         addSubview(wordStackView)
@@ -95,12 +106,16 @@ private extension CardView {
     }
     
     func autoLayoutSetup() {
-        wordCountLabel.snp.makeConstraints { make in
-            make.top.left.equalToSuperview().inset(inset)
+        topLineStackView.snp.makeConstraints { make in
+            make.top.left.right.equalToSuperview().inset(inset)
         }
-        cardStateStackView.snp.makeConstraints { make in
-            make.top.right.equalToSuperview().inset(inset)
+        
+        let stateButtonWidthSize = 26
+        
+        stateButton.snp.makeConstraints { make in
+            make.width.equalTo(stateButtonWidthSize)
         }
+
         wordStackView.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
