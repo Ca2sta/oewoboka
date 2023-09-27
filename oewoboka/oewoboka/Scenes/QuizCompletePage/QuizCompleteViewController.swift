@@ -9,9 +9,10 @@ import UIKit
 
 final class QuizCompleteViewController: UIViewController {
     
-    let resultView: ResultView
-    let quizFeedbackStackView: FeedBackStackView = FeedBackStackView()
-    let quizResultWords: [Word]
+    private let resultView: ResultView
+    private let quizFeedbackStackView: FeedBackStackView = FeedBackStackView()
+    private let quizResultWords: [Word]
+    var popCompletion: (([Word]?) -> Void)?
     
     init(words: [Word]) {
         quizResultWords = words
@@ -37,6 +38,7 @@ private extension QuizCompleteViewController {
         addViews()
         autoLayoutSetup()
         resultViewSetup()
+        quizFeedbackSetup()
     }
     
     func addViews() {
@@ -49,7 +51,19 @@ private extension QuizCompleteViewController {
     }
     
     func quizFeedbackSetup() {
-        quizFeedbackStackView.noMemoryCount = quizResultWords.filter{ $0.isMemorize }.count
+        quizFeedbackStackView.unMemorizeCount = quizResultWords.filter{ $0.isMemorize == false }.count
+        quizFeedbackStackView.popHandler = { [weak self] resultType in
+            switch resultType {
+            case .answer:
+                self?.popCompletion?(nil)
+            case .allReQuiz:
+                self?.popCompletion?(self?.quizResultWords)
+            case .unMemorizeReQuiz:
+                let unMemorizeWords = self?.quizResultWords.filter { $0.isMemorize == false }
+                self?.popCompletion?(unMemorizeWords)
+            }
+            self?.navigationController?.popViewController(animated: true)
+        }
     }
     
     func autoLayoutSetup() {

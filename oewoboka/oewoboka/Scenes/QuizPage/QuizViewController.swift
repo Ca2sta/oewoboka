@@ -17,7 +17,19 @@ final class QuizViewController: UIViewController {
     private var currentIndex: Int = 0
     
     let vocablularyList: Vocabulary = Vocabulary(id: UUID(), context: "Title", words: [Word(id: UUID(), english: "english", korea: "한국어", isMemorize: false),Word(id: UUID(), english: "english2", korea: "한국어2", isMemorize: false), Word(id: UUID(), english: "english3", korea: "한국어3", isMemorize: false)])
+    private let quizType: QuizType
     private var quizResultWords: [Word] = []
+    private var words: [Word] = []
+    
+    init(quizType: QuizType) {
+        self.quizType = quizType
+        super.init(nibName: nil, bundle: nil)
+        quizTypeSetup()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +59,8 @@ private extension QuizViewController {
     }
     
     func initCardView() {
+        words = vocablularyList.words
+        
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(cardMove(sender:)))
         frontCardView.isUserInteractionEnabled = true
         frontCardView.addGestureRecognizer(panGesture)
@@ -63,7 +77,6 @@ private extension QuizViewController {
     }
     
     func cardViewSetup(index: Int) {
-        let words = vocablularyList.words
         guard index >= 0 else { return }
         guard index < words.count else {
             navigationPushQuizCompletePage()
@@ -103,12 +116,27 @@ private extension QuizViewController {
         }
     }
     
-    private func navigationPushQuizCompletePage() {
+    func quizTypeSetup() {
+        frontCardView.quizType = quizType
+        backgroundCardView.quizType = quizType
+    }
+    
+    func navigationPushQuizCompletePage() {
         let vc = QuizCompleteViewController(words: quizResultWords)
+        vc.popCompletion = { [weak self] words in
+            guard let self else { return }
+            if let words {
+                self.words = words
+            }
+            self.backgroundCardView.isHidden = false
+            self.quizResultWords = []
+            self.currentIndex = 0
+            self.cardViewSetup(index: currentIndex)
+        }
         navigationController?.pushViewController(vc, animated: false)
     }
     
-    @objc private func cardMove(sender: UIPanGestureRecognizer) {
+    @objc func cardMove(sender: UIPanGestureRecognizer) {
         guard let moveView = sender.view else { return }
         let point = sender.translation(in: view)
         moveView.center = CGPoint(x: view.center.x + point.x, y: moveView.center.y)

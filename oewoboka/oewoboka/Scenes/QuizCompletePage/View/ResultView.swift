@@ -87,7 +87,7 @@ extension ResultView {
         let arcCenter = CGPoint(x: bounds.width/2, y: bounds.height/2)
         let radius = bounds.width/2
         let calayer = CAShapeLayer()
-        let bezierPath = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: -.pi / 2, endAngle: quizRate * CGFloat.pi, clockwise: true)
+        let bezierPath = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: -0.5 * CGFloat.pi, endAngle: 1.5 * CGFloat.pi, clockwise: true)
         calayer.path = bezierPath.cgPath
         calayer.strokeColor = UIColor.red.cgColor
         calayer.fillColor = UIColor.clear.cgColor
@@ -95,8 +95,8 @@ extension ResultView {
         calayer.lineCap = .round
         
         let caAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        caAnimation.toValue = 1
         caAnimation.fromValue = 0
+        caAnimation.toValue = quizRate
         caAnimation.duration = duration
         caAnimation.fillMode = .forwards
         caAnimation.isRemovedOnCompletion = false

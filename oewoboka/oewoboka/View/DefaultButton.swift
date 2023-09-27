@@ -61,7 +61,6 @@ final class DefaultButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
         typeSetup()
-        print(center, titleLabel?.center)
     }
     
 }
@@ -90,7 +89,6 @@ extension DefaultButton {
         switch type {
         case .center:
             let leftEdgeInset = bounds.width/2 - (titleLabel?.bounds.width ?? 0)/2 - (imageView?.bounds.width ?? 0) - horizontalPadding
-            print(leftEdgeInset)
             titleEdgeInsets.left = leftEdgeInset
         case .left:
             titleEdgeInsets.left = spacing

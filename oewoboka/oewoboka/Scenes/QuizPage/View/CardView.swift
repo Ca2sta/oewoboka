@@ -59,6 +59,11 @@ final class CardView: UIView {
     }()
     
     private let inset: CGFloat = 24
+    var quizType: QuizType = .training {
+        didSet {
+            quizTypeSetup()
+        }
+    }
 
     init() {
         super.init(frame: .zero)
@@ -76,7 +81,6 @@ private extension CardView {
         backgroundColor = .white
         addViews()
         autoLayoutSetup()
-        countLabelSetup()
         buttonSetup()
     }
     
@@ -102,13 +106,22 @@ private extension CardView {
         }
     }
     
+    func quizTypeSetup() {
+        switch quizType {
+        case .training:
+            break
+        case .wordDictation:
+            englishLabel.isHidden = true
+        case .meanDictation:
+            koreaLabel.isHidden = true
+        case .test:
+            print("test")
+        }
+    }
+    
     func buttonSetup() {
         bookMarkButton.addTarget(self, action: #selector(bookMarkClick), for: .touchUpInside)
         stateButton.addTarget(self, action: #selector(stateButtonClick), for: .touchUpInside)
-    }
-    
-    func countLabelSetup() {
-        wordCountLabel.text = "1/6"
     }
     
     @objc func bookMarkClick() {
