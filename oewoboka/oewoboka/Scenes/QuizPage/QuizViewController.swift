@@ -139,8 +139,8 @@ private extension QuizViewController {
     @objc func cardMove(sender: UIPanGestureRecognizer) {
         guard let moveView = sender.view else { return }
         let point = sender.translation(in: view)
-        moveView.center = CGPoint(x: view.center.x + point.x, y: moveView.center.y)
-        
+        moveView.center = CGPoint(x: view.center.x + point.x, y: view.center.y + point.y)
+                
         var word = vocablularyList.words[currentIndex]
         
         if sender.state == .ended {
