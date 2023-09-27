@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 enum Typography {
+    case bigTitle
     case title1
     case title2
     case title2Medium
@@ -19,6 +20,8 @@ enum Typography {
     
     var font: UIFont {
         switch self {
+        case .bigTitle:
+            return .systemFont(ofSize: 40, weight: .bold)
         case .title1:
             return .systemFont(ofSize: 30, weight: .bold)
         case .title2:

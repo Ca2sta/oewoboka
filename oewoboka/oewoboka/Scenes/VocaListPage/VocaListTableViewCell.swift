@@ -18,6 +18,7 @@ class VocaListTableViewCell: UITableViewCell {
     }()
     let vocaListLabel: UILabel = {
         let label = UILabel()
+        label.font = Typography.title1.font
         return label
     }()
     let vocaNumbersLabel: UILabel = {
@@ -32,7 +33,7 @@ class VocaListTableViewCell: UITableViewCell {
         let label = UILabel()
         return label
     }()
-    let achievementRate: UILabel = {
+    let inProgressRateLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .purple
         return label
@@ -58,7 +59,7 @@ class VocaListTableViewCell: UITableViewCell {
         contentView.addSubview(vocaNumbersLabel)
         contentView.addSubview(uncompleteNumbersLabel)
         contentView.addSubview(completeNumbersLabel)
-        contentView.addSubview(achievementRate)
+        contentView.addSubview(inProgressRateLabel)
         
         setButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
@@ -66,7 +67,7 @@ class VocaListTableViewCell: UITableViewCell {
             make.width.equalTo(30)
             make.height.equalTo(30)
         }
-        achievementRate.snp.makeConstraints { make in
+        inProgressRateLabel.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-15)
             make.bottom.equalToSuperview().offset(-8)
             make.width.equalTo(45)
@@ -95,14 +96,11 @@ class VocaListTableViewCell: UITableViewCell {
         vocaListLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.left.equalToSuperview().offset(10)
-            make.right.equalTo(setButton.snp.left).offset(-15)
+            make.right.equalTo(inProgressRateLabel.snp.left).offset(-15)
             make.bottom.equalTo(vocaNumbersLabel.snp.top).offset(-10)
         }
 
         
-    }
-    override func layoutSubviews() {
-      super.layoutSubviews()
     }
     
     @objc func setButtonTapped() {

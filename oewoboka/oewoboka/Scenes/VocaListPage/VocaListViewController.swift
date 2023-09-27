@@ -12,7 +12,7 @@ final class VocaListViewController: UIViewController {
     
     let vocaListTableView = UITableView()
     let vocaSearchController = UISearchController(searchResultsController: nil)
-    let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+    let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: VocaListViewController.self, action: #selector(addButtonTapped))
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +66,7 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
         cell.vocaNumbersLabel.text = "V: \(indexPath.row)"
         cell.completeNumbersLabel.text = "Com: \(indexPath.row)"
         cell.uncompleteNumbersLabel.text = "Ucm: \(indexPath.row)"
-        cell.achievementRate.text = "Achievement Rate: \(indexPath.row)%"
+        cell.inProgressRateLabel.text = "Achievement Rate: \(indexPath.row)%"
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

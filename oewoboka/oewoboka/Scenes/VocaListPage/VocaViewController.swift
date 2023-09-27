@@ -6,28 +6,40 @@
 //
 
 import UIKit
+import SnapKit
 
 class VocaViewController: UIViewController {
     let vocaTableView = UITableView()
     let allLabel : UILabel = {
         let label = UILabel()
-        label.text = "전체 단어수: 00"
+        label.text = "전체 단어수: 0"
         return label
+    }()
+    let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: VocaViewController.self, action: #selector(addButtonTapped))
+    var totalWordCount = 0
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 MM월 dd일 HH:mm"
+        return formatter
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
         setUpUI()
-//        
-//        vocaTableView.dataSource = self
-//        vocaTableView.delegate = self
-//        vocaTableView.register(VocaListTableViewCell.self, forCellReuseIdentifier: "VocaCell")
+        
+        vocaTableView.dataSource = self
+        vocaTableView.delegate = self
+        vocaTableView.register(VocaTableViewCell.self, forCellReuseIdentifier: "VocaCell")
 
     }
     func setUpUI() {
-        self.view.addSubview(vocaTableView)
+        view.addSubview(vocaTableView)
         view.addSubview(allLabel)
+        navigationItem.rightBarButtonItem = addButton
+
+        addButton.target = self
+        addButton.action = #selector(addButtonTapped)
+        
         allLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.left.right.equalToSuperview()
@@ -38,32 +50,40 @@ class VocaViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    @objc func addButtonTapped() {
+        totalWordCount += 1
+        allLabel.text = "전체 단어수: \(totalWordCount)"
+        print("testPlusButton")
+        vocaTableView.reloadData()
     }
-    */
-
 }
 extension VocaViewController: UITableViewDelegate,UITableViewDataSource,UISearchControllerDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        
+        return totalWordCount
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "VocaCell", for: indexPath) as! VocaTableViewCell
+        let currentDate = Date() 
+        let dateString = dateFormatter.string(from: currentDate)
         
+        cell.dateLabel.text = "\((indexPath.row) + 1). \(dateString)"
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 100
     }
-
+    func updateSearchResults(for searchController: UISearchController) {
+        print("text")
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedVocaViewController = SelectedVocaViewController()
+        
+        self.navigationController?.pushViewController(selectedVocaViewController, animated: true)
+    }
 }
