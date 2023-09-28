@@ -30,7 +30,10 @@ final class FTModalTopView: UIView {
         return view
     }()
     
-    override init(frame: CGRect) {
+    private let viewModel: FTOPViewModel
+    
+    init(viewModel: FTOPViewModel) {
+        self.viewModel = viewModel
         super.init(frame: CGRect.zero)
         setUp()
     }

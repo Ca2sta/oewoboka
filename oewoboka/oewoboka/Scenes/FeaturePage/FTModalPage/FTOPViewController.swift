@@ -10,11 +10,11 @@ import SnapKit
 
 final class FTOPViewController: UIViewController {
     
-    private let topView = FTModalTopView()
+    lazy var topView = FTModalTopView(viewModel: viewModel)
     
-    private let middleView = FTModalMiddleView()
+    lazy var middleView = FTModalMiddleView(viewModel: viewModel)
     
-    private let bottomView = FTModalBottomView()
+    lazy var bottomView = FTModalBottomView(viewModel: viewModel)
     
     private let viewModel = FTOPViewModel()
     
@@ -30,9 +30,6 @@ final class FTOPViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    deinit {
-//        print("FTOPViewController deinit")
-//    }
 }
 
 extension FTOPViewController {
@@ -82,6 +79,7 @@ private extension FTOPViewController {
         middleView.typeView.typeCollectionView.register(FTSettingTypeCell.self, forCellWithReuseIdentifier: FTSettingTypeCell.identifier)
         middleView.countView.plusButton.addTarget(self, action: #selector(didTappedCountButton(_:)), for: .touchUpInside)
         middleView.countView.minusButton.addTarget(self, action: #selector(didTappedCountButton(_:)), for: .touchUpInside)
+        middleView.countView.sliderView.addTarget(self, action: #selector(didSlideSlider(_ :)), for: .valueChanged)
     }
     
 }
@@ -92,6 +90,7 @@ private extension FTOPViewController {
     @objc func didTappedBackButton() {
         self.dismiss(animated: true)
     }
+    
     @objc func didTappedCountButton(_ button: UIButton) {
         if button == middleView.countView.plusButton {
             middleView.countView.count += 1
@@ -100,6 +99,10 @@ private extension FTOPViewController {
                 middleView.countView.count -= 1
             }
         }
+    }
+    
+    @objc func didSlideSlider(_ slider: UISlider) {
+        middleView.countView.count = Int(slider.value * 100)
     }
 }
 
@@ -118,7 +121,7 @@ extension FTOPViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? FTSettingTypeCell else { return }
+//        guard let cell = collectionView.cellForItem(at: indexPath) as? FTSettingTypeCell else { return }
         print(indexPath.row)
     }
     

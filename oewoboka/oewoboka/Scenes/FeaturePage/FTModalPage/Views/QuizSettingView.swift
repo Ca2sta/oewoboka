@@ -28,11 +28,11 @@ final class QuizSettingView: UIView {
         return label
     }()
     
-    let rangeButton: DefaultButton = {
+    lazy var rangeButton: DefaultButton = {
         let button = DefaultButton()
-        button.image = UIImage(systemName: "person")
-        button.text = "단어장 선택"
-        button.type = .rightImage(UIImage(systemName: "person"))
+        button.image = viewModel.rangeBTLeftImage
+        button.text = viewModel.rangeBTtitle
+        button.type = .rightImage(viewModel.rangeBTRightImage)
         return button
     }()
     
@@ -53,8 +53,15 @@ final class QuizSettingView: UIView {
     
     private let type: QuizSettingType
     
+    private let viewModel: FTOPViewModel
     
-    init(title:String, description:String, type: QuizSettingType) {
+    
+    init(title:String,
+         description:String,
+         type: QuizSettingType,
+         viewModel: FTOPViewModel
+    ) {
+        self.viewModel = viewModel
         self.type = type
         super.init(frame: CGRect.zero)
         self.titleLabel.text = title

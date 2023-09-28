@@ -10,10 +10,10 @@ import SnapKit
 
 final class FTModalBottomView: UIView {
 
-    private let startButton: DefaultButton = {
+    lazy var startButton: DefaultButton = {
         let button = DefaultButton()
-        button.text = "퀴즈 시작"
-        button.image = UIImage(systemName: "person")
+        button.text = viewModel.startBTTitle
+        button.image = viewModel.startBTImage
         button.type = .center
         return button
     }()
@@ -24,7 +24,10 @@ final class FTModalBottomView: UIView {
         return view
     }()
     
-    override init(frame: CGRect) {
+    private var viewModel: FTOPViewModel
+    
+    init(viewModel: FTOPViewModel) {
+        self.viewModel = viewModel
         super.init(frame: CGRect.zero)
         setUp()
     }
@@ -41,7 +44,6 @@ private extension FTModalBottomView {
     func setUp() {
         setUpStartButton()
         setUpStartBTdivider()
-        
     }
     
     func setUpStartButton() {

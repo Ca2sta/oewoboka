@@ -17,21 +17,26 @@ final class FTModalMiddleView: UIView {
     
     private let contentView = UIView()
     
-    let rangeView = QuizSettingView(
-        title: "문제 범위",
-        description: "여러 단어장을 선택할 수 있어요",
-        type: .range
+    lazy var rangeView = QuizSettingView(
+        title: viewModel.rangeViewTitle,
+        description: viewModel.rangeViewDescription,
+        type: .range,
+        viewModel: viewModel
     )
     
-    let typeView = QuizSettingView(
-        title: "문제 타입",
-        description: "공부하고 싶은 항목을 선택해 주세요",
-        type: .type
+    lazy var typeView = QuizSettingView(
+        title: viewModel.typeViewTitle,
+        description: viewModel.typeViewDescription,
+        type: .type,
+        viewModel: viewModel
     )
     
-    let countView = QuizCountView()
+    lazy var countView = QuizCountView(viewModel: viewModel)
     
-    override init(frame: CGRect) {
+    private var viewModel = FTOPViewModel()
+    
+    init(viewModel: FTOPViewModel) {
+        self.viewModel = viewModel
         super.init(frame: CGRect.zero)
         setUp()
     }

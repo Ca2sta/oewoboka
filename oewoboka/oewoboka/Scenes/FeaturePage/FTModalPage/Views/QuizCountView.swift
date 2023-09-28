@@ -11,10 +11,10 @@ import SnapKit
 final class QuizCountView: UIView {
 
 
-    private let title: UILabel = {
+    lazy var title: UILabel = {
         let label = UILabel()
         label.font = Typography.body1.font
-        label.text = "문제 개수 제한"
+        label.text = viewModel.countViewTitle
         return label
     }()
     
@@ -31,21 +31,17 @@ final class QuizCountView: UIView {
         return view
     }()
     
-    let plusButton: UIButton = {
+    lazy var plusButton: UIButton = {
         let button = UIButton()
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: Constant.screenHeight * 0.03)
-        let image = UIImage(systemName: "plus.circle", withConfiguration: imageConfig)
         button.tintColor = .black
-        button.setImage(image, for: .normal)
+        button.setImage(viewModel.countViewPlusBTImage, for: .normal)
         return button
     }()
     
-    let minusButton: UIButton = {
+    lazy var minusButton: UIButton = {
         let button = UIButton()
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: Constant.screenHeight * 0.03)
-        let image = UIImage(systemName: "minus.circle", withConfiguration: imageConfig)
         button.tintColor = .black
-        button.setImage(image, for: .normal)
+        button.setImage(viewModel.countViewMinusImage, for: .normal)
         return button
     }()
     
@@ -58,13 +54,25 @@ final class QuizCountView: UIView {
         return label
     }()
     
+    lazy var sliderView: UISlider = {
+        let slider = UISlider()
+        slider.value = (Float(count) / 100)
+        slider.thumbTintColor = .systemPink
+        slider.minimumTrackTintColor = .systemPink
+        return slider
+    }()
+    
     var count = 10 {
         didSet {
             countLabel.text = "\(count)개"
+            sliderView.value = (Float(count) / 100)
         }
     }
     
-    override init(frame: CGRect) {
+    private var viewModel = FTOPViewModel()
+    
+    init(viewModel: FTOPViewModel) {
+        self.viewModel = viewModel
         super.init(frame: CGRect.zero)
         setUp()
     }
@@ -80,6 +88,7 @@ private extension QuizCountView {
     func setUp() {
         setUpTitle()
         setUpStackView()
+        setUpSlider()
         setUpDivider()
     }
     
@@ -93,7 +102,7 @@ private extension QuizCountView {
     func setUpStackView() {
         self.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
+            make.centerY.equalTo(title.snp.centerY)
             make.right.equalToSuperview().inset(Constant.defalutPadding)
             make.height.equalTo(Constant.screenHeight * 0.03)
         }
@@ -103,7 +112,7 @@ private extension QuizCountView {
         }
         stackView.addArrangedSubview(countLabel)
         countLabel.snp.makeConstraints { make in
-            make.width.equalTo(Constant.screenHeight * 0.05)
+            make.width.equalTo(Constant.screenHeight * 0.06)
         }
         stackView.addArrangedSubview(plusButton)
         plusButton.snp.makeConstraints { make in
@@ -111,14 +120,22 @@ private extension QuizCountView {
         }
     }
     
+    func setUpSlider() {
+        self.addSubview(sliderView)
+        sliderView.snp.makeConstraints { make in
+            make.top.equalTo(title.snp.bottom).offset(Constant.defalutPadding)
+            make.left.right.equalToSuperview().inset(Constant.defalutPadding)
+            make.height.equalTo(stackView)
+        }
+    }
+    
     func setUpDivider() {
         self.addSubview(divider)
         divider.snp.makeConstraints { make in
-            make.top.equalTo(title.snp.bottom).offset(Constant.defalutPadding)
+            make.top.equalTo(sliderView.snp.bottom).offset(Constant.defalutPadding)
             make.left.right.bottom.equalToSuperview()
             make.height.equalTo(1)
         }
     }
-
 }
 
