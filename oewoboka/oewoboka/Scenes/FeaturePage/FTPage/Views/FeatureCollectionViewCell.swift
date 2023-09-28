@@ -22,7 +22,7 @@ final class FeatureCollectionViewCell: UICollectionViewCell {
         let view = UILabel()
         view.font = Typography.title2Medium.font
         view.textAlignment = .center
-        view.textColor = .systemPink
+        view.textColor = .systemGray
         return view
     }()
     
@@ -30,7 +30,7 @@ final class FeatureCollectionViewCell: UICollectionViewCell {
         let view = UILabel()
         view.font = Typography.body2.font
         view.textAlignment = .center
-        view.textColor = .systemPink
+        view.textColor = .systemGray
         return view
     }()
     
@@ -94,5 +94,16 @@ extension FeatureCollectionViewCell {
         titleLabel.text = data.title
         descriptionLabel.text = data.description
         imageView.image = data.image
+    }
+}
+
+extension FeatureCollectionViewCell {
+    // MARK: - colorLoad
+
+    func colorLoad(color: UIColor) {
+        contentView.layer.borderColor = color.cgColor
+        titleLabel.textColor = color
+        descriptionLabel.textColor = color
+        imageView.tintColor = color
     }
 }

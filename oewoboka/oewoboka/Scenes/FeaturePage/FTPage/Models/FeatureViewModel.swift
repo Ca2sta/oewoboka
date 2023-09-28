@@ -17,9 +17,24 @@ final class FeatureViewModel {
     var previousIndex = 0
     
     var features:[FeatureCellModel] = [
-        FeatureCellModel(image: UIImage(systemName: "menucard"), title: "단어 카드", description: "카드를 넘기며 단어를 외워요!", type: .wordCard),
-        FeatureCellModel(image: UIImage(systemName: "pencil.line"), title: "받아쓰기", description: "받아쓰기를 하며 단어를 외워요!", type: .dictation),
-        FeatureCellModel(image: UIImage(systemName: "rays"), title: "깜빡이", description: "받아쓰기를 하며 단어를 외워요!", type: .blink),
+        FeatureCellModel(
+            image: UIImage(systemName: "menucard"),
+            title: "단어 카드",
+            description: "카드를 넘기며 단어를 외워요!",
+            type: .wordCard
+        ),
+        FeatureCellModel(
+            image: UIImage(systemName: "pencil.line"),
+            title: "받아쓰기",
+            description: "받아쓰기를 하며 단어를 외워요!",
+            type: .dictation
+        ),
+        FeatureCellModel(
+            image: UIImage(systemName: "note.text"),
+            title: "시험 보기",
+            description: "시험을 통해 어쩌구",
+            type: .blink
+        ),
     ]
     
     

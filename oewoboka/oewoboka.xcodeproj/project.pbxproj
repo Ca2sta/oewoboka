@@ -12,6 +12,12 @@
 		084C45F22AC1A9CB002999DF /* FeatureCellModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C45F12AC1A9CB002999DF /* FeatureCellModels.swift */; };
 		084C45F52AC1A9FA002999DF /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C45F42AC1A9FA002999DF /* Constant.swift */; };
 		085F51702AC3F5AA0039CB25 /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085F516F2AC3F5AA0039CB25 /* PresentationController.swift */; };
+		085F51732AC40CE00039CB25 /* FTModalTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085F51722AC40CE00039CB25 /* FTModalTopView.swift */; };
+		085F51752AC40F090039CB25 /* FTModalBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085F51742AC40F090039CB25 /* FTModalBottomView.swift */; };
+		085F51772AC410810039CB25 /* FTModalMiddleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085F51762AC410810039CB25 /* FTModalMiddleView.swift */; };
+		085F517A2AC4198B0039CB25 /* QuizSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085F51792AC4198B0039CB25 /* QuizSettingView.swift */; };
+		085F517C2AC553D80039CB25 /* FTSettingTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085F517B2AC553D80039CB25 /* FTSettingTypeCell.swift */; };
+		085F517E2AC556810039CB25 /* FTOPViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085F517D2AC556810039CB25 /* FTOPViewModel.swift */; };
 		08872FE62AC2CB7300FC3469 /* FTOPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08872FE52AC2CB7300FC3469 /* FTOPViewController.swift */; };
 		18BF668A2AC208B300C53C07 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BF66892AC208B300C53C07 /* Typography.swift */; };
 		18BF668D2AC2097400C53C07 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BF668C2AC2097400C53C07 /* DefaultButton.swift */; };
@@ -34,6 +40,12 @@
 		084C45F12AC1A9CB002999DF /* FeatureCellModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureCellModels.swift; sourceTree = "<group>"; };
 		084C45F42AC1A9FA002999DF /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		085F516F2AC3F5AA0039CB25 /* PresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
+		085F51722AC40CE00039CB25 /* FTModalTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTModalTopView.swift; sourceTree = "<group>"; };
+		085F51742AC40F090039CB25 /* FTModalBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTModalBottomView.swift; sourceTree = "<group>"; };
+		085F51762AC410810039CB25 /* FTModalMiddleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTModalMiddleView.swift; sourceTree = "<group>"; };
+		085F51792AC4198B0039CB25 /* QuizSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSettingView.swift; sourceTree = "<group>"; };
+		085F517B2AC553D80039CB25 /* FTSettingTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSettingTypeCell.swift; sourceTree = "<group>"; };
+		085F517D2AC556810039CB25 /* FTOPViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOPViewModel.swift; sourceTree = "<group>"; };
 		08872FE52AC2CB7300FC3469 /* FTOPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOPViewController.swift; sourceTree = "<group>"; };
 		18BF66892AC208B300C53C07 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		18BF668C2AC2097400C53C07 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
@@ -81,14 +93,26 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
-		08872FE22AC2CAC600FC3469 /* FeaturePage */ = {
+		085F51712AC40CAA0039CB25 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				085F51722AC40CE00039CB25 /* FTModalTopView.swift */,
+				085F51792AC4198B0039CB25 /* QuizSettingView.swift */,
+				085F51762AC410810039CB25 /* FTModalMiddleView.swift */,
+				085F51742AC40F090039CB25 /* FTModalBottomView.swift */,
+				085F517B2AC553D80039CB25 /* FTSettingTypeCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		08872FE22AC2CAC600FC3469 /* FTPage */ = {
 			isa = PBXGroup;
 			children = (
 				084C45F02AC1A9B6002999DF /* Models */,
 				18E0D2162AC133A2005DDA6F /* FeatureViewController.swift */,
 				08872FE32AC2CAF900FC3469 /* Views */,
 			);
-			path = FeaturePage;
+			path = FTPage;
 			sourceTree = "<group>";
 		};
 		08872FE32AC2CAF900FC3469 /* Views */ = {
@@ -99,12 +123,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		08872FE42AC2CB3C00FC3469 /* FeatureOpPage */ = {
+		08872FE42AC2CB3C00FC3469 /* FTModalPage */ = {
 			isa = PBXGroup;
 			children = (
+				085F51712AC40CAA0039CB25 /* Views */,
 				08872FE52AC2CB7300FC3469 /* FTOPViewController.swift */,
+				085F517D2AC556810039CB25 /* FTOPViewModel.swift */,
 			);
-			path = FeatureOpPage;
+			path = FTModalPage;
 			sourceTree = "<group>";
 		};
 		18BF668B2AC208F500C53C07 /* View */ = {
@@ -203,8 +229,8 @@
 		18E0D20F2AC1330A005DDA6F /* FeaturePage */ = {
 			isa = PBXGroup;
 			children = (
-				08872FE22AC2CAC600FC3469 /* FeaturePage */,
-				08872FE42AC2CB3C00FC3469 /* FeatureOpPage */,
+				08872FE22AC2CAC600FC3469 /* FTPage */,
+				08872FE42AC2CB3C00FC3469 /* FTModalPage */,
 			);
 			path = FeaturePage;
 			sourceTree = "<group>";
@@ -302,6 +328,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				18E0D2172AC133A2005DDA6F /* FeatureViewController.swift in Sources */,
+				085F517C2AC553D80039CB25 /* FTSettingTypeCell.swift in Sources */,
+				085F51732AC40CE00039CB25 /* FTModalTopView.swift in Sources */,
 				084C45ED2AC1943E002999DF /* FeatureCollectionViewCell.swift in Sources */,
 				084C45EB2AC1934D002999DF /* FeatureViewModel.swift in Sources */,
 				084C45F22AC1A9CB002999DF /* FeatureCellModels.swift in Sources */,
@@ -311,10 +339,14 @@
 				085F51702AC3F5AA0039CB25 /* PresentationController.swift in Sources */,
 				18E0D2132AC13388005DDA6F /* QuizViewController.swift in Sources */,
 				18E0D21B2AC133FE005DDA6F /* AddVocabularyViewController.swift in Sources */,
+				085F51752AC40F090039CB25 /* FTModalBottomView.swift in Sources */,
+				085F517E2AC556810039CB25 /* FTOPViewModel.swift in Sources */,
 				18E0D1F52AC1305D005DDA6F /* TabBarController.swift in Sources */,
 				08872FE62AC2CB7300FC3469 /* FTOPViewController.swift in Sources */,
 				18E0D1F12AC1305D005DDA6F /* AppDelegate.swift in Sources */,
 				18E0D1F32AC1305D005DDA6F /* SceneDelegate.swift in Sources */,
+				085F51772AC410810039CB25 /* FTModalMiddleView.swift in Sources */,
+				085F517A2AC4198B0039CB25 /* QuizSettingView.swift in Sources */,
 				084C45F52AC1A9FA002999DF /* Constant.swift in Sources */,
 				18BF668D2AC2097400C53C07 /* DefaultButton.swift in Sources */,
 			);

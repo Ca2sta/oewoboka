@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+final class FTOPViewModel {
+ 
+    var quizType = [
+        "단어",
+        "의미",
+        "교대로",
+        "랜덤"
+    ]
+    
+}

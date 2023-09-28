@@ -25,7 +25,7 @@ final class FeatureViewController: UIViewController {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         let cellWidth: CGFloat = floor(viewModel.cellSize.width)
-        let insetX = (view.bounds.width - cellWidth) / 2.0
+        let insetX = (Constant.screenWidth - cellWidth) / 2.0
         collectionView.contentInset = UIEdgeInsets(top: 0, left: insetX, bottom: 0, right: insetX)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.decelerationRate = .fast
@@ -154,14 +154,14 @@ extension FeatureViewController: UICollectionViewDelegateFlowLayout, UICollectio
         let indexPath = IndexPath(item: Int(roundedIndex), section: 0)
         DispatchQueue.main.async { [weak self] in
             guard let self = self else {return}
-            guard let cell = featureCollectionView.cellForItem(at: indexPath) else { return }
-            cell.contentView.layer.borderColor = UIColor.systemPink.cgColor
+            guard let cell = featureCollectionView.cellForItem(at: indexPath) as? FeatureCollectionViewCell else { return }
+            cell.colorLoad(color: UIColor.systemPink)
             animateZoomforCell(zoomCell: cell)
         }
         if Int(roundedIndex) != viewModel.previousIndex {
             let preIndexPath = IndexPath(item: viewModel.previousIndex, section: 0)
-            if let preCell = featureCollectionView.cellForItem(at: preIndexPath) {
-                preCell.contentView.layer.borderColor = UIColor.systemGray.cgColor
+            if let preCell = featureCollectionView.cellForItem(at: preIndexPath) as? FeatureCollectionViewCell {
+                preCell.colorLoad(color: UIColor.systemGray)
                 animateZoomforCellremove(zoomCell: preCell)
             }
             viewModel.previousIndex = indexPath.item

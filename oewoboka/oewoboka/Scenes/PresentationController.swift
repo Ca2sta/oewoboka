@@ -10,15 +10,13 @@ import UIKit
 
 final class PresentationController: UIPresentationController {
     
-    let blurEffectView: UIVisualEffectView!
-    var tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
-    var size: CGFloat
+    private let blurEffectView: UIVisualEffectView!
+    private var tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
+    private let size: CGFloat
     
     init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?, size: CGFloat) {
         let blurEffect = UIBlurEffect(style: .dark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
-//        super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
-        
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.blurEffectView.isUserInteractionEnabled = true
         self.blurEffectView.addGestureRecognizer(tapGestureRecognizer)
