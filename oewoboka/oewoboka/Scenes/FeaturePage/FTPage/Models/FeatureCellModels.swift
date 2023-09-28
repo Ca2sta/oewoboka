@@ -12,4 +12,11 @@ struct FeatureCellModel {
     var image: UIImage?
     var title: String
     var description: String
+    var type: FeatureChoice
+}
+
+enum FeatureChoice {
+    case wordCard
+    case dictation
+    case blink
 }

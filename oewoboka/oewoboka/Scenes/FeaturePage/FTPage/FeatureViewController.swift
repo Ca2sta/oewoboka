@@ -127,7 +127,7 @@ extension FeatureViewController: UICollectionViewDelegateFlowLayout, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let yourVC = FTOPViewController()
+        let yourVC = FTOPViewController(data: viewModel.features[indexPath.row])
         yourVC.modalPresentationStyle = .custom
         yourVC.transitioningDelegate = self
         self.present(yourVC, animated: true, completion: nil)
@@ -171,6 +171,6 @@ extension FeatureViewController: UICollectionViewDelegateFlowLayout, UICollectio
 extension FeatureViewController: UIViewControllerTransitioningDelegate {
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        PresentationController(presentedViewController: presented, presenting: presenting, size: 0.5)
+        PresentationController(presentedViewController: presented, presenting: presenting, size: 0.8)
     }
 }
