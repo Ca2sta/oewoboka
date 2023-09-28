@@ -29,6 +29,8 @@ final class FTModalMiddleView: UIView {
         type: .type
     )
     
+    let countView = QuizCountView()
+    
     override init(frame: CGRect) {
         super.init(frame: CGRect.zero)
         setUp()
@@ -49,6 +51,7 @@ private extension FTModalMiddleView {
         setUpContentView()
         setUpRangeView()
         setUpTypeView()
+        setUpCountView()
     }
     
     func setUpScrollView() {
@@ -76,8 +79,15 @@ private extension FTModalMiddleView {
         contentView.addSubview(typeView)
         typeView.snp.makeConstraints { make in
             make.top.equalTo(rangeView.snp.bottom)
-            make.left.right.bottom.equalToSuperview()
+            make.left.right.equalToSuperview()
         }
     }
     
+    func setUpCountView() {
+        contentView.addSubview(countView)
+        countView.snp.makeConstraints { make in
+            make.top.equalTo(typeView.snp.bottom)
+            make.left.right.bottom.equalToSuperview()
+        }
+    }
 }

@@ -18,6 +18,7 @@
 		085F517A2AC4198B0039CB25 /* QuizSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085F51792AC4198B0039CB25 /* QuizSettingView.swift */; };
 		085F517C2AC553D80039CB25 /* FTSettingTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085F517B2AC553D80039CB25 /* FTSettingTypeCell.swift */; };
 		085F517E2AC556810039CB25 /* FTOPViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085F517D2AC556810039CB25 /* FTOPViewModel.swift */; };
+		085F51802AC569820039CB25 /* QuizCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085F517F2AC569820039CB25 /* QuizCountView.swift */; };
 		08872FE62AC2CB7300FC3469 /* FTOPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08872FE52AC2CB7300FC3469 /* FTOPViewController.swift */; };
 		18BF668A2AC208B300C53C07 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BF66892AC208B300C53C07 /* Typography.swift */; };
 		18BF668D2AC2097400C53C07 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BF668C2AC2097400C53C07 /* DefaultButton.swift */; };
@@ -46,6 +47,7 @@
 		085F51792AC4198B0039CB25 /* QuizSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSettingView.swift; sourceTree = "<group>"; };
 		085F517B2AC553D80039CB25 /* FTSettingTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSettingTypeCell.swift; sourceTree = "<group>"; };
 		085F517D2AC556810039CB25 /* FTOPViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOPViewModel.swift; sourceTree = "<group>"; };
+		085F517F2AC569820039CB25 /* QuizCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCountView.swift; sourceTree = "<group>"; };
 		08872FE52AC2CB7300FC3469 /* FTOPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOPViewController.swift; sourceTree = "<group>"; };
 		18BF66892AC208B300C53C07 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		18BF668C2AC2097400C53C07 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 			children = (
 				085F51722AC40CE00039CB25 /* FTModalTopView.swift */,
 				085F51792AC4198B0039CB25 /* QuizSettingView.swift */,
+				085F517F2AC569820039CB25 /* QuizCountView.swift */,
 				085F51762AC410810039CB25 /* FTModalMiddleView.swift */,
 				085F51742AC40F090039CB25 /* FTModalBottomView.swift */,
 				085F517B2AC553D80039CB25 /* FTSettingTypeCell.swift */,
@@ -328,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18E0D2172AC133A2005DDA6F /* FeatureViewController.swift in Sources */,
+				085F51802AC569820039CB25 /* QuizCountView.swift in Sources */,
 				085F517C2AC553D80039CB25 /* FTSettingTypeCell.swift in Sources */,
 				085F51732AC40CE00039CB25 /* FTModalTopView.swift in Sources */,
 				084C45ED2AC1943E002999DF /* FeatureCollectionViewCell.swift in Sources */,
