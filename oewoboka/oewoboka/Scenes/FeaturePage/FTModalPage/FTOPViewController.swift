@@ -80,6 +80,8 @@ private extension FTOPViewController {
         middleView.typeView.typeCollectionView.delegate = self
         middleView.typeView.typeCollectionView.dataSource = self
         middleView.typeView.typeCollectionView.register(FTSettingTypeCell.self, forCellWithReuseIdentifier: FTSettingTypeCell.identifier)
+        middleView.countView.plusButton.addTarget(self, action: #selector(didTappedCountButton(_:)), for: .touchUpInside)
+        middleView.countView.minusButton.addTarget(self, action: #selector(didTappedCountButton(_:)), for: .touchUpInside)
     }
     
 }
@@ -89,6 +91,15 @@ private extension FTOPViewController {
     
     @objc func didTappedBackButton() {
         self.dismiss(animated: true)
+    }
+    @objc func didTappedCountButton(_ button: UIButton) {
+        if button == middleView.countView.plusButton {
+            middleView.countView.count += 1
+        } else {
+            if middleView.countView.count > 0 {
+                middleView.countView.count -= 1
+            }
+        }
     }
 }
 

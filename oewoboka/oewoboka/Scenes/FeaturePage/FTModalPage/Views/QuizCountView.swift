@@ -31,7 +31,7 @@ final class QuizCountView: UIView {
         return view
     }()
     
-    private let plusButton: UIButton = {
+    let plusButton: UIButton = {
         let button = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: Constant.screenHeight * 0.03)
         let image = UIImage(systemName: "plus.circle", withConfiguration: imageConfig)
@@ -40,7 +40,7 @@ final class QuizCountView: UIView {
         return button
     }()
     
-    private let minusButton: UIButton = {
+    let minusButton: UIButton = {
         let button = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: Constant.screenHeight * 0.03)
         let image = UIImage(systemName: "minus.circle", withConfiguration: imageConfig)
@@ -54,10 +54,11 @@ final class QuizCountView: UIView {
         label.font = Typography.body1.font
         label.textColor = .systemPink
         label.text = "\(count)개"
+        label.textAlignment = .center
         return label
     }()
     
-    private var count = 10 {
+    var count = 10 {
         didSet {
             countLabel.text = "\(count)개"
         }
@@ -101,6 +102,9 @@ private extension QuizCountView {
             make.height.width.equalTo(Constant.screenHeight * 0.03)
         }
         stackView.addArrangedSubview(countLabel)
+        countLabel.snp.makeConstraints { make in
+            make.width.equalTo(Constant.screenHeight * 0.05)
+        }
         stackView.addArrangedSubview(plusButton)
         plusButton.snp.makeConstraints { make in
             make.height.width.equalTo(Constant.screenHeight * 0.03)
