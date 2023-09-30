@@ -99,7 +99,7 @@ private extension FTOPViewController {
     }
     
     @objc func didTappedRangeButton() {
-        let yourVC = VocaListSelectedController()
+        let yourVC = VocaListSelectedController(viewModel: self.viewModel)
         yourVC.modalPresentationStyle = .custom
         yourVC.transitioningDelegate = self
         self.present(yourVC, animated: true, completion: nil)
