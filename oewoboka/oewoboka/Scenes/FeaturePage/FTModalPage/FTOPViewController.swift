@@ -86,6 +86,7 @@ private extension FTOPViewController {
     // MARK: - SetUpAddTarget
     func setUpAddTarget() {
         topView.backButton.addTarget(self, action: #selector(didTappedBackButton), for: .touchUpInside)
+        middleView.rangeView.rangeButton.addTarget(self, action: #selector(didTappedRangeButton), for: .touchUpInside)
         middleView.countView.plusButton.addTarget(self, action: #selector(didTappedCountButton(_:)), for: .touchUpInside)
         middleView.countView.minusButton.addTarget(self, action: #selector(didTappedCountButton(_:)), for: .touchUpInside)
         middleView.countView.sliderView.addTarget(self, action: #selector(didSlideSlider(_ :)), for: .valueChanged)
@@ -95,6 +96,13 @@ private extension FTOPViewController {
     
     @objc func didTappedBackButton() {
         self.dismiss(animated: true)
+    }
+    
+    @objc func didTappedRangeButton() {
+        let yourVC = VocaListSelectedController()
+        yourVC.modalPresentationStyle = .custom
+        yourVC.transitioningDelegate = self
+        self.present(yourVC, animated: true, completion: nil)
     }
     
     @objc func didTappedCountButton(_ button: UIButton) {
@@ -130,7 +138,11 @@ extension FTOPViewController: UICollectionViewDelegate, UICollectionViewDataSour
 //        guard let cell = collectionView.cellForItem(at: indexPath) as? FTSettingTypeCell else { return }
         print(indexPath.row)
     }
-    
-    
 }
 
+extension FTOPViewController: UIViewControllerTransitioningDelegate {
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        PresentationController(presentedViewController: presented, presenting: presenting, size: 0.6)
+    }
+}
