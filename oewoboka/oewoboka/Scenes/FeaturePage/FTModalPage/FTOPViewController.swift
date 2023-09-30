@@ -38,7 +38,6 @@ extension FTOPViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
-        topView.backButton.addTarget(self, action: #selector(didTappedBackButton), for: .touchUpInside)
     }
 }
 
@@ -50,6 +49,7 @@ private extension FTOPViewController {
         setUpTopView()
         setUpBottomView()
         setUpMiddleView()
+        setUpAddTarget()
     }
     
     func setUpTopView() {
@@ -77,14 +77,20 @@ private extension FTOPViewController {
         middleView.typeView.typeCollectionView.delegate = self
         middleView.typeView.typeCollectionView.dataSource = self
         middleView.typeView.typeCollectionView.register(FTSettingTypeCell.self, forCellWithReuseIdentifier: FTSettingTypeCell.identifier)
-        middleView.countView.plusButton.addTarget(self, action: #selector(didTappedCountButton(_:)), for: .touchUpInside)
-        middleView.countView.minusButton.addTarget(self, action: #selector(didTappedCountButton(_:)), for: .touchUpInside)
-        middleView.countView.sliderView.addTarget(self, action: #selector(didSlideSlider(_ :)), for: .valueChanged)
     }
     
 }
 
 private extension FTOPViewController {
+    
+    // MARK: - SetUpAddTarget
+    func setUpAddTarget() {
+        topView.backButton.addTarget(self, action: #selector(didTappedBackButton), for: .touchUpInside)
+        middleView.countView.plusButton.addTarget(self, action: #selector(didTappedCountButton(_:)), for: .touchUpInside)
+        middleView.countView.minusButton.addTarget(self, action: #selector(didTappedCountButton(_:)), for: .touchUpInside)
+        middleView.countView.sliderView.addTarget(self, action: #selector(didSlideSlider(_ :)), for: .valueChanged)
+    }
+    
     // MARK: - ButtonTappedMethod
     
     @objc func didTappedBackButton() {
