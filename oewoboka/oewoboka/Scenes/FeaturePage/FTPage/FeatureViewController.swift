@@ -35,6 +35,11 @@ final class FeatureViewController: UIViewController {
 
 extension FeatureViewController {
     // MARK: - LifeCycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.titleTextAttributes = viewModel.titleLabelFont
+        navigationItem.title = viewModel.titleLabelText
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,8 +51,6 @@ private extension FeatureViewController {
     // MARK: - SetUp
 
     func setUp() {
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: Typography.title2Medium.font]
-        navigationItem.title = "퀴즈"
         setUpDividerView()
         setUpFeatureCollectionView()
     }
@@ -70,8 +73,9 @@ private extension FeatureViewController {
         featureCollectionView.delegate = self
         featureCollectionView.dataSource = self
         featureCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(divider.snp.bottom).offset(Constant.defalutPadding)
-            make.left.right.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.centerY.equalTo(view.safeAreaLayoutGuide)
+            make.left.right.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(Constant.screenHeight * 0.6)
         }
     }
     

@@ -10,12 +10,14 @@ import UIKit
 
 final class FeatureViewModel {
     
-    let minItemSpacing: CGFloat = 40
+    // MARK: - titleSet
+    let titleLabelText = "학습하기"
+    let titleLabelFont = [NSAttributedString.Key.font: Typography.title2Medium.font]
     
+    // MARK: - CellSet
     let cellSize = CGSize(width: UIScreen.main.bounds.width * 0.6, height: UIScreen.main.bounds.height * 0.5)
-    
+    let minItemSpacing: CGFloat = 40
     var previousIndex = 0
-    
     var features:[FeatureCellModel] = [
         FeatureCellModel(
             image: UIImage(systemName: "menucard"),
