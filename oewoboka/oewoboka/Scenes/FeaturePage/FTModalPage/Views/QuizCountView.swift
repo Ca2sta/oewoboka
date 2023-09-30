@@ -112,7 +112,7 @@ private extension QuizCountView {
         }
         stackView.addArrangedSubview(countLabel)
         countLabel.snp.makeConstraints { make in
-            make.width.equalTo(Constant.screenHeight * 0.06)
+            make.width.equalTo(Constant.screenHeight * 0.07)
         }
         stackView.addArrangedSubview(plusButton)
         plusButton.snp.makeConstraints { make in

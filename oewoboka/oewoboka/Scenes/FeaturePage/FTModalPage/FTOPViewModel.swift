@@ -9,7 +9,14 @@ import Foundation
 import UIKit
 
 final class FTOPViewModel {
- 
+    
+    // MARK: - RangeView
+    let rangeViewTitle = "문제 범위"
+    let rangeViewDescription = "여러 단어장을 선택할 수 있어요"
+    
+    // MARK: - TypeView
+    let typeViewTitle = "문제 타입"
+    let typeViewDescription = "공부하고 싶은 항목을 선택해 주세요"
     var quizType = [
         "단어",
         "의미",
@@ -17,15 +24,6 @@ final class FTOPViewModel {
         "랜덤"
     ]
     
-    // MARK: - RangeView
-    let rangeViewTitle = "문제 범위"
-    let rangeViewDescription = "여러 단어장을 선택할 수 있어요"
-    
-    
-    // MARK: - TypeView
-    let typeViewTitle = "문제 타입"
-    let typeViewDescription = "공부하고 싶은 항목을 선택해 주세요"
-
     // MARK: - QuizSettingView
     let rangeBTLeftImage = UIImage(systemName: "person.fill")
     let rangeBTtitle = "단어장 선택"
