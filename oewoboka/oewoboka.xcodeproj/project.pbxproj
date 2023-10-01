@@ -101,9 +101,9 @@
 			isa = PBXGroup;
 			children = (
 				085F51722AC40CE00039CB25 /* FTModalTopView.swift */,
+				085F51762AC410810039CB25 /* FTModalMiddleView.swift */,
 				085F51792AC4198B0039CB25 /* QuizSettingView.swift */,
 				085F517F2AC569820039CB25 /* QuizCountView.swift */,
-				085F51762AC410810039CB25 /* FTModalMiddleView.swift */,
 				085F51742AC40F090039CB25 /* FTModalBottomView.swift */,
 				085F517B2AC553D80039CB25 /* FTSettingTypeCell.swift */,
 			);

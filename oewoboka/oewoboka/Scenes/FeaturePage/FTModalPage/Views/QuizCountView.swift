@@ -68,6 +68,7 @@ final class QuizCountView: UIView {
             sliderView.value = (Float(count) / 100)
         }
     }
+    weak var delegate: CountDelegate?
     
     private var viewModel = FTOPViewModel()
     
@@ -110,6 +111,7 @@ private extension QuizCountView {
         minusButton.snp.makeConstraints { make in
             make.height.width.equalTo(Constant.screenHeight * 0.03)
         }
+        minusButton.addTarget(self, action: #selector(didTappedCountButton(_:)), for: .touchUpInside)
         stackView.addArrangedSubview(countLabel)
         countLabel.snp.makeConstraints { make in
             make.width.equalTo(Constant.screenHeight * 0.07)
@@ -118,6 +120,7 @@ private extension QuizCountView {
         plusButton.snp.makeConstraints { make in
             make.height.width.equalTo(Constant.screenHeight * 0.03)
         }
+        plusButton.addTarget(self, action: #selector(didTappedCountButton(_:)), for: .touchUpInside)
     }
     
     func setUpSlider() {
@@ -127,6 +130,7 @@ private extension QuizCountView {
             make.left.right.equalToSuperview().inset(Constant.defalutPadding)
             make.height.equalTo(stackView)
         }
+        sliderView.addTarget(self, action: #selector(didSlideSlider(_ :)), for: .valueChanged)
     }
     
     func setUpDivider() {
@@ -139,3 +143,19 @@ private extension QuizCountView {
     }
 }
 
+private extension QuizCountView {
+    // MARK: - ButtonTappedMethod
+
+    @objc func didTappedCountButton(_ button: UIButton) {
+        didTappedCountButton(button)
+    }
+    
+    @objc func didSlideSlider(_ slider: UISlider) {
+        didSlideSlider(slider)
+    }
+}
+
+protocol CountDelegate: FTOPViewController {
+    func didTappedCountButton(_ button: UIButton)
+    func didSlideSlider(_ slider: UISlider)
+}

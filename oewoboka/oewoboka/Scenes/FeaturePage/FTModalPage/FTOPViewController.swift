@@ -57,6 +57,7 @@ private extension FTOPViewController {
         topView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
         }
+        topView.delegate = self
     }
     
     func setUpBottomView() {
@@ -76,48 +77,11 @@ private extension FTOPViewController {
         }
         middleView.typeView.typeCollectionView.delegate = self
         middleView.typeView.typeCollectionView.dataSource = self
+        middleView.rangeView.rangeDelegate = self
+        middleView.countView.delegate = self
         middleView.typeView.typeCollectionView.register(FTSettingTypeCell.self, forCellWithReuseIdentifier: FTSettingTypeCell.identifier)
     }
     
-}
-
-private extension FTOPViewController {
-    
-    // MARK: - SetUpAddTarget
-    func setUpAddTarget() {
-        topView.backButton.addTarget(self, action: #selector(didTappedBackButton), for: .touchUpInside)
-        middleView.rangeView.rangeButton.addTarget(self, action: #selector(didTappedRangeButton), for: .touchUpInside)
-        middleView.countView.plusButton.addTarget(self, action: #selector(didTappedCountButton(_:)), for: .touchUpInside)
-        middleView.countView.minusButton.addTarget(self, action: #selector(didTappedCountButton(_:)), for: .touchUpInside)
-        middleView.countView.sliderView.addTarget(self, action: #selector(didSlideSlider(_ :)), for: .valueChanged)
-    }
-    
-    // MARK: - ButtonTappedMethod
-    
-    @objc func didTappedBackButton() {
-        self.dismiss(animated: true)
-    }
-    
-    @objc func didTappedRangeButton() {
-        let yourVC = VocaListSelectedController(viewModel: self.viewModel)
-        yourVC.modalPresentationStyle = .custom
-        yourVC.transitioningDelegate = self
-        self.present(yourVC, animated: true, completion: nil)
-    }
-    
-    @objc func didTappedCountButton(_ button: UIButton) {
-        if button == middleView.countView.plusButton {
-            middleView.countView.count += 1
-        } else {
-            if middleView.countView.count > 0 {
-                middleView.countView.count -= 1
-            }
-        }
-    }
-    
-    @objc func didSlideSlider(_ slider: UISlider) {
-        middleView.countView.count = Int(slider.value * 100)
-    }
 }
 
 extension FTOPViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -135,7 +99,7 @@ extension FTOPViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        guard let cell = collectionView.cellForItem(at: indexPath) as? FTSettingTypeCell else { return }
+        //        guard let cell = collectionView.cellForItem(at: indexPath) as? FTSettingTypeCell else { return }
         print(indexPath.row)
     }
 }
@@ -145,4 +109,39 @@ extension FTOPViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         PresentationController(presentedViewController: presented, presenting: presenting, size: 0.6)
     }
+}
+
+// MARK: - Custom Delegate extension
+
+extension FTOPViewController: TopViewDelegate {
+    func didTappedBackButton() {
+        self.dismiss(animated: true)
+    }
+}
+
+extension FTOPViewController: rangeButtonDelegate {
+    func didTappedRangeButton() {
+        let yourVC = VocaListSelectedController(viewModel: self.viewModel)
+        yourVC.modalPresentationStyle = .custom
+        yourVC.transitioningDelegate = self
+        self.present(yourVC, animated: true, completion: nil)
+    }
+}
+
+extension FTOPViewController: CountDelegate {
+    func didTappedCountButton(_ button: UIButton) {
+        if button == middleView.countView.plusButton {
+            middleView.countView.count += 1
+        } else {
+            if middleView.countView.count > 0 {
+                middleView.countView.count -= 1
+            }
+        }
+    }
+    
+    func didSlideSlider(_ slider: UISlider) {
+        middleView.countView.count = Int(slider.value * 100)
+    }
+    
+    
 }
