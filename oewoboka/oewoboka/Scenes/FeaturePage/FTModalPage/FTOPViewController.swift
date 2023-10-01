@@ -49,7 +49,6 @@ private extension FTOPViewController {
         setUpTopView()
         setUpBottomView()
         setUpMiddleView()
-        setUpAddTarget()
     }
     
     func setUpTopView() {
@@ -131,17 +130,19 @@ extension FTOPViewController: rangeButtonDelegate {
 extension FTOPViewController: CountDelegate {
     func didTappedCountButton(_ button: UIButton) {
         if button == middleView.countView.plusButton {
-            middleView.countView.count += 1
+            viewModel.count += 1
         } else {
-            if middleView.countView.count > 0 {
-                middleView.countView.count -= 1
+            if viewModel.count > 0 {
+                viewModel.count -= 1
+                print(viewModel.count)
             }
         }
+        middleView.countView.viewUpdate()
     }
     
     func didSlideSlider(_ slider: UISlider) {
-        middleView.countView.count = Int(slider.value * 100)
+        viewModel.count = Int(slider.value * 100)
+        middleView.countView.viewUpdate()
+        print(viewModel.count)
     }
-    
-    
 }

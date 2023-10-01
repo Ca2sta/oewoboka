@@ -33,7 +33,7 @@ final class FTModalMiddleView: UIView {
     
     lazy var countView = QuizCountView(viewModel: viewModel)
     
-    private var viewModel = FTOPViewModel()
+    private var viewModel: FTOPViewModel
     
     init(viewModel: FTOPViewModel) {
         self.viewModel = viewModel

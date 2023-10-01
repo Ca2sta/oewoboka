@@ -10,6 +10,9 @@ import UIKit
 
 final class FTOPViewModel {
     
+    init() {
+        print("viewModel init")
+    }
     // MARK: - RangeView
     let rangeViewTitle = "문제 범위"
     let rangeViewDescription = "여러 단어장을 선택할 수 있어요"
@@ -30,8 +33,15 @@ final class FTOPViewModel {
     let rangeBTRightImage = UIImage(systemName: "person")
 
     // MARK: - QuizCountView
+    
+    var countViewUpdate : () -> Void = { }
     let countViewTitle = "문제 갯수 제한"
     let imageConfig = UIImage.SymbolConfiguration(pointSize: Constant.screenHeight * 0.03)
+    var count = 10 {
+        didSet {
+            countViewUpdate
+        }
+    }
     lazy var countViewPlusBTImage = UIImage(
         systemName: "plus.circle", withConfiguration: self.imageConfig
     )

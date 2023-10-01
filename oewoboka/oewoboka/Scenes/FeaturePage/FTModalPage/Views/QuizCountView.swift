@@ -9,8 +9,8 @@ import UIKit
 import SnapKit
 
 final class QuizCountView: UIView {
-
-
+    
+    
     lazy var title: UILabel = {
         let label = UILabel()
         label.font = Typography.body1.font
@@ -49,28 +49,22 @@ final class QuizCountView: UIView {
         let label = UILabel()
         label.font = Typography.body1.font
         label.textColor = .systemPink
-        label.text = "\(count)개"
+        label.text = "\(viewModel.count)개"
         label.textAlignment = .center
         return label
     }()
     
     lazy var sliderView: UISlider = {
         let slider = UISlider()
-        slider.value = (Float(count) / 100)
+        slider.value = (Float(viewModel.count) / 100)
         slider.thumbTintColor = .systemPink
         slider.minimumTrackTintColor = .systemPink
         return slider
     }()
     
-    var count = 10 {
-        didSet {
-            countLabel.text = "\(count)개"
-            sliderView.value = (Float(count) / 100)
-        }
-    }
     weak var delegate: CountDelegate?
     
-    private var viewModel = FTOPViewModel()
+    private var viewModel: FTOPViewModel
     
     init(viewModel: FTOPViewModel) {
         self.viewModel = viewModel
@@ -80,6 +74,13 @@ final class QuizCountView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func viewUpdate() {
+        
+        
+        self.countLabel.text = "\(viewModel.count)개"
+        self.sliderView.value = (Float(viewModel.count) / 100)
     }
     
 }
@@ -145,13 +146,13 @@ private extension QuizCountView {
 
 private extension QuizCountView {
     // MARK: - ButtonTappedMethod
-
+    
     @objc func didTappedCountButton(_ button: UIButton) {
-        didTappedCountButton(button)
+        delegate?.didTappedCountButton(button)
     }
     
     @objc func didSlideSlider(_ slider: UISlider) {
-        didSlideSlider(slider)
+        delegate?.didSlideSlider(slider)
     }
 }
 
