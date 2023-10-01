@@ -34,7 +34,7 @@
 		084C45F12AC1A9CB002999DF /* FeatureCellModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureCellModels.swift; sourceTree = "<group>"; };
 		084C45F42AC1A9FA002999DF /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		086E10992AC96A3A00AC7F69 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
-		08BF71192AC87B2900ADBDDA /* NaverDictionaryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NaverDictionaryManager.swift; path = oewoboka/Scenes/FeaturePage/NaverDictionaryManager.swift; sourceTree = SOURCE_ROOT; };
+		08BF71192AC87B2900ADBDDA /* NaverDictionaryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NaverDictionaryManager.swift; path = oewoboka/Manager/NaverDictionaryManager.swift; sourceTree = SOURCE_ROOT; };
 		18BF66892AC208B300C53C07 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		18BF668C2AC2097400C53C07 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		18E0D1ED2AC1305D005DDA6F /* oewoboka.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = oewoboka.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +80,14 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		086E109B2AC96C2C00AC7F69 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				08BF71192AC87B2900ADBDDA /* NaverDictionaryManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		18BF668B2AC208F500C53C07 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +118,7 @@
 				18BF668B2AC208F500C53C07 /* View */,
 				084C45F32AC1A9E2002999DF /* Helper */,
 				18E0D20B2AC13237005DDA6F /* Resource */,
+				086E109B2AC96C2C00AC7F69 /* Manager */,
 				18E0D20A2AC13232005DDA6F /* Model */,
 				18E0D2072AC131B9005DDA6F /* Scenes */,
 				18E0D1FB2AC13061005DDA6F /* LaunchScreen.storyboard */,
@@ -152,7 +161,6 @@
 		18E0D20A2AC13232005DDA6F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				08BF71192AC87B2900ADBDDA /* NaverDictionaryManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
