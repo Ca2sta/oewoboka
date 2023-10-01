@@ -41,6 +41,8 @@ struct NaverDictionaryManager {
         var requestURL = URLRequest(url: url)
         requestURL.httpMethod = "POST"
         requestURL.addValue("application/x-www-form-urlencoded; charset=UTF-8", forHTTPHeaderField: "Content-Type")
+        requestURL.addValue(Client.id.getClient, forHTTPHeaderField: "X-Naver-Client-Id")
+        requestURL.addValue(Client.secret.getClient, forHTTPHeaderField: "X-Naver-Client-Secret")
         
         
         let task = URLSession.shared.dataTask(with: requestURL) { (data, response, error) in
