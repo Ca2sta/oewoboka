@@ -11,7 +11,6 @@
 		084C45ED2AC1943E002999DF /* FeatureCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C45EC2AC1943E002999DF /* FeatureCollectionViewCell.swift */; };
 		084C45F22AC1A9CB002999DF /* FeatureCellModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C45F12AC1A9CB002999DF /* FeatureCellModels.swift */; };
 		084C45F52AC1A9FA002999DF /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C45F42AC1A9FA002999DF /* Constant.swift */; };
-		086E109A2AC96A3A00AC7F69 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086E10992AC96A3A00AC7F69 /* Client.swift */; };
 		08BF711A2AC87B2900ADBDDA /* NaverDictionaryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BF71192AC87B2900ADBDDA /* NaverDictionaryManager.swift */; };
 		18BF668A2AC208B300C53C07 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BF66892AC208B300C53C07 /* Typography.swift */; };
 		18BF668D2AC2097400C53C07 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BF668C2AC2097400C53C07 /* DefaultButton.swift */; };
@@ -33,7 +32,6 @@
 		084C45EC2AC1943E002999DF /* FeatureCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureCollectionViewCell.swift; sourceTree = "<group>"; };
 		084C45F12AC1A9CB002999DF /* FeatureCellModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureCellModels.swift; sourceTree = "<group>"; };
 		084C45F42AC1A9FA002999DF /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
-		086E10992AC96A3A00AC7F69 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		08BF71192AC87B2900ADBDDA /* NaverDictionaryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NaverDictionaryManager.swift; path = oewoboka/Manager/NaverDictionaryManager.swift; sourceTree = SOURCE_ROOT; };
 		18BF66892AC208B300C53C07 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		18BF668C2AC2097400C53C07 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
@@ -123,7 +121,6 @@
 				18E0D2072AC131B9005DDA6F /* Scenes */,
 				18E0D1FB2AC13061005DDA6F /* LaunchScreen.storyboard */,
 				18E0D1FE2AC13061005DDA6F /* Info.plist */,
-				086E10992AC96A3A00AC7F69 /* Client.swift */,
 			);
 			path = oewoboka;
 			sourceTree = "<group>";
@@ -291,7 +288,6 @@
 				084C45EB2AC1934D002999DF /* FeatureViewModel.swift in Sources */,
 				084C45F22AC1A9CB002999DF /* FeatureCellModels.swift in Sources */,
 				18E0D20D2AC13264005DDA6F /* AddVocaViewController.swift in Sources */,
-				086E109A2AC96A3A00AC7F69 /* Client.swift in Sources */,
 				18E0D2192AC133AD005DDA6F /* VocaListViewController.swift in Sources */,
 				18BF668A2AC208B300C53C07 /* Typography.swift in Sources */,
 				18E0D2132AC13388005DDA6F /* QuizViewController.swift in Sources */,
