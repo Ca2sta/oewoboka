@@ -10,17 +10,13 @@ import SnapKit
 
 final class FTSettingTypeCell: UICollectionViewCell {
     
-    static let identifier = "FTSettingTypeCell"
-    
-    var selectToggle = false
-    
-    let title: UILabel = {
+    private let title: UILabel = {
         let label = UILabel()
         label.font = Typography.body1.font
         return label
     }()
     
-    let imageView: UIImageView = {
+    lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "circle")
         view.tintColor = .systemGray
@@ -68,5 +64,11 @@ private extension FTSettingTypeCell {
 extension FTSettingTypeCell {
     func bind(title: String) {
         self.title.text = title
+    }
+}
+
+extension FTSettingTypeCell: CollectionViewIdentifier {
+    static var identifier: String {
+        String(describing: type(of: self))
     }
 }

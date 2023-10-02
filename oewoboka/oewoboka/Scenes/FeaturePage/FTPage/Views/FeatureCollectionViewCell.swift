@@ -10,8 +10,6 @@ import SnapKit
 
 final class FeatureCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "FeatureCollectionViewCell"
-    
     lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.tintColor = .systemGray
@@ -106,4 +104,17 @@ extension FeatureCollectionViewCell {
         descriptionLabel.textColor = color
         imageView.tintColor = color
     }
+}
+
+extension FeatureCollectionViewCell: CollectionViewIdentifier {
+    static var identifier: String {
+        get {
+            String(describing: type(of: self))
+        }
+    }
+}
+
+
+protocol CollectionViewIdentifier: UICollectionViewCell {
+    static var identifier: String { get }
 }
