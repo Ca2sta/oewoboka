@@ -10,6 +10,7 @@ import SnapKit
 
 class VocaViewController: UIViewController {
     let vocaTableView = UITableView()
+    let vocaSearchBar = UISearchBar()
     let allLabel : UILabel = {
         let label = UILabel()
         label.text = "전체 단어수: 0"
@@ -30,6 +31,8 @@ class VocaViewController: UIViewController {
         vocaTableView.dataSource = self
         vocaTableView.delegate = self
         vocaTableView.register(VocaTableViewCell.self, forCellReuseIdentifier: "VocaCell")
+        navigationItem.titleView = vocaSearchBar
+        vocaSearchBar.delegate = self
 
     }
     func setUpUI() {
@@ -57,8 +60,19 @@ class VocaViewController: UIViewController {
         print("testPlusButton")
         vocaTableView.reloadData()
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let searchText = searchBar.text {
+
+            print("검색어: \(searchText)")
+        }
+        
+        vocaTableView.reloadData()
+        
+    }
+    
 }
-extension VocaViewController: UITableViewDelegate,UITableViewDataSource,UISearchControllerDelegate {
+extension VocaViewController: UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         

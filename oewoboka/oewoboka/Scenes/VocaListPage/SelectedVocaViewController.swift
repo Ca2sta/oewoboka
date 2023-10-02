@@ -35,7 +35,7 @@ class SelectedVocaViewController: UIViewController {
     }()
     let bottomSheetView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemGray
+        view.backgroundColor = .systemGray3
         return view
     }()
     let isCompleteButton: UIButton = {
@@ -56,14 +56,16 @@ class SelectedVocaViewController: UIViewController {
     }()
     let hideButton: UIButton = {
         let button = UIButton(type: .system)
+        button.tintColor = .black
         return button
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
         isCompleteButton.setImage(UIImage(systemName: "text.justify"), for: .normal)
-        hideButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        hideButton.setImage(UIImage(systemName: "eye"), for: .normal)
         hideButton.addTarget(self, action: #selector(hideButtonTapped), for: .touchUpInside)
+        
         leftButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         rightButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         firstButton.setImage(UIImage(systemName: "chevron.left.2"), for: .normal)
@@ -129,5 +131,11 @@ class SelectedVocaViewController: UIViewController {
     @objc func hideButtonTapped() {
         vocaLabel.isHidden = !vocaLabel.isHidden
         partLabel.isHidden = !partLabel.isHidden
+        if vocaLabel.isHidden {
+            hideButton.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
+            
+        } else {
+            hideButton.setImage(UIImage(systemName: "eye"), for: .normal)
+        }
     }
 }

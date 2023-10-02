@@ -11,7 +11,6 @@ import SnapKit
 
 class VocaListTableViewCell: UITableViewCell {
     static let identifier = "ListCell"
-    
     let setButton: UIButton = {
         let button = UIButton(type: .system)
         return button
@@ -38,6 +37,7 @@ class VocaListTableViewCell: UITableViewCell {
         label.backgroundColor = .purple
         return label
     }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUpUI()
@@ -104,7 +104,31 @@ class VocaListTableViewCell: UITableViewCell {
     }
     
     @objc func setButtonTapped() {
-        print("test")
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        let editAction = UIAlertAction(title: "수정", style: .default) { _ in
+            print("수정을 선택했습니다.")
+        }
+
+        let copyAction = UIAlertAction(title: "복사", style: .default) { _ in
+            print("복사를 선택했습니다.")
+        }
+
+        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
+
+            print("삭제를 선택했습니다.")
+        }
+
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+
+        alertController.addAction(editAction)
+        alertController.addAction(copyAction)
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+
+        if let viewController = UIApplication.shared.keyWindow?.rootViewController {
+            viewController.present(alertController, animated: true, completion: nil)
+        }
     }
 
 }

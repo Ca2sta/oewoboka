@@ -7,14 +7,20 @@ import SnapKit
 
 class VocaTableViewCell: UITableViewCell {
     static let identifier = "VocaCell"
-    
+    var buttonState = 1
     let dateLabel : UILabel = {
         let label = UILabel()
         label.font = Typography.body2.font
         return label
     }()
     let isCompleteButton: UIButton = {
-        let button = UIButton(type: .system)
+        let button = UIButton()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 300, weight: .light)
+        let image = UIImage(systemName: "checkmark.square", withConfiguration: imageConfig)
+
+        button.setImage(image, for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+
         return button
     }()
     let vocaLabel : UILabel = {
@@ -41,7 +47,7 @@ class VocaTableViewCell: UITableViewCell {
         setUpUI()
         
         isCompleteButton.addTarget(self, action: #selector(isCompleteButtonTapped), for: .touchUpInside)
-        isCompleteButton.setImage(UIImage(systemName: "text.justify"), for: .normal)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -63,6 +69,7 @@ class VocaTableViewCell: UITableViewCell {
         isCompleteButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.right.equalToSuperview().inset(10)
+            make.height.width.equalTo(45)
         }
         vocaLabel.snp.makeConstraints { make in
             make.bottom.equalTo(partLabel.snp.top).offset(-10)
@@ -84,6 +91,26 @@ class VocaTableViewCell: UITableViewCell {
         }
     }
     @objc func isCompleteButtonTapped() {
-        print("test")
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 300, weight: .light)
+        switch buttonState {
+        case 1:
+            let image = UIImage(systemName: "checkmark.square.fill", withConfiguration: imageConfig)
+            isCompleteButton.setImage(image, for: .normal)
+
+            buttonState = 2
+        case 2:
+      
+            let image = UIImage(systemName: "xmark.square.fill", withConfiguration: imageConfig)
+            isCompleteButton.setImage(image, for: .normal)
+
+            buttonState = 3
+        case 3:
+            let image = UIImage(systemName: "checkmark.square", withConfiguration: imageConfig)
+            isCompleteButton.setImage(image, for: .normal)
+
+            buttonState = 1
+        default:
+            break
+        }
     }
 }
