@@ -15,16 +15,18 @@ final class QuizSettingView: UIView {
         case type
     }
 
-    private let titleLabel: UILabel = {
+    lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = Typography.body1.font
+        label.text = type == .range ? viewModel.rangeViewTitle : viewModel.typeViewTitle
         return label
     }()
     
-    private let descriptionLabel: UILabel = {
+    lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = Typography.body2.font
         label.textColor = .systemGray
+        label.text = type == .range ? viewModel.rangeViewDescription : viewModel.typeViewDescription
         return label
     }()
     
@@ -57,16 +59,10 @@ final class QuizSettingView: UIView {
     
     weak var buttonDelegate: ViewHasButton?
     
-    init(title:String,
-         description:String,
-         type: QuizSettingType,
-         viewModel: FTOPViewModel
-    ) {
+    init(type: QuizSettingType, viewModel: FTOPViewModel ) {
         self.viewModel = viewModel
         self.type = type
         super.init(frame: CGRect.zero)
-        self.titleLabel.text = title
-        self.descriptionLabel.text = description
         setUp()
     }
     
