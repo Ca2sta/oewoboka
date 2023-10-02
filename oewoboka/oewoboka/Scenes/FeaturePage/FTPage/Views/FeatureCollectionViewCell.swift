@@ -16,6 +16,7 @@ final class FeatureCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
+    
     private let titleLabel: UILabel = {
         let view = UILabel()
         view.font = Typography.title2Medium.font

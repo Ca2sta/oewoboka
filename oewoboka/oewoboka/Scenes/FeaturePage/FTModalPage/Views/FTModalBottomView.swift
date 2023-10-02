@@ -24,6 +24,7 @@ final class FTModalBottomView: UIView {
         return view
     }()
     
+    
     private var viewModel: FTOPViewModel
     
     init(viewModel: FTOPViewModel) {

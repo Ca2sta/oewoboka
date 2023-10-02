@@ -61,6 +61,7 @@ private extension FTSettingTypeCell {
     }
 }
 
+
 extension FTSettingTypeCell {
     func bind(title: String) {
         self.title.text = title

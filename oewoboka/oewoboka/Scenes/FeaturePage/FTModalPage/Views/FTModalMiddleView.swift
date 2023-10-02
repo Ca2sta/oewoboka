@@ -15,6 +15,7 @@ final class FTModalMiddleView: UIView {
         return view
     }()
     
+    
     private let contentView = UIView()
     
     lazy var rangeView = QuizSettingView(type: .range, viewModel: viewModel)

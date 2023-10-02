@@ -41,6 +41,7 @@ final class FTOPViewModel {
             countViewUpdate()
         }
     }
+    
     lazy var countViewPlusBTImage = UIImage(
         systemName: "plus.circle", withConfiguration: self.imageConfig
     )

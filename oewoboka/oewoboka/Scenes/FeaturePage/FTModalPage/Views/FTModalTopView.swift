@@ -17,6 +17,7 @@ final class FTModalTopView: UIView {
         return view
     }()
     
+    
     let backButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
