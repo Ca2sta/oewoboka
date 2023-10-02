@@ -55,7 +55,7 @@ final class QuizSettingView: UIView {
     
     private let viewModel: FTOPViewModel
     
-    weak var rangeDelegate: rangeButtonDelegate?
+    weak var buttonDelegate: ViewHasButton?
     
     init(title:String,
          description:String,
@@ -115,7 +115,7 @@ private extension QuizSettingView {
             make.left.right.equalTo(descriptionLabel)
             make.height.equalTo(Constant.screenHeight * 0.05)
         }
-        rangeButton.addTarget(self, action: #selector(didTappedRangeButton), for: .touchUpInside)
+        rangeButton.addTarget(self, action: #selector(didTappedRangeButton(_:)), for: .touchUpInside)
     }
     
     func setUpRangeDivider() {
@@ -147,11 +147,7 @@ private extension QuizSettingView {
 }
 
 private extension QuizSettingView {
-    @objc func didTappedRangeButton() {
-        rangeDelegate?.didTappedRangeButton()
+    @objc func didTappedRangeButton(_ button: UIButton) {
+        buttonDelegate?.didTappedButton(button: button)
     }
-}
-
-protocol rangeButtonDelegate: FTOPViewController {
-    func didTappedRangeButton()
 }

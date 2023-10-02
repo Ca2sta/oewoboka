@@ -62,7 +62,9 @@ final class QuizCountView: UIView {
         return slider
     }()
     
-    weak var delegate: CountDelegate?
+    weak var buttonDelegate: ViewHasButton?
+    
+    weak var sliderDelegate: ViewHasSlider?
     
     private var viewModel: FTOPViewModel
     
@@ -150,15 +152,14 @@ private extension QuizCountView {
     // MARK: - ButtonTappedMethod
     
     @objc func didTappedCountButton(_ button: UIButton) {
-        delegate?.didTappedCountButton(button)
+        buttonDelegate?.didTappedButton(button: button)
     }
     
     @objc func didSlideSlider(_ slider: UISlider) {
-        delegate?.didSlideSlider(slider)
+        sliderDelegate?.didSlideSlider(slider)
     }
 }
 
-protocol CountDelegate: FTOPViewController {
-    func didTappedCountButton(_ button: UIButton)
+protocol ViewHasSlider: UIViewController {
     func didSlideSlider(_ slider: UISlider)
 }

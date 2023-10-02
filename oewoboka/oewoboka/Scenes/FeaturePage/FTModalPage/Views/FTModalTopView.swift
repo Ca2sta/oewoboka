@@ -32,7 +32,7 @@ final class FTModalTopView: UIView {
     
     private let viewModel: FTOPViewModel
     
-    weak var delegate: TopViewDelegate?
+    weak var buttonDelegate: ViewHasButton?
     
     init(viewModel: FTOPViewModel) {
         self.viewModel = viewModel
@@ -68,7 +68,7 @@ private extension FTModalTopView {
             make.right.equalToSuperview().inset(Constant.defalutPadding)
             make.width.height.equalTo(titleLabel.snp.height)
         }
-        backButton.addTarget(self, action: #selector(didTappedBackButton), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(didTappedBackButton(_:)), for: .touchUpInside)
     }
     
     func setUpDivider() {
@@ -84,12 +84,12 @@ private extension FTModalTopView {
 
 private extension FTModalTopView {
     // MARK: - ButtonTappedMethod
-    @objc func didTappedBackButton() {
-        delegate?.didTappedBackButton()
+    @objc func didTappedBackButton(_ button: UIButton) {
+        buttonDelegate?.didTappedButton(button: button)
     }
 }
 
-protocol TopViewDelegate: FTOPViewController {
-    func didTappedBackButton()
+protocol ViewHasButton: UIViewController {
+    func didTappedButton(button: UIButton)
 }
 

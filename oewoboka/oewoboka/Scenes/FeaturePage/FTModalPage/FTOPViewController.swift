@@ -56,7 +56,7 @@ private extension FTOPViewController {
         topView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
         }
-        topView.delegate = self
+        topView.buttonDelegate = self
     }
     
     func setUpBottomView() {
@@ -76,8 +76,9 @@ private extension FTOPViewController {
         }
         middleView.typeView.typeCollectionView.delegate = self
         middleView.typeView.typeCollectionView.dataSource = self
-        middleView.rangeView.rangeDelegate = self
-        middleView.countView.delegate = self
+        middleView.rangeView.buttonDelegate = self
+        middleView.countView.buttonDelegate = self
+        middleView.countView.sliderDelegate = self
         middleView.typeView.typeCollectionView.register(FTSettingTypeCell.self, forCellWithReuseIdentifier: FTSettingTypeCell.identifier)
     }
     
@@ -116,34 +117,27 @@ extension FTOPViewController: UIViewControllerTransitioningDelegate {
 
 // MARK: - Custom Delegate extension
 
-extension FTOPViewController: TopViewDelegate {
-    
-    func didTappedBackButton() {
-        self.dismiss(animated: true)
-    }
-}
-
-extension FTOPViewController: rangeButtonDelegate {
-    
-    func didTappedRangeButton() {
-        let yourVC = VocaListSelectedController(viewModel: self.viewModel)
-        yourVC.modalPresentationStyle = .custom
-        yourVC.transitioningDelegate = self
-        self.present(yourVC, animated: true, completion: nil)
-    }
-}
-
-extension FTOPViewController: CountDelegate {
-    
-    func didTappedCountButton(_ button: UIButton) {
-        if button == middleView.countView.plusButton {
+extension FTOPViewController: ViewHasButton {
+    func didTappedButton(button: UIButton) {
+        switch button {
+        case topView.backButton:
+            self.dismiss(animated: true)
+        case middleView.rangeView.rangeButton:
+            let yourVC = VocaListSelectedController(viewModel: self.viewModel)
+            yourVC.modalPresentationStyle = .custom
+            yourVC.transitioningDelegate = self
+            self.present(yourVC, animated: true, completion: nil)
+        case middleView.countView.plusButton:
             viewModel.count += 1
-        } else {
-            if viewModel.count > 0 {
-                viewModel.count -= 1
-            }
+        case middleView.countView.minusButton:
+            if viewModel.count > 0 { viewModel.count -= 1 }
+        default:
+            print("Button not registered")
         }
     }
+}
+
+extension FTOPViewController: ViewHasSlider {
     
     func didSlideSlider(_ slider: UISlider) {
         viewModel.count = Int(slider.value * 100)
