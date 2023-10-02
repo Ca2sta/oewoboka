@@ -42,7 +42,7 @@
 		18E0D2232AC181CB005DDA6F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D2222AC181CB005DDA6F /* CardView.swift */; };
 		18E0D2252AC18B90005DDA6F /* QuizControlStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D2242AC18B90005DDA6F /* QuizControlStackView.swift */; };
 		18E0D2282AC1930F005DDA6F /* QuizCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D2272AC1930F005DDA6F /* QuizCompleteViewController.swift */; };
-		18E0D22B2AC19344005DDA6F /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D22A2AC19344005DDA6F /* ResultView.swift */; };
+		18E0D22B2AC19344005DDA6F /* CircleProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D22A2AC19344005DDA6F /* CircleProgressBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,7 +82,7 @@
 		18E0D2222AC181CB005DDA6F /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		18E0D2242AC18B90005DDA6F /* QuizControlStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizControlStackView.swift; sourceTree = "<group>"; };
 		18E0D2272AC1930F005DDA6F /* QuizCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCompleteViewController.swift; sourceTree = "<group>"; };
-		18E0D22A2AC19344005DDA6F /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
+		18E0D22A2AC19344005DDA6F /* CircleProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgressBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +134,7 @@
 		18BF668B2AC208F500C53C07 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				18E0D22A2AC19344005DDA6F /* CircleProgressBar.swift */,
 				18BF668C2AC2097400C53C07 /* DefaultButton.swift */,
 			);
 			path = View;
@@ -318,7 +319,6 @@
 		18E0D2292AC1932F005DDA6F /* View */ = {
 			isa = PBXGroup;
 			children = (
-				18E0D22A2AC19344005DDA6F /* ResultView.swift */,
 				18CE9BE62AC2CA9900D39403 /* FeedBackStackView.swift */,
 			);
 			path = View;
@@ -416,7 +416,7 @@
 				18CE95B22AC6D84900CAA133 /* BottomSheetPresentationController.swift in Sources */,
 				18BF668A2AC208B300C53C07 /* Typography.swift in Sources */,
 				18E0D2132AC13388005DDA6F /* QuizViewController.swift in Sources */,
-				18E0D22B2AC19344005DDA6F /* ResultView.swift in Sources */,
+				18E0D22B2AC19344005DDA6F /* CircleProgressBar.swift in Sources */,
 				18E0D21E2AC17E94005DDA6F /* Vocabulary.swift in Sources */,
 				18E0D21B2AC133FE005DDA6F /* AddVocabularyViewController.swift in Sources */,
 				18E0D1F52AC1305D005DDA6F /* TabBarController.swift in Sources */,

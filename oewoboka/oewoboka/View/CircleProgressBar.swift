@@ -7,11 +7,15 @@
 
 import UIKit
 
-final class ResultView: UIView {
+final class CircleProgressBar: UIView {
     
-    private let correctRateLabel: UILabel = {
+    enum ResultType {
+        case number // 숫자와 밑에 count가 보이는 형태의 ResultView (예:30)
+        case percent // 숫자와 %가 같이 보이는 형태의 ResultView (예:30%)
+    }
+    let correctRateLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 40, weight: .bold)
+        label.font = Typography.title1.font
         label.textColor = .black
         return label
     }()
@@ -21,23 +25,43 @@ final class ResultView: UIView {
         label.textColor = .black
         return label
     }()
+    private let type: ResultType
     private var count: Int = 0
     private let endValue: Double
     private let startValue: Double = 0
-    private let duration: CGFloat = 1
     private let quizRate: CGFloat
     private var displayLink: CADisplayLink?
     private var animationStartDate: Date? = nil
+    
+    // 애니메이션 시간
+    var duration: CGFloat = 1
+    // 테두리 굵기
+    var resultViewLineWidth: CGFloat = 3
+    // 에니메이션이 되는 라인의 굵기
+    var progressBarLineWidth: CGFloat = 8
+    var lineColor: UIColor = UIColor.red
+    var fillColor: CGColor = UIColor.clear.cgColor
 
 
-    init(correctRate: CGFloat, allWordCount: Int, isMemorizeCount: Int) {
+    init(correctRate: CGFloat, type: ResultType) {
         quizRate = correctRate
         endValue = correctRate * 100
         
+        self.type = type
         self.correctRateLabel.text = "0"
-        self.allCountLabel.text = "\(isMemorizeCount) / \(allWordCount)"
+        if type == .percent {
+            self.correctRateLabel.text? += "%"
+            allCountLabel.isHidden = true
+        }
         
         super.init(frame: .zero)
+        
+        setup()
+    }
+    
+    convenience init(correctRate: CGFloat, type: ResultType, allWordCount: Int, isMemorizeCount: Int) {
+        self.init(correctRate: correctRate, type: type)
+        self.allCountLabel.text = "\(isMemorizeCount) / \(allWordCount)"
         
         setup()
     }
@@ -48,7 +72,7 @@ final class ResultView: UIView {
     
 }
 
-private extension ResultView {
+private extension CircleProgressBar {
     func setup() {
         addViews()
         autoLayoutSetup()
@@ -59,19 +83,25 @@ private extension ResultView {
     }
     
     func autoLayoutSetup() {
-        correctRateLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(snp.centerY)
-        }
-        allCountLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(correctRateLabel.snp.bottom).offset(12)
+        if type == .number {
+            correctRateLabel.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.bottom.equalTo(snp.centerY)
+            }
+            allCountLabel.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(correctRateLabel.snp.bottom).offset(12)
+            }
+        } else {
+            correctRateLabel.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+            }
         }
     }
 }
 
 //MARK: Animation
-extension ResultView {
+extension CircleProgressBar {
     
     func progressBarSetupAnimation() {
         layoutIfNeeded()
@@ -79,9 +109,9 @@ extension ResultView {
         let bezierPathTest = UIBezierPath(ovalIn: bounds)
         let progressBar = CAShapeLayer()
         progressBar.path = bezierPathTest.cgPath
-        progressBar.fillColor = UIColor.clear.cgColor
-        progressBar.strokeColor = UIColor.red.withAlphaComponent(0.3).cgColor
-        progressBar.lineWidth = 3
+        progressBar.fillColor = fillColor
+        progressBar.strokeColor = lineColor.withAlphaComponent(0.3).cgColor
+        progressBar.lineWidth = resultViewLineWidth
         layer.addSublayer(progressBar)
         
         let arcCenter = CGPoint(x: bounds.width/2, y: bounds.height/2)
@@ -89,9 +119,10 @@ extension ResultView {
         let calayer = CAShapeLayer()
         let bezierPath = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: -0.5 * CGFloat.pi, endAngle: 1.5 * CGFloat.pi, clockwise: true)
         calayer.path = bezierPath.cgPath
-        calayer.strokeColor = UIColor.red.cgColor
-        calayer.fillColor = UIColor.clear.cgColor
-        calayer.lineWidth = 8
+        calayer.strokeColor = lineColor.cgColor
+        calayer.fillColor = fillColor
+        
+        calayer.lineWidth = progressBarLineWidth
         calayer.lineCap = .round
         
         let caAnimation = CABasicAnimation(keyPath: "strokeEnd")
@@ -126,12 +157,12 @@ extension ResultView {
         
         if time > duration {
             stopDisplayLink()
-            correctRateLabel.text = "\(Int(endValue))"
+            correctRateLabel.text = type == .number ? "\(Int(endValue))" : "\(Int(endValue))%"
             return
         }
         let percentage = time / duration
         let value = percentage * (endValue - startValue)
         count = Int(value)
-        correctRateLabel.text = "\(count)"
+        correctRateLabel.text = type == .number ? "\(count)" : "\(count)%"
     }
 }
