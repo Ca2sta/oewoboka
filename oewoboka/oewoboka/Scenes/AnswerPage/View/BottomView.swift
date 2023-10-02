@@ -21,6 +21,8 @@ class BottomView: UIStackView {
         button.text = "틀린 단어를 마크"
         return button
     }()
+    var unBookMarkHandler: (() -> Void)?
+    var bookMarkHandler: (() -> Void)?
     private let topLineView: UIView = {
         let view = UIView()
         view.backgroundColor = .gray
@@ -42,6 +44,7 @@ private extension BottomView {
     func setup() {
         stackViewInit()
         addViews()
+        buttonSetup()
         autoLayoutSetup()
     }
     
@@ -58,6 +61,19 @@ private extension BottomView {
         addArrangedSubview(unBookMarkButton)
         addArrangedSubview(bookMarkButton)
         addSubview(topLineView)
+    }
+    
+    func buttonSetup() {
+        unBookMarkButton.addTarget(self, action: #selector(unBookMarkButtonClick), for: .touchUpInside)
+        bookMarkButton.addTarget(self, action: #selector(bookMarkButtonClick), for: .touchUpInside)
+    }
+    
+    @objc func unBookMarkButtonClick() {
+        unBookMarkHandler?()
+    }
+    
+    @objc func bookMarkButtonClick() {
+        bookMarkHandler?()
     }
     
     func autoLayoutSetup() {

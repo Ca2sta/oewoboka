@@ -13,4 +13,5 @@ struct Word {
     let english: String
     let korea: String
     var isMemorize: Bool
+    var isBookmark: Bool
 }

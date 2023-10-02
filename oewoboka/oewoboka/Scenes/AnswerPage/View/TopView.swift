@@ -30,6 +30,8 @@ class TopView: UIStackView {
         return view
     }()
     
+    var closeButtonClickHandler: (() -> Void)?
+    
     init(title: String) {
         super.init(frame: .zero)
         titleLabel.text = title
@@ -46,6 +48,7 @@ private extension TopView {
     func setup() {
         stackViewInit()
         addViews()
+        buttonSetup()
         autoLayoutSetup()
     }
     
@@ -60,6 +63,14 @@ private extension TopView {
         addArrangedSubview(titleLabel)
         addArrangedSubview(closeButton)
         addSubview(bottomLineView)
+    }
+    
+    func buttonSetup() {
+        closeButton.addTarget(self, action: #selector(closeButtonClick), for: .touchUpInside)
+    }
+    
+    @objc func closeButtonClick() {
+        closeButtonClickHandler?()
     }
     
     func autoLayoutSetup() {

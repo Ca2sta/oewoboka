@@ -14,7 +14,7 @@ class AnswerViewController: BottomSheetViewController {
     private let answerTableView: UITableView = UITableView()
     private let answerBottomView: BottomView = BottomView()
     
-    let words: [Word]
+    var words: [Word]
     
     init(words: [Word]) {
         self.words = words
@@ -38,6 +38,8 @@ private extension AnswerViewController {
         mainViewSetup()
         addView()
         tableViewSetup()
+        topViewSetup()
+        bottomViewSetup()
         autoLayoutSetup()
     }
     
@@ -59,6 +61,34 @@ private extension AnswerViewController {
         answerTableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
+    func topViewSetup() {
+        answerTopView.closeButtonClickHandler = { [weak self] in
+            self?.dismiss(animated: true)
+        }
+    }
+    
+    func bottomViewSetup() {
+        let answerWords = words.filter { $0.isMemorize }
+        answerBottomView.unBookMarkHandler = { [weak self] in
+            guard let self else { return }
+            for word in answerWords {
+                guard let wordIndex = words.firstIndex(where: { $0.id == word.id }) else { continue }
+                self.words[wordIndex].isBookmark = false
+            }
+            self.answerTableView.reloadData()
+        }
+        
+        let noAnswerWords = words.filter { $0.isMemorize == false }
+        answerBottomView.bookMarkHandler = { [weak self] in
+            guard let self else { return }
+            for word in noAnswerWords {
+                guard let wordIndex = words.firstIndex(where: { $0.id == word.id }) else { continue }
+                self.words[wordIndex].isBookmark = true
+            }
+            self.answerTableView.reloadData()
+        }
+    }
+    
     func autoLayoutSetup() {
         let safeArea = view.safeAreaLayoutGuide
         answerTopView.snp.makeConstraints { make in
@@ -73,6 +103,7 @@ private extension AnswerViewController {
             make.left.right.bottom.equalTo(safeArea)
         }
     }
+    
 }
 
 // MARK: TableView
@@ -89,6 +120,11 @@ extension AnswerViewController: UITableViewDelegate, UITableViewDataSource {
         cell.vocabularyTitleLabel.text = word.vocabularyTitle
         cell.englishWordLabel.text = word.english
         cell.koreaWordLabel.text = word.korea
+        cell.bookMarkButton.isSelected = word.isBookmark
+        cell.wordBookmarkUpdate = { [weak self] isSelected in
+            guard let self else { return }
+            self.words[indexPath.row].isBookmark = isSelected
+        }
         return cell
     }
 }

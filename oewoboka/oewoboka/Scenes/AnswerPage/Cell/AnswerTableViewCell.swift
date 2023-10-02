@@ -33,6 +33,7 @@ class AnswerTableViewCell: UITableViewCell {
     let bookMarkButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        button.setImage(UIImage(systemName: "bookmark.fill"), for: .selected)
         button.tintColor = button.isSelected ? .red : .black
         return button
     }()
@@ -56,6 +57,8 @@ class AnswerTableViewCell: UITableViewCell {
         label.textColor = .black
         return label
     }()
+    var wordBookmarkUpdate: ((Bool) -> Void)?
+    
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -72,7 +75,7 @@ class AnswerTableViewCell: UITableViewCell {
 private extension AnswerTableViewCell {
     func setup() {
         addView()
-        topViewSetup()
+        buttonSetup()
         autoLayoutSetup()
     }
     
@@ -86,8 +89,13 @@ private extension AnswerTableViewCell {
         wordStackView.addArrangedSubview(koreaWordLabel)
     }
     
-    func topViewSetup() {
-        
+    func buttonSetup() {
+        bookMarkButton.addTarget(self, action: #selector(bookmarkButtonClick), for: .touchUpInside)
+    }
+    
+    @objc func bookmarkButtonClick() {
+        bookMarkButton.isSelected.toggle()
+        wordBookmarkUpdate?(bookMarkButton.isSelected)
     }
     
     func autoLayoutSetup() {
