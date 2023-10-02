@@ -19,6 +19,7 @@ final class FeatureViewController: UIViewController {
         return view
     }()
     
+    
     lazy var featureCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
