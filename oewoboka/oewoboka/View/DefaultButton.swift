@@ -41,13 +41,14 @@ final class DefaultButton: UIButton {
     }
     
     var verticalPadding: CGFloat = 4
-    var horizontalPadding: CGFloat = 8
+    var horizontalPadding: CGFloat = 12
     var spacing: CGFloat = 8
     
     // MARK: - Initializer
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        imageViewSetup()
         setTitle()
         makeRound()
         makeBorder()
@@ -67,6 +68,9 @@ final class DefaultButton: UIButton {
 // MARK: - InitUI
 extension DefaultButton {
         
+    private func imageViewSetup() {
+        imageView?.contentMode = .scaleAspectFill
+    }
     private func setTitle() {
         titleLabel?.font = Typography.body1.font
         setTitleColor(UIColor.black, for: .normal)
@@ -84,7 +88,7 @@ extension DefaultButton {
         contentEdgeInsets = UIEdgeInsets(top: verticalPadding, left: horizontalPadding, bottom: verticalPadding, right: horizontalPadding)
         switch type {
         case .center:
-            let leftEdgeInset = bounds.width/2 - (titleLabel?.bounds.width ?? 0)
+            let leftEdgeInset = bounds.width/2 - (titleLabel?.bounds.width ?? 0)/2 - (imageView?.bounds.width ?? 0) - horizontalPadding
             titleEdgeInsets.left = leftEdgeInset
         case .left:
             titleEdgeInsets.left = spacing
