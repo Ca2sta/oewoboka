@@ -19,9 +19,13 @@ final class VocaListViewController: UIViewController, UISearchResultsUpdating {
     let vocaSearchController = UISearchController(searchResultsController: nil)
     let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: VocaListViewController.self, action: #selector(addButtonTapped))
     var allVocaLists = [
+        VocaList(name: "단어장 1", description: "Another Voca List"),
+        VocaList(name: "단어장 2", description: "Another Voca List"),
+        VocaList(name: "단어장 3", description: "Another Voca List"),
         VocaList(name: "Voca List 1", description: "This is the first Voca List"),
         VocaList(name: "Voca List 2", description: "Another Voca List"),
-    ]
+        VocaList(name: "Voca List 3", description: "Another Voca List")
+        ]
     var filteredVocaLists = [VocaList]()
     
     override func viewDidLoad() {
@@ -89,7 +93,11 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
 
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        if vocaSearchController.isActive {
+            return filteredVocaLists.count
+        } else {
+            return allVocaLists.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -132,6 +140,8 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
                 return vocaList.name.localizedCaseInsensitiveContains(searchText)
             }
         }
+        
+        filteredVocaLists.sort { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
         
         vocaListTableView.reloadData()
     }
