@@ -33,6 +33,10 @@
 		18E0D2172AC133A2005DDA6F /* FeatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D2162AC133A2005DDA6F /* FeatureViewController.swift */; };
 		18E0D2192AC133AD005DDA6F /* VocaListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D2182AC133AD005DDA6F /* VocaListViewController.swift */; };
 		18E0D21B2AC133FE005DDA6F /* AddVocabularyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D21A2AC133FE005DDA6F /* AddVocabularyViewController.swift */; };
+		9B865E032AC2D72E00E562FA /* VocaListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B865E022AC2D72E00E562FA /* VocaListTableViewCell.swift */; };
+		9B865E052AC2E07900E562FA /* VocaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B865E042AC2E07900E562FA /* VocaViewController.swift */; };
+		9B865E072AC2E14400E562FA /* VocaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B865E062AC2E14400E562FA /* VocaTableViewCell.swift */; };
+		9B865E092AC3C2AD00E562FA /* SelectedVocaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B865E082AC3C2AD00E562FA /* SelectedVocaViewController.swift */; };
 		18E0D21E2AC17E94005DDA6F /* Vocabulary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D21D2AC17E94005DDA6F /* Vocabulary.swift */; };
 		18E0D2202AC17ED7005DDA6F /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D21F2AC17ED7005DDA6F /* Word.swift */; };
 		18E0D2232AC181CB005DDA6F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D2222AC181CB005DDA6F /* CardView.swift */; };
@@ -69,6 +73,10 @@
 		18E0D2162AC133A2005DDA6F /* FeatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureViewController.swift; sourceTree = "<group>"; };
 		18E0D2182AC133AD005DDA6F /* VocaListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaListViewController.swift; sourceTree = "<group>"; };
 		18E0D21A2AC133FE005DDA6F /* AddVocabularyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVocabularyViewController.swift; sourceTree = "<group>"; };
+		9B865E022AC2D72E00E562FA /* VocaListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaListTableViewCell.swift; sourceTree = "<group>"; };
+		9B865E042AC2E07900E562FA /* VocaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaViewController.swift; sourceTree = "<group>"; };
+		9B865E062AC2E14400E562FA /* VocaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaTableViewCell.swift; sourceTree = "<group>"; };
+		9B865E082AC3C2AD00E562FA /* SelectedVocaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedVocaViewController.swift; sourceTree = "<group>"; };
 		18E0D21D2AC17E94005DDA6F /* Vocabulary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vocabulary.swift; sourceTree = "<group>"; };
 		18E0D21F2AC17ED7005DDA6F /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		18E0D2222AC181CB005DDA6F /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
@@ -220,6 +228,10 @@
 			isa = PBXGroup;
 			children = (
 				18E0D2182AC133AD005DDA6F /* VocaListViewController.swift */,
+				9B865E022AC2D72E00E562FA /* VocaListTableViewCell.swift */,
+				9B865E042AC2E07900E562FA /* VocaViewController.swift */,
+				9B865E062AC2E14400E562FA /* VocaTableViewCell.swift */,
+				9B865E082AC3C2AD00E562FA /* SelectedVocaViewController.swift */,
 			);
 			path = VocaListPage;
 			sourceTree = "<group>";
@@ -394,6 +406,8 @@
 				084C45ED2AC1943E002999DF /* FeatureCollectionViewCell.swift in Sources */,
 				18B97AF42AC3C819006C0AAA /* QuizResultType.swift in Sources */,
 				084C45EB2AC1934D002999DF /* FeatureViewModel.swift in Sources */,
+				9B865E032AC2D72E00E562FA /* VocaListTableViewCell.swift in Sources */,
+				9B865E092AC3C2AD00E562FA /* SelectedVocaViewController.swift in Sources */,
 				084C45F22AC1A9CB002999DF /* FeatureCellModels.swift in Sources */,
 				18E0D20D2AC13264005DDA6F /* AddVocaViewController.swift in Sources */,
 				18E0D2192AC133AD005DDA6F /* VocaListViewController.swift in Sources */,
@@ -406,6 +420,8 @@
 				18E0D21E2AC17E94005DDA6F /* Vocabulary.swift in Sources */,
 				18E0D21B2AC133FE005DDA6F /* AddVocabularyViewController.swift in Sources */,
 				18E0D1F52AC1305D005DDA6F /* TabBarController.swift in Sources */,
+				9B865E072AC2E14400E562FA /* VocaTableViewCell.swift in Sources */,
+				9B865E052AC2E07900E562FA /* VocaViewController.swift in Sources */,
 				18E0D2202AC17ED7005DDA6F /* Word.swift in Sources */,
 				18E0D2252AC18B90005DDA6F /* QuizControlStackView.swift in Sources */,
 				18CE95B42AC6DAF400CAA133 /* AnswerViewController.swift in Sources */,
