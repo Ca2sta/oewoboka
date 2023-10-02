@@ -9,8 +9,13 @@ import UIKit
 
 class BottomSheetViewController: UIViewController {
     
-    private var isDismissTouch: Bool = false
+    private var isDismissDragging: Bool = false
+    
+    // view의 처음 높이(팝업뷰 드래그시 이 위치보다 더 높아지지 않음)
     private let originY: CGFloat
+    
+    // 팝업뷰를 닫기 위해 터치시, 터치가 적용되는 영역 높이 설정 (터치 영역보다 더 아래쪽을 클릭시 팝업뷰가 내려가지 않음)
+    var dismissTouchHeightArea: CGFloat = 44
     
     init(originY: CGFloat) {
         self.originY = originY
@@ -28,14 +33,14 @@ extension BottomSheetViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let window = UIApplication.shared.windows.first,
               let location = touches.first?.location(in: window),
-              location.y <= originY + 40 else { return }
-        isDismissTouch = true
+              location.y <= originY + dismissTouchHeightArea else { return }
+        isDismissDragging = true
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let window = UIApplication.shared.windows.first
         guard let location = touches.first?.location(in: window),
-            isDismissTouch else { return }
+            isDismissDragging else { return }
         guard location.y > originY else {
             view.frame.origin.y = originY
             return
@@ -45,7 +50,7 @@ extension BottomSheetViewController {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        guard isDismissTouch,
+        guard isDismissDragging,
               let window = UIApplication.shared.windows.first,
               let touch = touches.first else { return }
         
@@ -58,7 +63,7 @@ extension BottomSheetViewController {
         if location.y >= dismissY { dismiss(animated: true) }
         else if isFasterDown { dismiss(animated: true) }
         else {
-            isDismissTouch = false
+            isDismissDragging = false
             UIView.animate(withDuration: 0.1) {
                 self.view.frame.origin.y = self.originY
             }
