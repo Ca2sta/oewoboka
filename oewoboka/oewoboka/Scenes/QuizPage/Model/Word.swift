@@ -9,6 +9,7 @@ import Foundation
 
 struct Word {
     let id: UUID
+    let vocabularyTitle: String
     let english: String
     let korea: String
     var isMemorize: Bool

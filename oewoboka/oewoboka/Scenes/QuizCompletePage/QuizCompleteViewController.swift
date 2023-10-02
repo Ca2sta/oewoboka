@@ -39,6 +39,7 @@ private extension QuizCompleteViewController {
         autoLayoutSetup()
         resultViewSetup()
         quizFeedbackSetup()
+        navigationSetup()
     }
     
     func addViews() {
@@ -55,7 +56,11 @@ private extension QuizCompleteViewController {
         quizFeedbackStackView.popHandler = { [weak self] resultType in
             switch resultType {
             case .answer:
-                self?.popCompletion?(nil)
+                guard let self else { return }
+                let vc = AnswerViewController(words: self.quizResultWords)
+                vc.modalPresentationStyle = .custom
+                vc.transitioningDelegate = self
+                self.present(vc, animated: true)
             case .allReQuiz:
                 self?.popCompletion?(self?.quizResultWords)
             case .unMemorizeReQuiz:
@@ -75,5 +80,21 @@ private extension QuizCompleteViewController {
         quizFeedbackStackView.snp.makeConstraints { make in
             make.left.right.bottom.equalTo(safeArea).inset(24)
         }
+    }
+    
+    func navigationSetup() {
+        navigationItem.hidesBackButton = true
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "test", style: .plain, target: self, action: #selector(backButtonClick))
+    }
+    
+    @objc func backButtonClick() {
+        navigationController?.popToRootViewController(animated: true)
+        
+    }
+}
+
+extension QuizCompleteViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return BottomSheetPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }

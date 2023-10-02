@@ -16,7 +16,7 @@ final class QuizViewController: UIViewController {
     private let margin: CGFloat = 24
     private var currentIndex: Int = 0
     
-    let vocablularyList: Vocabulary = Vocabulary(id: UUID(), context: "Title", words: [Word(id: UUID(), english: "english", korea: "한국어", isMemorize: false),Word(id: UUID(), english: "english2", korea: "한국어2", isMemorize: false), Word(id: UUID(), english: "english3", korea: "한국어3", isMemorize: false)])
+    let vocablularyList: Vocabulary = Vocabulary(id: UUID(), context: "Title", words: [Word(id: UUID(), vocabularyTitle: "Test", english: "english", korea: "한국어", isMemorize: false),Word(id: UUID(), vocabularyTitle: "Test", english: "english2", korea: "한국어2", isMemorize: false), Word(id: UUID(), vocabularyTitle: "Test", english: "english3", korea: "한국어3", isMemorize: false)])
     private let quizType: QuizType
     private var quizResultWords: [Word] = []
     private var words: [Word] = []

@@ -69,7 +69,7 @@ private extension FeedBackStackView {
     }
     
     func buttonSetup() {
-        quizAnswerButton.addTarget(self, action: #selector(reQuizeButtonClik), for: .touchUpInside)
+        quizAnswerButton.addTarget(self, action: #selector(quizAnswerButtonClick), for: .touchUpInside)
         reQuizButton.addTarget(self, action: #selector(reQuizeButtonClik), for: .touchUpInside)
         unMemorizeWordReQuizButton.addTarget(self, action: #selector(unMemorizeReQuizButtonClick), for: .touchUpInside)
     }
