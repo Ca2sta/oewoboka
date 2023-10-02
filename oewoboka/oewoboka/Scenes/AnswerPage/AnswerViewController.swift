@@ -8,19 +8,17 @@
 import UIKit
 import SnapKit
 
-class AnswerViewController: UIViewController {
+class AnswerViewController: BottomSheetViewController {
     
     private let answerTopView: TopView = TopView(title: "정답 보기")
     private let answerTableView: UITableView = UITableView()
     private let answerBottomView: BottomView = BottomView()
     
-    private var isDismissTouch: Bool = false
-    private let originY: CGFloat = Constant.screenHeight * 0.2
     let words: [Word]
     
     init(words: [Word]) {
         self.words = words
-        super.init(nibName: nil, bundle: nil)
+        super.init(originY: Constant.screenHeight * 0.2)
     }
     
     required init?(coder: NSCoder) {
@@ -92,48 +90,5 @@ extension AnswerViewController: UITableViewDelegate, UITableViewDataSource {
         cell.englishWordLabel.text = word.english
         cell.koreaWordLabel.text = word.korea
         return cell
-    }
-}
-
-// MARK: TouchEvent
-extension AnswerViewController {
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let window = UIApplication.shared.windows.first,
-              let location = touches.first?.location(in: window),
-              location.y <= originY + 40 else { return }
-        isDismissTouch = true
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let window = UIApplication.shared.windows.first
-        guard let location = touches.first?.location(in: window),
-            isDismissTouch else { return }
-        guard location.y > originY else {
-            view.frame.origin.y = originY
-            return
-        }
-        view.frame.origin.y = location.y
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        guard isDismissTouch,
-              let window = UIApplication.shared.windows.first,
-              let touch = touches.first else { return }
-        
-        let previousLocation = touch.previousLocation(in: window)
-        let location = touch.location(in: window)
-        
-        let dismissY = originY + 200
-        let isFasterDown = (location.y - previousLocation.y) >= 7
-        
-        if location.y >= dismissY { dismiss(animated: true) }
-        else if isFasterDown { dismiss(animated: true) }
-        else {
-            isDismissTouch = false
-            UIView.animate(withDuration: 0.1) {
-                self.view.frame.origin.y = self.originY
-            }
-        }
     }
 }

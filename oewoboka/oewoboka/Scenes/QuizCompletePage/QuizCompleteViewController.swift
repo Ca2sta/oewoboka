@@ -89,13 +89,14 @@ private extension QuizCompleteViewController {
     }
     
     func navigationSetup() {
+        let backBarButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(backButtonClick))
+        backBarButton.tintColor = .black
         navigationItem.hidesBackButton = true
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "test", style: .plain, target: self, action: #selector(backButtonClick))
+        navigationItem.leftBarButtonItem = backBarButton
     }
     
     @objc func backButtonClick() {
         navigationController?.popToRootViewController(animated: true)
-        
     }
 }
 
