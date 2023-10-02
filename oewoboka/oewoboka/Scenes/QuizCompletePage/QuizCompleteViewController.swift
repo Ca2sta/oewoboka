@@ -10,7 +10,7 @@ import UIKit
 final class QuizCompleteViewController: UIViewController {
     
     private let middleView: UIView = UIView()
-    private let resultView: ResultView
+    private let resultView: CircleProgressBar
     private let quizFeedbackStackView: FeedBackStackView = FeedBackStackView()
     private let quizResultWords: [Word]
     var popCompletion: (([Word]?) -> Void)?
@@ -19,7 +19,7 @@ final class QuizCompleteViewController: UIViewController {
         quizResultWords = words
         let memorizeWords = quizResultWords.filter { $0.isMemorize }
         let rate = CGFloat(memorizeWords.count) / CGFloat(quizResultWords.count)
-        resultView = ResultView(correctRate: rate, allWordCount: quizResultWords.count, isMemorizeCount: memorizeWords.count)
+        resultView = CircleProgressBar(correctRate: rate, type: .percent, allWordCount: quizResultWords.count, isMemorizeCount: memorizeWords.count)
         super.init(nibName: nil, bundle: nil)
     }
     
