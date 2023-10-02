@@ -160,6 +160,4 @@ private extension QuizCountView {
     }
 }
 
-protocol ViewHasSlider: UIViewController {
-    func didSlideSlider(_ slider: UISlider)
-}
+

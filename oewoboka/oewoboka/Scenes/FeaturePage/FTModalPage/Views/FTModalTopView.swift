@@ -89,7 +89,3 @@ private extension FTModalTopView {
     }
 }
 
-protocol ViewHasButton: UIViewController {
-    func didTappedButton(button: UIButton)
-}
-

@@ -115,6 +115,4 @@ extension FeatureCollectionViewCell: CollectionViewIdentifier {
 }
 
 
-protocol CollectionViewIdentifier: UICollectionViewCell {
-    static var identifier: String { get }
-}
+
