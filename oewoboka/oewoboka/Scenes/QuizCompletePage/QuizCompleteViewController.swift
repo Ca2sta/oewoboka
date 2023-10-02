@@ -9,6 +9,7 @@ import UIKit
 
 final class QuizCompleteViewController: UIViewController {
     
+    private let middleView: UIView = UIView()
     private let resultView: ResultView
     private let quizFeedbackStackView: FeedBackStackView = FeedBackStackView()
     private let quizResultWords: [Word]
@@ -43,7 +44,8 @@ private extension QuizCompleteViewController {
     }
     
     func addViews() {
-        view.addSubview(resultView)
+        view.addSubview(middleView)
+        middleView.addSubview(resultView)
         view.addSubview(quizFeedbackStackView)
     }
     
@@ -73,6 +75,10 @@ private extension QuizCompleteViewController {
     
     func autoLayoutSetup() {
         let safeArea = view.safeAreaLayoutGuide
+        middleView.snp.makeConstraints { make in
+            make.top.left.right.equalTo(safeArea)
+            make.bottom.equalTo(quizFeedbackStackView.snp.top)
+        }
         resultView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.height.width.equalTo(safeArea.snp.width).dividedBy(2)

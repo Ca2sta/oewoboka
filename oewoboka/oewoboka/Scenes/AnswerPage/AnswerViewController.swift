@@ -87,7 +87,7 @@ extension AnswerViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AnswerTableViewCell.identifier, for: indexPath) as? AnswerTableViewCell else { return UITableViewCell() }
         let word = words[indexPath.row]
-        cell.numberLabel.text = "\(indexPath.row)"
+        cell.numberLabel.text = "\(indexPath.row + 1)."
         cell.vocabularyTitleLabel.text = word.vocabularyTitle
         cell.englishWordLabel.text = word.english
         cell.koreaWordLabel.text = word.korea
