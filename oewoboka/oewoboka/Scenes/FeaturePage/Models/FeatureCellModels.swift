@@ -11,12 +11,5 @@ import UIKit
 struct FeatureCellModel {
     var image: UIImage?
     var title: String
-    var description: String
-    var type: FeatureChoice
-}
-
-enum FeatureChoice {
-    case wordCard
-    case dictation
-    case blink
+    lazy var description = "\(self.title)를 하며 단어를 외워요!"
 }
