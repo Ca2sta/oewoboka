@@ -70,6 +70,7 @@ final class QuizCountView: UIView {
         self.viewModel = viewModel
         super.init(frame: CGRect.zero)
         setUp()
+        viewUpdate()
     }
     
     required init?(coder: NSCoder) {
@@ -77,10 +78,11 @@ final class QuizCountView: UIView {
     }
     
     func viewUpdate() {
-        
-        
-        self.countLabel.text = "\(viewModel.count)개"
-        self.sliderView.value = (Float(viewModel.count) / 100)
+        self.viewModel.countViewUpdate = { [weak self] in
+            guard let self = self else { return }
+            self.countLabel.text = "\(viewModel.count)개"
+            self.sliderView.value = (Float(viewModel.count) / 100)
+        }
     }
     
 }

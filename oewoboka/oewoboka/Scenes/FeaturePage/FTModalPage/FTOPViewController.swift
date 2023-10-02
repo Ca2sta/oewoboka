@@ -117,12 +117,14 @@ extension FTOPViewController: UIViewControllerTransitioningDelegate {
 // MARK: - Custom Delegate extension
 
 extension FTOPViewController: TopViewDelegate {
+    
     func didTappedBackButton() {
         self.dismiss(animated: true)
     }
 }
 
 extension FTOPViewController: rangeButtonDelegate {
+    
     func didTappedRangeButton() {
         let yourVC = VocaListSelectedController(viewModel: self.viewModel)
         yourVC.modalPresentationStyle = .custom
@@ -132,21 +134,18 @@ extension FTOPViewController: rangeButtonDelegate {
 }
 
 extension FTOPViewController: CountDelegate {
+    
     func didTappedCountButton(_ button: UIButton) {
         if button == middleView.countView.plusButton {
             viewModel.count += 1
         } else {
             if viewModel.count > 0 {
                 viewModel.count -= 1
-                print(viewModel.count)
             }
         }
-        middleView.countView.viewUpdate()
     }
     
     func didSlideSlider(_ slider: UISlider) {
         viewModel.count = Int(slider.value * 100)
-        middleView.countView.viewUpdate()
-        print(viewModel.count)
     }
 }

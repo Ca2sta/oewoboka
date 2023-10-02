@@ -33,13 +33,12 @@ final class FTOPViewModel {
     let rangeBTRightImage = UIImage(systemName: "person")
 
     // MARK: - QuizCountView
-    
     var countViewUpdate : () -> Void = { }
     let countViewTitle = "문제 갯수 제한"
     let imageConfig = UIImage.SymbolConfiguration(pointSize: Constant.screenHeight * 0.03)
     var count = 10 {
         didSet {
-            countViewUpdate
+            countViewUpdate()
         }
     }
     lazy var countViewPlusBTImage = UIImage(
