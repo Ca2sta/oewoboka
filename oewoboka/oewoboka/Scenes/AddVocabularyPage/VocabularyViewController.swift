@@ -147,5 +147,11 @@ extension VocabularyViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         guard let text = textField.text else { return }
 //        navigationItem.rightBarButtonItem?.isEnabled = !text.isEmpty
+        if text.count != 0 {
+            addVocablaryButton.isHidden = false
+        } else {
+            addVocablaryButton.isHidden = true
+        }
+        
     }
 }
