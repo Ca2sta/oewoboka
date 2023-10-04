@@ -134,6 +134,7 @@ final class VocabularyViewController: UIViewController {
         guard let title = wordTextField.text else { return }
         vocabularyRepository.create(title: title)
         initTextFleid()
+        addVocablaryButton.isHidden = true
         tabBarController?.selectedIndex = 0
     }
     
