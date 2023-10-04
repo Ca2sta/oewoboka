@@ -12,10 +12,10 @@ final class QuizCompleteViewController: UIViewController {
     private let middleView: UIView = UIView()
     private let resultView: CircleProgressBar
     private let quizFeedbackStackView: FeedBackStackView = FeedBackStackView()
-    private let quizResultWords: [Word]
-    var popCompletion: (([Word]?) -> Void)?
+    private let quizResultWords: [WordEntity]
+    var popCompletion: (([WordEntity]?) -> Void)?
     
-    init(words: [Word]) {
+    init(words: [WordEntity]) {
         quizResultWords = words
         let memorizeWords = quizResultWords.filter { $0.isMemorize }
         let rate = CGFloat(memorizeWords.count) / CGFloat(quizResultWords.count)

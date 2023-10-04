@@ -14,9 +14,9 @@ class AnswerViewController: BottomSheetViewController {
     private let answerTableView: UITableView = UITableView()
     private let answerBottomView: BottomView = BottomView()
     
-    var words: [Word]
+    var words: [WordEntity]
     
-    init(words: [Word]) {
+    init(words: [WordEntity]) {
         self.words = words
         super.init(originY: Constant.screenHeight * 0.2)
     }
@@ -116,8 +116,9 @@ extension AnswerViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AnswerTableViewCell.identifier, for: indexPath) as? AnswerTableViewCell else { return UITableViewCell() }
         let word = words[indexPath.row]
+        guard let vocabulary = word.vocabulary else { return UITableViewCell() }
         cell.numberLabel.text = "\(indexPath.row + 1)."
-        cell.vocabularyTitleLabel.text = word.vocabularyTitle
+        cell.vocabularyTitleLabel.text = vocabulary.title
         cell.englishWordLabel.text = word.english
         cell.koreaWordLabel.text = word.korea
         cell.bookMarkButton.isSelected = word.isBookmark

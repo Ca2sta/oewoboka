@@ -8,7 +8,6 @@
 import Foundation
 
 struct Vocabulary {
-    let id: UUID
-    let context: String
+    let title: String
     let words: [Word]
 }
