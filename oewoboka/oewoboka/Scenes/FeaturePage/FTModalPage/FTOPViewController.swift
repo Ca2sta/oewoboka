@@ -128,9 +128,9 @@ extension FTOPViewController: ViewHasButton {
             yourVC.transitioningDelegate = self
             self.present(yourVC, animated: true, completion: nil)
         case middleView.countView.plusButton:
-            viewModel.count += 1
+            viewModel.count.value += 1
         case middleView.countView.minusButton:
-            if viewModel.count > 0 { viewModel.count -= 1 }
+            if viewModel.count.value > 0 { viewModel.count.value -= 1 }
         default:
             print("Button not registered")
         }
@@ -140,6 +140,6 @@ extension FTOPViewController: ViewHasButton {
 extension FTOPViewController: ViewHasSlider {
     
     func didSlideSlider(_ slider: UISlider) {
-        viewModel.count = Int(slider.value * 100)
+        viewModel.count.value = Int(slider.value * 100)
     }
 }

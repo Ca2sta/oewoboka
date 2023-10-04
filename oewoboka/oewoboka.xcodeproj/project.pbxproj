@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		081E2DF62ACCE8A900A07764 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081E2DF52ACCE8A900A07764 /* Observable.swift */; };
 		084C45F52AC1A9FA002999DF /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C45F42AC1A9FA002999DF /* Constant.swift */; };
 		08AEE5E92ACAF2D300FBE770 /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE5E82ACAF2D300FBE770 /* PresentationController.swift */; };
 		08AEE5EB2ACAF33400FBE770 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE5EA2ACAF33400FBE770 /* Protocols.swift */; };
@@ -57,6 +58,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		081E2DF52ACCE8A900A07764 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		084C45F42AC1A9FA002999DF /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		08AEE5E82ACAF2D300FBE770 /* PresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
 		08AEE5EA2ACAF33400FBE770 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				084C45F42AC1A9FA002999DF /* Constant.swift */,
 				18BF66892AC208B300C53C07 /* Typography.swift */,
 				18C345852ACA8CFC0072995F /* BottomSheetViewController.swift */,
+				081E2DF52ACCE8A900A07764 /* Observable.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -504,6 +507,7 @@
 				08AEE6042ACAF53300FBE770 /* FTModalBottomView.swift in Sources */,
 				08AEE6022ACAF52300FBE770 /* QuizCountView.swift in Sources */,
 				08AEE6082ACAF55000FBE770 /* FTOPViewController.swift in Sources */,
+				081E2DF62ACCE8A900A07764 /* Observable.swift in Sources */,
 				18CE95B42AC6DAF400CAA133 /* AnswerViewController.swift in Sources */,
 				18A815BA2AC3E1D3007FE489 /* QuizType.swift in Sources */,
 				18E0D1F12AC1305D005DDA6F /* AppDelegate.swift in Sources */,
