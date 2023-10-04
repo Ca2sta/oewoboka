@@ -26,9 +26,9 @@ final class FTOPViewModel {
     ]
     
     // MARK: - QuizSettingView
-    let rangeBTLeftImage = UIImage(systemName: "person.fill")
+    let rangeBTLeftImage = UIImage(systemName: "book.closed")
     let rangeBTtitle = "단어장 선택"
-    let rangeBTRightImage = UIImage(systemName: "person")
+    let rangeBTRightImage = UIImage(systemName: "chevron.right")
     var quizType: QuizType = .wordDictation
 
     // MARK: - QuizCountView
@@ -44,7 +44,7 @@ final class FTOPViewModel {
     
     // MARK: - BottomView
     let startBTTitle = "퀴즈 시작"
-    let startBTImage = UIImage(systemName: "person")
+    let startBTImage = UIImage(systemName: "arrowtriangle.right.fill")
 
     
 }

@@ -10,7 +10,7 @@ import SnapKit
 
 final class FTOPViewController: BottomSheetViewController {
     
-    lazy var topView = FTModalTopView(viewModel: viewModel)
+    lazy var topView = PageTopView(title: "")
     
     lazy var middleView = FTModalMiddleView(viewModel: viewModel)
     

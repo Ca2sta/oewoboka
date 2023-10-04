@@ -42,6 +42,8 @@ final class QuizSettingView: UIView {
     let typeCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.minimumLineSpacing = 0
         let width = Constant.screenWidth - (Constant.defalutPadding * 2)
         flowLayout.itemSize = CGSize(width: width, height: Constant.screenHeight * 0.05)
         let view = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)

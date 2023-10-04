@@ -16,7 +16,7 @@
 		08AEE5F42ACAF40A00FBE770 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE5F32ACAF40A00FBE770 /* Models.swift */; };
 		08AEE5F62ACAF42400FBE770 /* FeatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE5F52ACAF42400FBE770 /* FeatureViewController.swift */; };
 		08AEE5F82ACAF45000FBE770 /* FeatureCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE5F72ACAF45000FBE770 /* FeatureCollectionViewCell.swift */; };
-		08AEE5FC2ACAF4F000FBE770 /* FTModalTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE5FB2ACAF4F000FBE770 /* FTModalTopView.swift */; };
+		08AEE5FC2ACAF4F000FBE770 /* PageTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE5FB2ACAF4F000FBE770 /* PageTopView.swift */; };
 		08AEE5FE2ACAF50400FBE770 /* FTModalMiddleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE5FD2ACAF50400FBE770 /* FTModalMiddleView.swift */; };
 		08AEE6002ACAF51400FBE770 /* QuizSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE5FF2ACAF51400FBE770 /* QuizSettingView.swift */; };
 		08AEE6022ACAF52300FBE770 /* QuizCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE6012ACAF52300FBE770 /* QuizCountView.swift */; };
@@ -69,7 +69,7 @@
 		08AEE5F32ACAF40A00FBE770 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		08AEE5F52ACAF42400FBE770 /* FeatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureViewController.swift; sourceTree = "<group>"; };
 		08AEE5F72ACAF45000FBE770 /* FeatureCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureCollectionViewCell.swift; sourceTree = "<group>"; };
-		08AEE5FB2ACAF4F000FBE770 /* FTModalTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTModalTopView.swift; sourceTree = "<group>"; };
+		08AEE5FB2ACAF4F000FBE770 /* PageTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTopView.swift; sourceTree = "<group>"; };
 		08AEE5FD2ACAF50400FBE770 /* FTModalMiddleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTModalMiddleView.swift; sourceTree = "<group>"; };
 		08AEE5FF2ACAF51400FBE770 /* QuizSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSettingView.swift; sourceTree = "<group>"; };
 		08AEE6012ACAF52300FBE770 /* QuizCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCountView.swift; sourceTree = "<group>"; };
@@ -183,7 +183,7 @@
 		08AEE60B2ACAF56B00FBE770 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				08AEE5FB2ACAF4F000FBE770 /* FTModalTopView.swift */,
+				08AEE5FB2ACAF4F000FBE770 /* PageTopView.swift */,
 				08AEE5FD2ACAF50400FBE770 /* FTModalMiddleView.swift */,
 				08AEE5FF2ACAF51400FBE770 /* QuizSettingView.swift */,
 				08AEE6012ACAF52300FBE770 /* QuizCountView.swift */,
@@ -500,7 +500,7 @@
 				08AEE5F42ACAF40A00FBE770 /* Models.swift in Sources */,
 				18E0D21E2AC17E94005DDA6F /* Vocabulary.swift in Sources */,
 				18E0D21B2AC133FE005DDA6F /* AddVocabularyViewController.swift in Sources */,
-				08AEE5FC2ACAF4F000FBE770 /* FTModalTopView.swift in Sources */,
+				08AEE5FC2ACAF4F000FBE770 /* PageTopView.swift in Sources */,
 				08AEE5F82ACAF45000FBE770 /* FeatureCollectionViewCell.swift in Sources */,
 				18E0D1F52AC1305D005DDA6F /* TabBarController.swift in Sources */,
 				9B865E072AC2E14400E562FA /* VocaTableViewCell.swift in Sources */,
