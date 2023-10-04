@@ -13,7 +13,7 @@
 		08AEE5EB2ACAF33400FBE770 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE5EA2ACAF33400FBE770 /* Protocols.swift */; };
 		08AEE5ED2ACAF36B00FBE770 /* VocaListSelectedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE5EC2ACAF36B00FBE770 /* VocaListSelectedController.swift */; };
 		08AEE5F12ACAF3EA00FBE770 /* FeatureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE5F02ACAF3EA00FBE770 /* FeatureViewModel.swift */; };
-		08AEE5F42ACAF40A00FBE770 /* FeatureCellModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE5F32ACAF40A00FBE770 /* FeatureCellModels.swift */; };
+		08AEE5F42ACAF40A00FBE770 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE5F32ACAF40A00FBE770 /* Models.swift */; };
 		08AEE5F62ACAF42400FBE770 /* FeatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE5F52ACAF42400FBE770 /* FeatureViewController.swift */; };
 		08AEE5F82ACAF45000FBE770 /* FeatureCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE5F72ACAF45000FBE770 /* FeatureCollectionViewCell.swift */; };
 		08AEE5FC2ACAF4F000FBE770 /* FTModalTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE5FB2ACAF4F000FBE770 /* FTModalTopView.swift */; };
@@ -64,7 +64,7 @@
 		08AEE5EA2ACAF33400FBE770 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		08AEE5EC2ACAF36B00FBE770 /* VocaListSelectedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaListSelectedController.swift; sourceTree = "<group>"; };
 		08AEE5F02ACAF3EA00FBE770 /* FeatureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureViewModel.swift; sourceTree = "<group>"; };
-		08AEE5F32ACAF40A00FBE770 /* FeatureCellModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureCellModels.swift; sourceTree = "<group>"; };
+		08AEE5F32ACAF40A00FBE770 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		08AEE5F52ACAF42400FBE770 /* FeatureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureViewController.swift; sourceTree = "<group>"; };
 		08AEE5F72ACAF45000FBE770 /* FeatureCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureCollectionViewCell.swift; sourceTree = "<group>"; };
 		08AEE5FB2ACAF4F000FBE770 /* FTModalTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTModalTopView.swift; sourceTree = "<group>"; };
@@ -154,7 +154,6 @@
 			isa = PBXGroup;
 			children = (
 				08AEE5F02ACAF3EA00FBE770 /* FeatureViewModel.swift */,
-				08AEE5F32ACAF40A00FBE770 /* FeatureCellModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -339,6 +338,7 @@
 		18E0D20F2AC1330A005DDA6F /* FeaturePage */ = {
 			isa = PBXGroup;
 			children = (
+				08AEE5F32ACAF40A00FBE770 /* Models.swift */,
 				08AEE5EA2ACAF33400FBE770 /* Protocols.swift */,
 				08AEE5EE2ACAF3B300FBE770 /* VocaListSelectedPage */,
 				08AEE5EF2ACAF3C500FBE770 /* FTPage */,
@@ -490,7 +490,7 @@
 				18BF668A2AC208B300C53C07 /* Typography.swift in Sources */,
 				18E0D2132AC13388005DDA6F /* QuizViewController.swift in Sources */,
 				18E0D22B2AC19344005DDA6F /* CircleProgressBar.swift in Sources */,
-				08AEE5F42ACAF40A00FBE770 /* FeatureCellModels.swift in Sources */,
+				08AEE5F42ACAF40A00FBE770 /* Models.swift in Sources */,
 				18E0D21E2AC17E94005DDA6F /* Vocabulary.swift in Sources */,
 				18E0D21B2AC133FE005DDA6F /* AddVocabularyViewController.swift in Sources */,
 				08AEE5FC2ACAF4F000FBE770 /* FTModalTopView.swift in Sources */,

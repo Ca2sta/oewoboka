@@ -131,7 +131,7 @@ private extension QuizSettingView {
         typeCollectionView.snp.makeConstraints { make in
             make.top.equalTo(descriptionLabel.snp.bottom).offset(Constant.defalutPadding / 2)
             make.left.right.equalToSuperview()
-            make.height.equalTo(Constant.screenHeight * 0.25)
+            make.height.equalTo(Constant.screenHeight * 0.1)
         }
     }
     
@@ -144,6 +144,8 @@ private extension QuizSettingView {
         }
     }
 }
+
+
 
 private extension QuizSettingView {
     @objc func didTappedRangeButton(_ button: UIButton) {

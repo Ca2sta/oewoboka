@@ -35,9 +35,7 @@ final class FeatureViewModel {
             image: UIImage(systemName: "note.text"),
             title: "시험 보기",
             description: "시험을 통해 어쩌구",
-            type: .blink
+            type: .test
         ),
     ]
-    
-    
 }

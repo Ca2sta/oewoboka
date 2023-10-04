@@ -31,6 +31,8 @@ final class FTModalBottomView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    weak var buttonDelegate: ViewHasButton?
 }
 
 private extension FTModalBottomView {
@@ -64,5 +66,12 @@ private extension FTModalBottomView {
             make.height.equalTo(1)
             make.top.equalToSuperview()
         }
+        startButton.addTarget(self, action: #selector(didTappedStartButton(_:)), for: .touchUpInside)
+    }
+}
+
+private extension FTModalBottomView {
+    @objc func didTappedStartButton(_ button: UIButton) {
+        buttonDelegate?.didTappedButton(button: button)
     }
 }
