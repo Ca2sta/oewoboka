@@ -10,12 +10,18 @@ import SnapKit
 
 final class VocabularyViewController: UIViewController {
     
-    private let divider: UIView = {
+    private let topDivider: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGray
         return view
     }()
     
+    private let wordTitleLabel: UILabel = {
+        let view = UILabel()
+        view.text = "단어장 제목"
+        view.font = Typography.body1.font
+        return view
+    }()
     // TextField 란
     private let wordTextField: UITextField = {
         let textField = UITextField()
@@ -25,6 +31,13 @@ final class VocabularyViewController: UIViewController {
         return textField
     }()
     
+    private let descriptionLabel: UILabel = {
+        let view = UILabel()
+        view.text = "단어장 설명"
+        view.font = Typography.body1.font
+        return view
+    }()
+    
     private let descriptionTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
@@ -32,10 +45,16 @@ final class VocabularyViewController: UIViewController {
         textField.placeholder = "단어장 설명을 입력해 주세요!(선택)"
         return textField
     }()
+    
+    private let bottomDivider: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray
+        return view
+    }()
 
     // '생성' 버튼
-    private let addVocablaryButton: UIButton = {
-        let button = UIButton(type: .system)
+    private let addVocablaryButton: DefaultButton = {
+        let button = DefaultButton()
         button.setTitle("생성", for: .normal)
         button.addTarget(self, action: #selector(didTapaddVocablaryButton), for: .touchUpInside)
         return button
@@ -46,8 +65,12 @@ final class VocabularyViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.addSubview(topDivider)
+        view.addSubview(wordTitleLabel)
         view.addSubview(wordTextField)
+        view.addSubview(descriptionLabel)
         view.addSubview(descriptionTextField)
+        view.addSubview(bottomDivider)
         view.addSubview(addVocablaryButton)
         
         setupConstraints()
@@ -57,32 +80,49 @@ final class VocabularyViewController: UIViewController {
     
     // TextField 란 설정
     private func setupConstraints() {
+        
+        topDivider.snp.makeConstraints { make in
+            make.top.left.right.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(1)
+            
+        }
+        wordTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(topDivider.snp.bottom).offset(Constant.defalutPadding)
+            make.left.equalToSuperview().offset(Constant.defalutPadding)
+        }
+        
         wordTextField.snp.makeConstraints { (make) in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
-            make.left.equalTo(view).offset(20)
-            make.right.equalTo(view).offset(-20)
-            make.height.equalTo(40)
+            make.top.equalTo(wordTitleLabel.snp.bottom).offset(Constant.defalutPadding / 2)
+            make.left.right.equalTo(view.safeAreaLayoutGuide).inset(Constant.defalutPadding)
+            make.height.equalTo(Constant.screenHeight * 0.05)
+        }
+        
+        descriptionLabel.snp.makeConstraints { make in
+            make.top.equalTo(wordTextField.snp.bottom).offset(Constant.defalutPadding)
+            make.left.equalToSuperview().offset(Constant.defalutPadding)
         }
         
         descriptionTextField.snp.makeConstraints { (make) in
-            make.top.equalTo(wordTextField.snp.bottom).offset(20)
-            make.left.equalTo(view).offset(20)
-            make.right.equalTo(view).offset(-20)
-            make.height.equalTo(40)
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(Constant.defalutPadding / 2)
+            make.left.right.equalTo(view.safeAreaLayoutGuide).inset(Constant.defalutPadding)
+            make.height.equalTo(Constant.screenHeight * 0.05)
+        }
+        
+        bottomDivider.snp.makeConstraints { make in
+            make.top.equalTo(descriptionTextField.snp.bottom).offset(Constant.defalutPadding)
+            make.left.right.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(1)
         }
    // '생성' 버튼 설정
         addVocablaryButton.snp.makeConstraints { (make) in
-            make.top.equalTo(descriptionTextField.snp.bottom).offset(20)
-            make.centerX.equalTo(view)
+            make.top.equalTo(bottomDivider.snp.bottom).offset(Constant.defalutPadding)
+            make.left.right.equalTo(view.safeAreaLayoutGuide).inset(Constant.defalutPadding)
+            make.height.equalTo(Constant.screenHeight * 0.05)
         }
     }
     
     private func setupNavigation() {
         navigationItem.title = "단어장"
-        let rightButton = UIBarButtonItem(title: "생성", style: .done, target: self, action: #selector(didTapaddVocablaryButton))
-        rightButton.tintColor = .systemRed
-        navigationItem.rightBarButtonItem = rightButton
-        navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
     private func setupTextField() {
@@ -106,6 +146,6 @@ final class VocabularyViewController: UIViewController {
 extension VocabularyViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         guard let text = textField.text else { return }
-        navigationItem.rightBarButtonItem?.isEnabled = !text.isEmpty
+//        navigationItem.rightBarButtonItem?.isEnabled = !text.isEmpty
     }
 }
