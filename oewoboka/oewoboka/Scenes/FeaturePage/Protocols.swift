@@ -8,10 +8,6 @@
 import Foundation
 import UIKit
 
-protocol CollectionViewIdentifier: UICollectionViewCell {
-    static var identifier: String { get }
-}
-
 protocol ViewHasButton: UIViewController {
     func didTappedButton(button: UIButton)
 }

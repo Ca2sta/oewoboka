@@ -106,13 +106,8 @@ extension FeatureCollectionViewCell {
     }
 }
 
-extension FeatureCollectionViewCell: CollectionViewIdentifier {
+extension UICollectionViewCell {
     static var identifier: String {
-        get {
-            String(describing: type(of: self))
-        }
+        get { String(describing: type(of: self)) }
     }
 }
-
-
-
