@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import CoreData
 
 class VocaViewController: UIViewController {
     let vocaTableView = UITableView()
@@ -23,6 +24,21 @@ class VocaViewController: UIViewController {
         formatter.dateFormat = "yyyy년 MM월 dd일 HH:mm"
         return formatter
     }()
+    var coreDataManager = VocabularyRepository.shared
+    let vocabularyID: NSManagedObjectID
+    
+    init(vocabularyID: NSManagedObjectID) {
+        self.vocabularyID = vocabularyID
+        print("!!!init\(vocabularyID)")
+        coreDataManager.addWord(vocabularyEntityId: vocabularyID, word: Word(english: "hi", korea: "안녕", isMemorize: false, isBookmark: false))
+        coreDataManager.addWord(vocabularyEntityId: vocabularyID, word: Word(english: "bye", korea: "ㅂㅇ", isMemorize: false, isBookmark: false))
+        coreDataManager.addWord(vocabularyEntityId: vocabularyID, word: Word(english: "happy", korea: "^^", isMemorize: false, isBookmark: false))
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,16 +92,14 @@ extension VocaViewController: UITableViewDelegate,UITableViewDataSource,UISearch
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return totalWordCount
+        return coreDataManager.fetch(id: vocabularyID)!.words!.count
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "VocaCell", for: indexPath) as! VocaTableViewCell
-        let currentDate = Date() 
-        let dateString = dateFormatter.string(from: currentDate)
-        
-        cell.dateLabel.text = "\((indexPath.row) + 1). \(dateString)"
+        let cell = tableView.dequeueReusableCell(withIdentifier: VocaTableViewCell.identifier, for: indexPath) as! VocaTableViewCell
+        guard let voca = coreDataManager.fetch(id: vocabularyID)?.words?.array as? [WordEntity] else {return UITableViewCell()}
+        cell.bind(data: voca[indexPath.row])
         return cell
     }
     

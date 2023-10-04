@@ -49,7 +49,7 @@ class VocaListTableViewCell: UITableViewCell {
     }
     
     func bind(data: VocabularyEntity) {
-        let word = data.words?.array as! [Word]
+        let word = data.words?.array as! [WordEntity]
         let cmpCount = word.filter{$0.isMemorize == true}.count
         let unCmpCount = word.count - cmpCount
         vocaListLabel.text = data.title

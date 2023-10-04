@@ -133,7 +133,15 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vocaViewController = VocaViewController()
+        
+        var targetAry: [VocabularyEntity] = []
+        if vocaSearchController.isActive {
+            targetAry = filteredVocaLists
+        } else {
+            targetAry = coreDataManager.allFetch()
+        }
+        
+        let vocaViewController = VocaViewController(vocabularyID: targetAry[indexPath.row].objectID)
         
         self.navigationController?.pushViewController(vocaViewController, animated: true)
     }

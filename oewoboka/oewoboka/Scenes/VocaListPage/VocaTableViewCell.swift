@@ -53,6 +53,11 @@ class VocaTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+    func bind(data: WordEntity) {
+        vocaLabel.text = data.english
+        koreanLabel.text = data.korea
+    }
     func setUpUI() {
         addSubview(dateLabel)
         contentView.addSubview(isCompleteButton)
