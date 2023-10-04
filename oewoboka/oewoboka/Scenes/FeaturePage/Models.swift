@@ -24,7 +24,7 @@ enum Feature {
 
 struct QuizSettingData {
     let featureType: Feature
-    let selectedVocabulary: [Vocabulary]
+    let selectedVocabulary: [VocabularyEntity]
     let quizType: QuizType
     let quizCount: Int
 }

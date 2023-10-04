@@ -21,9 +21,9 @@ final class QuizViewController: UIViewController {
     private var quizResultWords: [WordEntity] = []
     private var words: [WordEntity] = []
     
-    init(quizType: QuizType, vocabularyList: [VocabularyEntity]) {
-        self.quizType = quizType
-        self.vocabularyList = vocabularyList
+    init(quizData: QuizSettingData) {
+        self.quizType = quizData.quizType
+        self.vocabularyList = quizData.selectedVocabulary
         super.init(nibName: nil, bundle: nil)
         quizTypeSetup()
     }
