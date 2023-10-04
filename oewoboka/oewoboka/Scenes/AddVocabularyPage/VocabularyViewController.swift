@@ -78,7 +78,7 @@ final class VocabularyViewController: UIViewController {
     }
     
     private func setupNavigation() {
-        navigationController?.title = "단어장"
+        navigationItem.title = "단어장"
         let rightButton = UIBarButtonItem(title: "생성", style: .done, target: self, action: #selector(didTapaddVocablaryButton))
         rightButton.tintColor = .systemRed
         navigationItem.rightBarButtonItem = rightButton
