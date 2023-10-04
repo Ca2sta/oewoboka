@@ -18,7 +18,7 @@ class AnswerViewController: BottomSheetViewController {
     
     init(words: [WordEntity]) {
         self.words = words
-        super.init(originY: Constant.screenHeight * 0.2)
+        super.init()
     }
     
     required init?(coder: NSCoder) {
