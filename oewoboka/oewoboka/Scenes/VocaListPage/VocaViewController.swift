@@ -27,10 +27,10 @@ class VocaViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
-        
+        view.backgroundColor = .systemBackground
         vocaTableView.dataSource = self
         vocaTableView.delegate = self
-        vocaTableView.register(VocaTableViewCell.self, forCellReuseIdentifier: "VocaCell")
+        vocaTableView.register(VocaTableViewCell.self, forCellReuseIdentifier: VocaTableViewCell.identifier)
         navigationItem.titleView = vocaSearchBar
         vocaSearchBar.delegate = self
 
