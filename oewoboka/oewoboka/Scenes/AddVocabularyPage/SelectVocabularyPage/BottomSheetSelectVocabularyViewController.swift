@@ -23,7 +23,7 @@ final class BottomSheetSelectVocabularyViewController: BottomSheetViewController
         self.vocabularyList = repository.allFetch()
         selectIndex = vocabularyList.firstIndex(of: vocabulary)
 //        super.init(nibName: nil, bundle: nil)
-        super.init(originY: Constant.screenHeight * 0.2)
+        super.init()
     }
     
     required init?(coder: NSCoder) {

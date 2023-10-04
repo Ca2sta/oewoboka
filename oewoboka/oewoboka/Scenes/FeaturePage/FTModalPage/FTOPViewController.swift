@@ -20,9 +20,9 @@ final class FTOPViewController: BottomSheetViewController {
     
     var type: Feature
     
-    init(originY: CGFloat, data: FeatureCellModel) {
+    init(data: FeatureCellModel) {
         self.type = data.type
-        super.init(originY: originY)
+        super.init()
         topView.titleLabel.text = "\(data.title) 설정"
     }
     
