@@ -10,7 +10,6 @@ import SnapKit
 
 final class VocabularyViewController: UIViewController {
     
-    
     private let divider: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGray
@@ -34,50 +33,79 @@ final class VocabularyViewController: UIViewController {
         return textField
     }()
 
-    
     // '생성' 버튼
     private let addVocablaryButton: UIButton = {
-            let button = UIButton(type: .system)
-            button.setTitle("생성", for: .normal)
-            button.addTarget(self, action: #selector(didTapaddVocablaryButton), for: .touchUpInside)
-            return button
-        }()
+        let button = UIButton(type: .system)
+        button.setTitle("생성", for: .normal)
+        button.addTarget(self, action: #selector(didTapaddVocablaryButton), for: .touchUpInside)
+        return button
+    }()
+    
+    private let vocabularyRepository: VocabularyRepository = VocabularyRepository.shared
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        override func viewDidLoad() {
-            super.viewDidLoad()
-            
-            view.addSubview(wordTextField)
-            view.addSubview(descriptionTextField)
-            view.addSubview(addVocablaryButton)
-            
-            setupConstraints()
+        view.addSubview(wordTextField)
+        view.addSubview(descriptionTextField)
+        view.addSubview(addVocablaryButton)
+        
+        setupConstraints()
+        setupNavigation()
+        setupTextField()
+    }
+    
+    // TextField 란 설정
+    private func setupConstraints() {
+        wordTextField.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
+            make.left.equalTo(view).offset(20)
+            make.right.equalTo(view).offset(-20)
+            make.height.equalTo(40)
         }
         
-     // TextField 란 설정
-        private func setupConstraints() {
-            wordTextField.snp.makeConstraints { (make) in
-                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
-                make.left.equalTo(view).offset(20)
-                make.right.equalTo(view).offset(-20)
-                make.height.equalTo(40)
-            }
-            
-            descriptionTextField.snp.makeConstraints { (make) in
-                make.top.equalTo(wordTextField.snp.bottom).offset(20)
-                make.left.equalTo(view).offset(20)
-                make.right.equalTo(view).offset(-20)
-                make.height.equalTo(40)
-            }
-       // '생성' 버튼 설정
-            addVocablaryButton.snp.makeConstraints { (make) in
-                make.top.equalTo(descriptionTextField.snp.bottom).offset(20)
-                make.centerX.equalTo(view)
-            }
+        descriptionTextField.snp.makeConstraints { (make) in
+            make.top.equalTo(wordTextField.snp.bottom).offset(20)
+            make.left.equalTo(view).offset(20)
+            make.right.equalTo(view).offset(-20)
+            make.height.equalTo(40)
         }
-        
-        @objc private func didTapaddVocablaryButton() {
-            let vocabularyVC = AddVocabularyViewController()
-                    self.present(vocabularyVC, animated: true, completion: nil)
-                }
-       
+   // '생성' 버튼 설정
+        addVocablaryButton.snp.makeConstraints { (make) in
+            make.top.equalTo(descriptionTextField.snp.bottom).offset(20)
+            make.centerX.equalTo(view)
         }
+    }
+    
+    private func setupNavigation() {
+        navigationController?.title = "단어장"
+        let rightButton = UIBarButtonItem(title: "생성", style: .done, target: self, action: #selector(didTapaddVocablaryButton))
+        rightButton.tintColor = .systemRed
+        navigationItem.rightBarButtonItem = rightButton
+        navigationItem.rightBarButtonItem?.isEnabled = false
+    }
+    
+    private func setupTextField() {
+        wordTextField.delegate = self
+    }
+    
+    @objc private func didTapaddVocablaryButton() {
+        guard let title = wordTextField.text else { return }
+        vocabularyRepository.create(title: title)
+        initTextFleid()
+        tabBarController?.selectedIndex = 0
+    }
+    
+    private func initTextFleid() {
+        wordTextField.text = ""
+        descriptionTextField.text = ""
+    }
+   
+}
+
+extension VocabularyViewController: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let text = textField.text else { return }
+        navigationItem.rightBarButtonItem?.isEnabled = !text.isEmpty
+    }
+}

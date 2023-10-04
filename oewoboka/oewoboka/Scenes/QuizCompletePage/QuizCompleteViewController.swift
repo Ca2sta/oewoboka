@@ -102,6 +102,6 @@ private extension QuizCompleteViewController {
 
 extension QuizCompleteViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return BottomSheetPresentationController(presentedViewController: presented, presenting: presenting)
+        return PresentationController(presentedViewController: presented, presenting: presenting, size: 0.8)
     }
 }

@@ -43,12 +43,9 @@ class VocabularyRepository {
         self.type = type
     }
     
-    func create(title: String, words: [WordEntity]) {
+    func create(title: String) {
         let vocabularyEntity = VocabularyEntity(context: context)
         vocabularyEntity.title = title
-        words.forEach { word in
-            vocabularyEntity.addToWords(word)
-        }
         save()
     }
     
