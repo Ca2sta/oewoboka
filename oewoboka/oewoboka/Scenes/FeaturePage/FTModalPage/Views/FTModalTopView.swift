@@ -30,12 +30,9 @@ final class FTModalTopView: UIView {
         return view
     }()
     
-    private let viewModel: FTOPViewModel
-    
     weak var buttonDelegate: ViewHasButton?
     
     init(viewModel: FTOPViewModel) {
-        self.viewModel = viewModel
         super.init(frame: CGRect.zero)
         setUp()
     }

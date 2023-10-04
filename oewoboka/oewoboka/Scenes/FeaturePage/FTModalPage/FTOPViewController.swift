@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class FTOPViewController: UIViewController {
+final class FTOPViewController: BottomSheetViewController {
     
     lazy var topView = FTModalTopView(viewModel: viewModel)
     
@@ -18,11 +18,11 @@ final class FTOPViewController: UIViewController {
     
     private let viewModel = FTOPViewModel()
     
-    var type: FeatureChoice
+    var type: Feature
     
-    init(data: FeatureCellModel) {
+    init(originY: CGFloat, data: FeatureCellModel) {
         self.type = data.type
-        super.init(nibName: nil, bundle: nil)
+        super.init(originY: originY)
         topView.titleLabel.text = "\(data.title) 설정"
     }
     
@@ -65,6 +65,7 @@ private extension FTOPViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
             make.left.right.equalToSuperview()
         }
+        bottomView.buttonDelegate = self
     }
     
     func setUpMiddleView() {
@@ -86,7 +87,7 @@ private extension FTOPViewController {
 
 extension FTOPViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.quizType.count
+        return viewModel.features.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -94,12 +95,19 @@ extension FTOPViewController: UICollectionViewDelegate, UICollectionViewDataSour
             withReuseIdentifier: FTSettingTypeCell.identifier,
             for: indexPath
         ) as! FTSettingTypeCell
-        cell.bind(title: viewModel.quizType[indexPath.row])
+        cell.bind(title: viewModel.features[indexPath.row])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
+        switch indexPath.row {
+        case 0:
+            viewModel.quizType = .wordDictation
+        case 1:
+            viewModel.quizType = .meanDictation
+        default:
+            print("index Error")
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -128,9 +136,17 @@ extension FTOPViewController: ViewHasButton {
             yourVC.transitioningDelegate = self
             self.present(yourVC, animated: true, completion: nil)
         case middleView.countView.plusButton:
-            viewModel.count += 1
+            viewModel.count.value += 1
         case middleView.countView.minusButton:
-            if viewModel.count > 0 { viewModel.count -= 1 }
+            if viewModel.count.value > 0 { viewModel.count.value -= 1 }
+        case bottomView.startButton:
+            let data = QuizSettingData(featureType: self.type, selectedVocabulary: [], quizType: viewModel.quizType, quizCount: viewModel.count.value)
+            let vc = QuizViewController(quizType: .training)
+            guard let pvc = self.presentingViewController else { return }
+            self.dismiss(animated: true) {
+              pvc.present(vc, animated: true, completion: nil)
+            }
+
         default:
             print("Button not registered")
         }
@@ -140,6 +156,6 @@ extension FTOPViewController: ViewHasButton {
 extension FTOPViewController: ViewHasSlider {
     
     func didSlideSlider(_ slider: UISlider) {
-        viewModel.count = Int(slider.value * 100)
+        viewModel.count.value = Int(slider.value * 100)
     }
 }

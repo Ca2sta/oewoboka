@@ -12,8 +12,6 @@ final class FTModalBottomView: UIView {
 
     lazy var startButton: DefaultButton = {
         let button = DefaultButton()
-        button.text = viewModel.startBTTitle
-        button.image = viewModel.startBTImage
         button.type = .center
         return button
     }()
@@ -24,20 +22,26 @@ final class FTModalBottomView: UIView {
         return view
     }()
     
-    private var viewModel: FTOPViewModel
-    
     init(viewModel: FTOPViewModel) {
-        self.viewModel = viewModel
         super.init(frame: CGRect.zero)
         setUp()
+        bind(viewModel: viewModel)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    weak var buttonDelegate: ViewHasButton?
 }
 
 private extension FTModalBottomView {
+    // MARK: - bind
+    func bind(viewModel: FTOPViewModel) {
+        startButton.text = viewModel.startBTTitle
+        startButton.image = viewModel.startBTImage
+    }
+
     
     // MARK: - SetUp
 
@@ -62,5 +66,12 @@ private extension FTModalBottomView {
             make.height.equalTo(1)
             make.top.equalToSuperview()
         }
+        startButton.addTarget(self, action: #selector(didTappedStartButton(_:)), for: .touchUpInside)
+    }
+}
+
+private extension FTModalBottomView {
+    @objc func didTappedStartButton(_ button: UIButton) {
+        buttonDelegate?.didTappedButton(button: button)
     }
 }

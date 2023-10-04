@@ -20,27 +20,21 @@ final class FTOPViewModel {
     // MARK: - TypeView
     let typeViewTitle = "문제 타입"
     let typeViewDescription = "공부하고 싶은 항목을 선택해 주세요"
-    var quizType = [
+    let features = [
         "단어",
-        "의미",
-        "교대로",
-        "랜덤"
+        "의미"
     ]
     
     // MARK: - QuizSettingView
     let rangeBTLeftImage = UIImage(systemName: "person.fill")
     let rangeBTtitle = "단어장 선택"
     let rangeBTRightImage = UIImage(systemName: "person")
+    var quizType: QuizType = .wordDictation
 
     // MARK: - QuizCountView
-    var countViewUpdate : () -> Void = { }
     let countViewTitle = "문제 갯수 제한"
     let imageConfig = UIImage.SymbolConfiguration(pointSize: Constant.screenHeight * 0.03)
-    var count = 10 {
-        didSet {
-            countViewUpdate()
-        }
-    }
+    var count: Observable<Int> = Observable(10)
     lazy var countViewPlusBTImage = UIImage(
         systemName: "plus.circle", withConfiguration: self.imageConfig
     )

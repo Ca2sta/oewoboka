@@ -14,7 +14,6 @@ final class QuizCountView: UIView {
     lazy var title: UILabel = {
         let label = UILabel()
         label.font = Typography.body1.font
-        label.text = viewModel.countViewTitle
         return label
     }()
     
@@ -34,14 +33,12 @@ final class QuizCountView: UIView {
     lazy var plusButton: UIButton = {
         let button = UIButton()
         button.tintColor = .black
-        button.setImage(viewModel.countViewPlusBTImage, for: .normal)
         return button
     }()
     
     lazy var minusButton: UIButton = {
         let button = UIButton()
         button.tintColor = .black
-        button.setImage(viewModel.countViewMinusImage, for: .normal)
         return button
     }()
     
@@ -49,14 +46,12 @@ final class QuizCountView: UIView {
         let label = UILabel()
         label.font = Typography.body1.font
         label.textColor = .systemPink
-        label.text = "\(viewModel.count)개"
         label.textAlignment = .center
         return label
     }()
     
     lazy var sliderView: UISlider = {
         let slider = UISlider()
-        slider.value = (Float(viewModel.count) / 100)
         slider.thumbTintColor = .systemPink
         slider.minimumTrackTintColor = .systemPink
         return slider
@@ -66,30 +61,32 @@ final class QuizCountView: UIView {
     
     weak var sliderDelegate: ViewHasSlider?
     
-    private var viewModel: FTOPViewModel
-    
     init(viewModel: FTOPViewModel) {
-        self.viewModel = viewModel
         super.init(frame: CGRect.zero)
         setUp()
-        viewUpdate()
+        bind(viewModel: viewModel)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func viewUpdate() {
-        self.viewModel.countViewUpdate = { [weak self] in
-            guard let self = self else { return }
-            self.countLabel.text = "\(viewModel.count)개"
-            self.sliderView.value = (Float(viewModel.count) / 100)
-        }
-    }
-    
 }
 
 private extension QuizCountView {
+    // MARK: - bind
+    func bind(viewModel: FTOPViewModel) {
+        
+        title.text = viewModel.countViewTitle
+        plusButton.setImage(viewModel.countViewPlusBTImage, for: .normal)
+        minusButton.setImage(viewModel.countViewMinusImage, for: .normal)
+        countLabel.text = "\(viewModel.count)개"
+        sliderView.value = (Float(viewModel.count.value) / 100)
+        
+        viewModel.count.bind { value in
+            self.countLabel.text = "\(value)개"
+            self.sliderView.value = (Float(value) / 100)
+        }
+    }
     // MARK: - SetUp
     func setUp() {
         setUpTitle()

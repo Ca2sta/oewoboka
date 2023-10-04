@@ -12,11 +12,20 @@ struct FeatureCellModel {
     var image: UIImage?
     var title: String
     var description: String
-    var type: FeatureChoice
+    var type: Feature
 }
 
-enum FeatureChoice {
+enum Feature {
     case wordCard
     case dictation
-    case blink
+    case test
 }
+
+
+struct QuizSettingData {
+    let featureType: Feature
+    let selectedVocabulary: [Vocabulary]
+    let quizType: QuizType
+    let quizCount: Int
+}
+
