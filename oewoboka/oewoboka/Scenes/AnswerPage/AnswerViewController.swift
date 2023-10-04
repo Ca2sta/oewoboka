@@ -35,17 +35,11 @@ class AnswerViewController: BottomSheetViewController {
 // MARK: UI Init
 private extension AnswerViewController {
     func setup() {
-        mainViewSetup()
         addView()
         tableViewSetup()
         topViewSetup()
         bottomViewSetup()
         autoLayoutSetup()
-    }
-    
-    func mainViewSetup() {
-        view.layer.cornerRadius = 15
-        view.backgroundColor = .white
     }
     
     func addView() {
