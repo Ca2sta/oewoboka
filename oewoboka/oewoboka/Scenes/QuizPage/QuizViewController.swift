@@ -16,13 +16,14 @@ final class QuizViewController: UIViewController {
     private let margin: CGFloat = 24
     private var currentIndex: Int = 0
     
-    let vocablularyList: Vocabulary = Vocabulary(id: UUID(), context: "Title", words: [Word(id: UUID(), vocabularyTitle: "Test", english: "english", korea: "한국어", isMemorize: false, isBookmark: false),Word(id: UUID(), vocabularyTitle: "Test", english: "english2", korea: "한국어2", isMemorize: false, isBookmark: false), Word(id: UUID(), vocabularyTitle: "Test", english: "english3", korea: "한국어3", isMemorize: false, isBookmark: false)])
+    let vocabularyList: [VocabularyEntity]
     private let quizType: QuizType
-    private var quizResultWords: [Word] = []
-    private var words: [Word] = []
+    private var quizResultWords: [WordEntity] = []
+    private var words: [WordEntity] = []
     
-    init(quizType: QuizType) {
-        self.quizType = quizType
+    init(quizData: QuizSettingData) {
+        self.quizType = quizData.quizType
+        self.vocabularyList = quizData.selectedVocabulary
         super.init(nibName: nil, bundle: nil)
         quizTypeSetup()
     }
@@ -55,11 +56,12 @@ private extension QuizViewController {
     }
     
     func navigationSetup() {
-        title = vocablularyList.context
+        title = "단어보기"
     }
     
     func initCardView() {
-        words = vocablularyList.words
+        guard let vocabularyWords = vocabularyList.first?.words?.array as? [WordEntity] else { return }
+        words = vocabularyWords
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(cardMove(sender:)))
         frontCardView.isUserInteractionEnabled = true
@@ -141,7 +143,7 @@ private extension QuizViewController {
         let point = sender.translation(in: view)
         moveView.center = CGPoint(x: view.center.x + point.x, y: view.center.y + point.y)
                 
-        var word = vocablularyList.words[currentIndex]
+        var word = vocabularyList.first!.words![currentIndex] as! WordEntity
         
         if sender.state == .ended {
             if moveView.center.x < 75 {
