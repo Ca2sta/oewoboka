@@ -63,28 +63,12 @@ final class CardView: UIView {
         label.textColor = .black
         return label
     }()
-    let englishTextField: UITextField = {
-        let textField = UITextField()
-        textField.font = Typography.title3.font
-        textField.textColor = .black
-        textField.textAlignment = .center
-        textField.placeholder = "영단어 작성"
-        return textField
-    }()
     let koreaLabel: UILabel = {
         let label = UILabel()
         label.font = Typography.body1.font
         label.textAlignment = .center
         label.textColor = .black
         return label
-    }()
-    let koreaTextField: UITextField = {
-        let textField = UITextField()
-        textField.font = Typography.body1.font
-        textField.textColor = .black
-        textField.textAlignment = .center
-        textField.placeholder = "의미 작성"
-        return textField
     }()
     
     private let inset: CGFloat = 24
