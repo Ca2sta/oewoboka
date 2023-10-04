@@ -8,23 +8,12 @@
 import UIKit
 import SnapKit
 class SelectedVocaViewController: UIViewController {
-    
-    let countLabel: UILabel = {
-        let label = UILabel()
-        label.text = "1 / 총 단어수"
-        label.font = Typography.body2.font
-        return label
-    }()
+    var data: WordEntity?
+    var buttonState = 1
     let vocaLabel: UILabel = {
         let label = UILabel()
         label.text = "development"
         label.font = Typography.bigTitle.font
-        return label
-    }()
-    let partLabel : UILabel = {
-        let label = UILabel()
-        label.text = "명사"
-        label.font = Typography.title2.font
         return label
     }()
     let koreanLabel : UILabel = {
@@ -62,21 +51,34 @@ class SelectedVocaViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
-        isCompleteButton.setImage(UIImage(systemName: "text.justify"), for: .normal)
+        view.backgroundColor = .systemBackground
+//        isCompleteButton.setImage(UIImage(systemName: "text.justify"), for: .normal)
         hideButton.setImage(UIImage(systemName: "eye"), for: .normal)
         hideButton.addTarget(self, action: #selector(hideButtonTapped), for: .touchUpInside)
         
         leftButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         rightButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         firstButton.setImage(UIImage(systemName: "chevron.left.2"), for: .normal)
-
+        isCompleteButton.addTarget(self, action: #selector(isCompleteButtonTapped), for: .touchUpInside)
     }
     
+    func bind(data: WordEntity) {
+        
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: .light)
+        let image: UIImage?
+        if data.isMemorize {
+            image = UIImage(systemName: "checkmark.square.fill", withConfiguration: imageConfig)
+        } else {
+            image = UIImage(systemName: "xmark.square.fill", withConfiguration: imageConfig)
+        }
+        isCompleteButton.setImage(image, for: .normal)
+        
+        vocaLabel.text = data.english
+        koreanLabel.text = data.korea
+    }
 
     func setUpUI() {
-        view.addSubview(countLabel)
         view.addSubview(vocaLabel)
-        view.addSubview(partLabel)
         view.addSubview(koreanLabel)
         view.addSubview(bottomSheetView)
         view.addSubview(isCompleteButton)
@@ -89,14 +91,6 @@ class SelectedVocaViewController: UIViewController {
         vocaLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview().offset(-40)
-        }
-        countLabel.snp.makeConstraints { make in
-            make.top.left.equalTo(view.safeAreaLayoutGuide).offset(10)
-        }
-        partLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.left.equalToSuperview().offset(10)
-            make.width.equalTo(60)
         }
         koreanLabel.snp.makeConstraints {make in
             make.centerX.equalToSuperview()
@@ -130,12 +124,34 @@ class SelectedVocaViewController: UIViewController {
     }
     @objc func hideButtonTapped() {
         vocaLabel.isHidden = !vocaLabel.isHidden
-        partLabel.isHidden = !partLabel.isHidden
         if vocaLabel.isHidden {
             hideButton.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
             
         } else {
             hideButton.setImage(UIImage(systemName: "eye"), for: .normal)
         }
+    }
+    @objc func isCompleteButtonTapped() {
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 300, weight: .light)
+        guard let data = data else { return }
+        
+        switch buttonState {
+        case 1:
+            let image = UIImage(systemName: "checkmark.square.fill", withConfiguration: imageConfig)
+            isCompleteButton.setImage(image, for: .normal)
+            data.isMemorize = true
+            print(data.isMemorize)
+
+            buttonState = 2
+        case 2:
+            let image = UIImage(systemName: "xmark.square.fill", withConfiguration: imageConfig)
+            isCompleteButton.setImage(image, for: .normal)
+            data.isMemorize = false
+            print(data.isMemorize)
+            buttonState = 1
+        default:
+            break
+        }
+        
     }
 }
