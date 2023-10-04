@@ -53,6 +53,7 @@
 		18E0D22B2AC19344005DDA6F /* CircleProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0D22A2AC19344005DDA6F /* CircleProgressBar.swift */; };
 		18ED60EE2ACCE3580089FC42 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18ED60EC2ACCE3580089FC42 /* Model.xcdatamodeld */; };
 		18ED60F02ACCE8190089FC42 /* VocabularyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED60EF2ACCE8190089FC42 /* VocabularyRepository.swift */; };
+		7EC2C0022ACD33EE005F1407 /* VocabularyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2C0012ACD33EE005F1407 /* VocabularyViewController.swift */; };
 		9B865E032AC2D72E00E562FA /* VocaListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B865E022AC2D72E00E562FA /* VocaListTableViewCell.swift */; };
 		9B865E052AC2E07900E562FA /* VocaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B865E042AC2E07900E562FA /* VocaViewController.swift */; };
 		9B865E072AC2E14400E562FA /* VocaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B865E062AC2E14400E562FA /* VocaTableViewCell.swift */; };
@@ -107,6 +108,7 @@
 		18E0D22A2AC19344005DDA6F /* CircleProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgressBar.swift; sourceTree = "<group>"; };
 		18ED60ED2ACCE3580089FC42 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		18ED60EF2ACCE8190089FC42 /* VocabularyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyRepository.swift; sourceTree = "<group>"; };
+		7EC2C0012ACD33EE005F1407 /* VocabularyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyViewController.swift; sourceTree = "<group>"; };
 		9B865E022AC2D72E00E562FA /* VocaListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaListTableViewCell.swift; sourceTree = "<group>"; };
 		9B865E042AC2E07900E562FA /* VocaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaViewController.swift; sourceTree = "<group>"; };
 		9B865E062AC2E14400E562FA /* VocaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaTableViewCell.swift; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 			isa = PBXGroup;
 			children = (
 				18E0D21A2AC133FE005DDA6F /* AddVocabularyViewController.swift */,
+				7EC2C0012ACD33EE005F1407 /* VocabularyViewController.swift */,
 			);
 			path = AddVocabularyPage;
 			sourceTree = "<group>";
@@ -514,6 +517,7 @@
 				08AEE6042ACAF53300FBE770 /* FTModalBottomView.swift in Sources */,
 				08AEE6022ACAF52300FBE770 /* QuizCountView.swift in Sources */,
 				08AEE6082ACAF55000FBE770 /* FTOPViewController.swift in Sources */,
+				7EC2C0022ACD33EE005F1407 /* VocabularyViewController.swift in Sources */,
 				081E2DF62ACCE8A900A07764 /* Observable.swift in Sources */,
 				18CE95B42AC6DAF400CAA133 /* AnswerViewController.swift in Sources */,
 				18ED60EE2ACCE3580089FC42 /* Model.xcdatamodeld in Sources */,
