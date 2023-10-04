@@ -32,11 +32,7 @@ class VocaListTableViewCell: UITableViewCell {
         let label = UILabel()
         return label
     }()
-    let inProgressRateLabel: UILabel = {
-        let label = UILabel()
-        label.backgroundColor = .purple
-        return label
-    }()
+
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -52,6 +48,41 @@ class VocaListTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
     
+    func bind(data: VocabularyEntity) {
+        let word = data.words?.array as! [WordEntity]
+        let cmpCount = word.filter{$0.isMemorize == true}.count
+        let unCmpCount = word.count - cmpCount
+        vocaListLabel.text = data.title
+        vocaNumbersLabel.text = "V: \(word.count)"
+        completeNumbersLabel.text = "✅: \(cmpCount)"
+        uncompleteNumbersLabel.text = "❎: \(unCmpCount)"
+        
+        let num1 = Double(word.count)
+        let num2 = Double(cmpCount)
+        var persent: Double = 0
+        if num1 != 0 && num2 != 0 { persent = num2 / num1 }
+        setUpProgressBar(persent: persent)
+    }
+    
+    func setUpProgressBar(persent: Double) {
+        
+        let inProgressRateLabel: CircleProgressBar = {
+            let view = CircleProgressBar(correctRate: persent, type: .percent)
+            view.resultViewLineWidth = 0.5
+            view.progressBarLineWidth = 1
+            view.correctRateLabel.font = Typography.body3.font
+            view.lineColor = .systemRed
+            return view
+        }()
+        contentView.addSubview(inProgressRateLabel)
+        inProgressRateLabel.snp.makeConstraints { make in
+            make.right.equalToSuperview().offset(-15)
+            make.bottom.equalToSuperview().offset(-8)
+            make.width.height.equalTo(Constant.screenWidth * 0.1)
+        }
+        inProgressRateLabel.progressBarSetupAnimation()
+    }
+    
     func setUpUI() {
         
         contentView.addSubview(setButton)
@@ -59,7 +90,7 @@ class VocaListTableViewCell: UITableViewCell {
         contentView.addSubview(vocaNumbersLabel)
         contentView.addSubview(uncompleteNumbersLabel)
         contentView.addSubview(completeNumbersLabel)
-        contentView.addSubview(inProgressRateLabel)
+
         
         setButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
@@ -67,12 +98,7 @@ class VocaListTableViewCell: UITableViewCell {
             make.width.equalTo(30)
             make.height.equalTo(30)
         }
-        inProgressRateLabel.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-15)
-            make.bottom.equalToSuperview().offset(-8)
-            make.width.equalTo(45)
-            make.height.equalTo(55)
-        }
+
         vocaNumbersLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(10)
             make.bottom.equalToSuperview().offset(-8)
@@ -96,7 +122,6 @@ class VocaListTableViewCell: UITableViewCell {
         vocaListLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.left.equalToSuperview().offset(10)
-            make.right.equalTo(inProgressRateLabel.snp.left).offset(-15)
             make.bottom.equalTo(vocaNumbersLabel.snp.top).offset(-10)
         }
 

@@ -26,7 +26,10 @@ final class VocaListViewController: UIViewController, UISearchResultsUpdating {
         VocaList(name: "Voca List 2", description: "Another Voca List"),
         VocaList(name: "Voca List 3", description: "Another Voca List")
         ]
-    var filteredVocaLists = [VocaList]()
+    
+    var filteredVocaLists: [VocabularyEntity] = []
+    
+    let coreDataManager = VocabularyRepository.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +39,8 @@ final class VocaListViewController: UIViewController, UISearchResultsUpdating {
         vocaListTableView.delegate = self
         vocaListTableView.dataSource = self
         vocaListTableView.register(VocaListTableViewCell.self, forCellReuseIdentifier: "ListCell")
-        
+        coreDataManager.create(title: "hihihi", words: [])
+        coreDataManager.create(title: "byebye", words: [])
     }
 
     
@@ -52,7 +56,6 @@ final class VocaListViewController: UIViewController, UISearchResultsUpdating {
             make.edges.equalToSuperview()
         }
         vocaSearchController.searchBar.snp.makeConstraints { make in
-//            make.left.equalToSuperview().offset(80)
             make.right.equalToSuperview().offset(-80)
             make.top.equalTo(additionalSafeAreaInsets)
         }
@@ -96,34 +99,20 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
         if vocaSearchController.isActive {
             return filteredVocaLists.count
         } else {
-            return allVocaLists.count
+            return coreDataManager.allFetch().count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as! VocaListTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: VocaListTableViewCell.identifier, for: indexPath) as! VocaListTableViewCell
         
-        let vocaList: VocaList
+        var targetAry: [VocabularyEntity] = []
         if vocaSearchController.isActive {
-            if indexPath.row < filteredVocaLists.count {
-                vocaList = filteredVocaLists[indexPath.row]
-            } else {
-                vocaList = VocaList(name: "", description: "")
-            }
+            targetAry = filteredVocaLists
         } else {
-            if indexPath.row < allVocaLists.count {
-                vocaList = allVocaLists[indexPath.row]
-            } else {
-                vocaList = VocaList(name: "", description: "")
-            }
+            targetAry = coreDataManager.allFetch()
         }
-        
-        cell.vocaListLabel.text = vocaList.name
-        //워드모델이 필요할듯?
-        cell.vocaNumbersLabel.text = "V: \(indexPath.row)"
-        cell.completeNumbersLabel.text = "✅: \(indexPath.row)"
-        cell.uncompleteNumbersLabel.text = "❎: \(indexPath.row)"
-        cell.inProgressRateLabel.text = "\(indexPath.row)%"
+        cell.bind(data: targetAry[indexPath.row])
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -134,20 +123,25 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
         guard let searchText = searchController.searchBar.text else { return }
         
         if searchText.isEmpty {
-            filteredVocaLists = allVocaLists
+            filteredVocaLists = coreDataManager.allFetch()
         } else {
-            filteredVocaLists = allVocaLists.filter { vocaList in
-                return vocaList.name.localizedCaseInsensitiveContains(searchText)
-            }
+            let filterAry = coreDataManager.allFetch().filter{$0.title!.contains(searchText)}
+            filteredVocaLists = filterAry
         }
-        
-        filteredVocaLists.sort { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
         
         vocaListTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vocaViewController = VocaViewController()
+        
+        var targetAry: [VocabularyEntity] = []
+        if vocaSearchController.isActive {
+            targetAry = filteredVocaLists
+        } else {
+            targetAry = coreDataManager.allFetch()
+        }
+        
+        let vocaViewController = VocaViewController(vocabularyID: targetAry[indexPath.row].objectID)
         
         self.navigationController?.pushViewController(vocaViewController, animated: true)
     }
