@@ -66,9 +66,3 @@ extension FTSettingTypeCell {
         self.title.text = title
     }
 }
-
-extension FTSettingTypeCell: CollectionViewIdentifier {
-    static var identifier: String {
-        String(describing: type(of: self))
-    }
-}
