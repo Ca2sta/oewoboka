@@ -141,7 +141,8 @@ extension FTOPViewController: ViewHasButton {
             if viewModel.count.value > 0 { viewModel.count.value -= 1 }
         case bottomView.startButton:
             let data = QuizSettingData(featureType: self.type, selectedVocabulary: [], quizType: viewModel.quizType, quizCount: viewModel.count.value)
-            // TODO: - quizViewController연결
+//            let vc = QuizViewController(data: data)
+//            self.navigationController?.pushViewController(vc, animated: true)
 
         default:
             print("Button not registered")
