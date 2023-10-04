@@ -7,7 +7,7 @@ import SnapKit
 
 class VocaTableViewCell: UITableViewCell {
     static let identifier = "VocaCell"
-    var buttonState = 1
+    var buttonState = 2
     var data: WordEntity?
     let dateLabel : UILabel = {
         let label = UILabel()
@@ -124,6 +124,5 @@ class VocaTableViewCell: UITableViewCell {
         default:
             break
         }
-        
     }
 }

@@ -7,26 +7,14 @@
 import Foundation
 import UIKit
 import SnapKit
-
-struct VocaList {
-    let name: String
-    let description: String
-}
+import CoreData
 
 final class VocaListViewController: UIViewController, UISearchResultsUpdating {
     
     let vocaListTableView = UITableView()
     let vocaSearchController = UISearchController(searchResultsController: nil)
     let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: VocaListViewController.self, action: #selector(addButtonTapped))
-    var allVocaLists = [
-        VocaList(name: "단어장 1", description: "Another Voca List"),
-        VocaList(name: "단어장 2", description: "Another Voca List"),
-        VocaList(name: "단어장 3", description: "Another Voca List"),
-        VocaList(name: "Voca List 1", description: "This is the first Voca List"),
-        VocaList(name: "Voca List 2", description: "Another Voca List"),
-        VocaList(name: "Voca List 3", description: "Another Voca List")
-        ]
-    
+
     var filteredVocaLists: [VocabularyEntity] = []
     
     let coreDataManager = VocabularyRepository.shared
@@ -41,6 +29,7 @@ final class VocaListViewController: UIViewController, UISearchResultsUpdating {
         vocaListTableView.register(VocaListTableViewCell.self, forCellReuseIdentifier: "ListCell")
         coreDataManager.create(title: "hihihi")
         coreDataManager.create(title: "byebye")
+        vocaListTableView.reloadData()
     }
 
     
@@ -129,7 +118,7 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
             filteredVocaLists = filterAry
         }
         
-        vocaListTableView.reloadData()
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -142,7 +131,7 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
         }
         
         let vocaViewController = VocaViewController(vocabularyID: targetAry[indexPath.row].objectID)
-        
+        vocaListTableView.reloadData()
         self.navigationController?.pushViewController(vocaViewController, animated: true)
     }
 }
