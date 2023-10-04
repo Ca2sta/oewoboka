@@ -34,6 +34,11 @@ class VocaViewController: UIViewController {
         coreDataManager.addWord(vocabularyEntityId: vocabularyID, word: Word(english: "bye", korea: "ㅂㅇ", isMemorize: false, isBookmark: false))
         coreDataManager.addWord(vocabularyEntityId: vocabularyID, word: Word(english: "happy", korea: "^^", isMemorize: false, isBookmark: false))
         super.init(nibName: nil, bundle: nil)
+        
+        if let vocabulary = coreDataManager.fetch(id: vocabularyID) {
+            totalWordCount = vocabulary.words?.count ?? 0
+        }
+        allLabel.text = "전체 단어수: \(totalWordCount)"
     }
     
     required init?(coder: NSCoder) {
@@ -49,7 +54,6 @@ class VocaViewController: UIViewController {
         vocaTableView.register(VocaTableViewCell.self, forCellReuseIdentifier: VocaTableViewCell.identifier)
         navigationItem.titleView = vocaSearchBar
         vocaSearchBar.delegate = self
-
     }
     func setUpUI() {
         view.addSubview(vocaTableView)
@@ -111,6 +115,8 @@ extension VocaViewController: UITableViewDelegate,UITableViewDataSource,UISearch
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedVocaViewController = SelectedVocaViewController()
+        guard let voca = coreDataManager.fetch(id: vocabularyID)?.words?.array as? [WordEntity] else {return}
+        selectedVocaViewController.bind(data: voca[indexPath.row])
         
         self.navigationController?.pushViewController(selectedVocaViewController, animated: true)
     }
