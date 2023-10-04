@@ -9,20 +9,53 @@ import UIKit
 
 class AddVocabularyViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    private let englishWordSearchField = UITextField()
+        private let koreanMeaningSearchField = UITextField()
+
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            
+            setupUI()
+        }
+
+        private func setupUI() {
+            view.backgroundColor = .white
+
+            let englishLabel = UILabel()
+            englishLabel.text = "English"
+            view.addSubview(englishLabel)
+
+            englishWordSearchField.borderStyle = .roundedRect
+            view.addSubview(englishWordSearchField)
+            
+            let koreanLabel = UILabel()
+            koreanLabel.text = "Korean"
+            view.addSubview(koreanLabel)
+
+            koreanMeaningSearchField.borderStyle = .roundedRect
+            view.addSubview(koreanMeaningSearchField)
+
+     
+            englishLabel.snp.makeConstraints { make in
+                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
+                make.leading.equalTo(view).offset(20)
+            }
+
+            englishWordSearchField.snp.makeConstraints { make in
+                make.top.equalTo(englishLabel.snp.bottom).offset(10)
+                make.leading.equalTo(view).offset(20)
+                make.trailing.equalTo(view).offset(-20)
+            }
+
+            koreanLabel.snp.makeConstraints { make in
+                make.top.equalTo(englishWordSearchField.snp.bottom).offset(20)
+                make.leading.equalTo(view).offset(20)
+            }
+
+            koreanMeaningSearchField.snp.makeConstraints { make in
+                make.top.equalTo(koreanLabel.snp.bottom).offset(10)
+                make.leading.equalTo(view).offset(20)
+                make.trailing.equalTo(view).offset(-20)
+            }
+        }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
