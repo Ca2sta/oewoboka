@@ -55,6 +55,7 @@ final class VocabularyViewController: UIViewController {
     // '생성' 버튼
     private let addVocablaryButton: DefaultButton = {
         let button = DefaultButton()
+        button.isHidden = true
         button.setTitle("생성", for: .normal)
         button.addTarget(self, action: #selector(didTapaddVocablaryButton), for: .touchUpInside)
         return button
@@ -136,6 +137,16 @@ final class VocabularyViewController: UIViewController {
         tabBarController?.selectedIndex = 0
     }
     
+    func buttonHiddenMotion(toggle:Bool){
+        UIView.transition(with: addVocablaryButton, duration: 0.5, options: .transitionFlipFromTop, animations: { [weak self] in
+            if toggle{
+                self?.addVocablaryButton.alpha = 0
+            } else {
+                self?.addVocablaryButton.alpha = 1
+            }
+        })
+    }
+    
     private func initTextFleid() {
         wordTextField.text = ""
         descriptionTextField.text = ""
@@ -146,11 +157,18 @@ final class VocabularyViewController: UIViewController {
 extension VocabularyViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         guard let text = textField.text else { return }
-//        navigationItem.rightBarButtonItem?.isEnabled = !text.isEmpty
-        if text.count != 0 {
-            addVocablaryButton.isHidden = false
-        } else {
+        if text.count == 0 {
             addVocablaryButton.isHidden = true
+            buttonHiddenMotion(toggle: addVocablaryButton.isHidden)
+        } else if text.count >= 1{
+            if addVocablaryButton.isHidden {
+                addVocablaryButton.isHidden = false
+                buttonHiddenMotion(toggle: addVocablaryButton.isHidden)
+            } else {
+                addVocablaryButton.isHidden = false
+            }
+            
+            
         }
         
     }
