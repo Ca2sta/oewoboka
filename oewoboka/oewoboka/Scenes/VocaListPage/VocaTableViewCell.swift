@@ -8,6 +8,7 @@ import SnapKit
 class VocaTableViewCell: UITableViewCell {
     static let identifier = "VocaCell"
     var buttonState = 1
+    var data: WordEntity?
     let dateLabel : UILabel = {
         let label = UILabel()
         label.font = Typography.body2.font
@@ -16,7 +17,7 @@ class VocaTableViewCell: UITableViewCell {
     let isCompleteButton: UIButton = {
         let button = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 300, weight: .light)
-        let image = UIImage(systemName: "checkmark.square", withConfiguration: imageConfig)
+        let image = UIImage(systemName: "xmark.square.fill", withConfiguration: imageConfig)
 
         button.setImage(image, for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
@@ -53,6 +54,24 @@ class VocaTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+    func bind(data: WordEntity) {
+        self.data = data
+        vocaLabel.text = data.english
+        koreanLabel.text = data.korea
+        
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 300, weight: .light)
+        let image: UIImage?
+        if data.isMemorize {
+            print("isMemorize's status:\(data.isMemorize)")
+            image = UIImage(systemName: "checkmark.square.fill", withConfiguration: imageConfig)
+        } else {
+            print("isMemorize's status:\(data.isMemorize)")
+            image = UIImage(systemName: "xmark.square.fill", withConfiguration: imageConfig)
+        }
+        isCompleteButton.setImage(image, for: .normal)
+    }
+    
     func setUpUI() {
         addSubview(dateLabel)
         contentView.addSubview(isCompleteButton)
@@ -72,45 +91,39 @@ class VocaTableViewCell: UITableViewCell {
             make.height.width.equalTo(45)
         }
         vocaLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(partLabel.snp.top).offset(-10)
-            make.top.equalTo(dateLabel.snp.bottom).offset(10)
+            make.centerY.equalToSuperview().offset(-15)
             make.left.equalToSuperview().offset(10)
-            make.height.equalTo(30)
-        }
-        partLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(10)
-            make.bottom.equalToSuperview().offset(-10)
-            make.width.equalTo(45)
             make.height.equalTo(30)
         }
         koreanLabel.snp.makeConstraints { make in
-            make.left.equalTo(partLabel.snp.right).offset(15)
+            make.left.equalToSuperview().offset(15)
             make.bottom.equalToSuperview().offset(-10)
             make.top.equalTo(vocaLabel.snp.bottom).offset(10)
             make.height.equalTo(30)
         }
     }
+    
     @objc func isCompleteButtonTapped() {
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 300, weight: .light)
+        guard let data = data else { return }
+        
         switch buttonState {
         case 1:
             let image = UIImage(systemName: "checkmark.square.fill", withConfiguration: imageConfig)
             isCompleteButton.setImage(image, for: .normal)
+            data.isMemorize = true
+            print(data.isMemorize)
 
             buttonState = 2
         case 2:
-      
             let image = UIImage(systemName: "xmark.square.fill", withConfiguration: imageConfig)
             isCompleteButton.setImage(image, for: .normal)
-
-            buttonState = 3
-        case 3:
-            let image = UIImage(systemName: "checkmark.square", withConfiguration: imageConfig)
-            isCompleteButton.setImage(image, for: .normal)
-
+            data.isMemorize = false
+            print(data.isMemorize)
             buttonState = 1
         default:
             break
         }
+        
     }
 }
