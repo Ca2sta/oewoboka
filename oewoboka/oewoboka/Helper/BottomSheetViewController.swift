@@ -20,6 +20,9 @@ class BottomSheetViewController: UIViewController {
     init(originY: CGFloat) {
         self.originY = originY
         super.init(nibName: nil, bundle: nil)
+        
+        view.layer.cornerRadius = 15
+        view.backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {
