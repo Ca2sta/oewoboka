@@ -18,7 +18,6 @@ final class QuizSettingView: UIView {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = Typography.body1.font
-        label.text = type == .range ? viewModel.rangeViewTitle : viewModel.typeViewTitle
         return label
     }()
     
@@ -26,15 +25,11 @@ final class QuizSettingView: UIView {
         let label = UILabel()
         label.font = Typography.body2.font
         label.textColor = .systemGray
-        label.text = type == .range ? viewModel.rangeViewDescription : viewModel.typeViewDescription
         return label
     }()
     
     lazy var rangeButton: DefaultButton = {
         let button = DefaultButton()
-        button.image = viewModel.rangeBTLeftImage
-        button.text = viewModel.rangeBTtitle
-        button.type = .rightImage(viewModel.rangeBTRightImage)
         return button
     }()
     
@@ -55,15 +50,13 @@ final class QuizSettingView: UIView {
     
     private let type: QuizSettingType
     
-    private let viewModel: FTOPViewModel
-    
     weak var buttonDelegate: ViewHasButton?
     
     init(type: QuizSettingType, viewModel: FTOPViewModel ) {
-        self.viewModel = viewModel
         self.type = type
         super.init(frame: CGRect.zero)
         setUp()
+        bind(viewModel: viewModel)
     }
     
     required init?(coder: NSCoder) {
@@ -72,6 +65,16 @@ final class QuizSettingView: UIView {
 }
 
 private extension QuizSettingView {
+    // MARK: - bind
+    func bind(viewModel: FTOPViewModel) {
+        titleLabel.text = type == .range ? viewModel.rangeViewTitle : viewModel.typeViewTitle
+        descriptionLabel.text = type == .range ? viewModel.rangeViewDescription : viewModel.typeViewDescription
+        rangeButton.image = viewModel.rangeBTLeftImage
+        rangeButton.text = viewModel.rangeBTtitle
+        rangeButton.type = .rightImage(viewModel.rangeBTRightImage)
+    }
+
+    
     // MARK: - SetUp
 
     func setUp(){

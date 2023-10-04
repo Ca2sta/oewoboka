@@ -12,8 +12,6 @@ final class FTModalBottomView: UIView {
 
     lazy var startButton: DefaultButton = {
         let button = DefaultButton()
-        button.text = viewModel.startBTTitle
-        button.image = viewModel.startBTImage
         button.type = .center
         return button
     }()
@@ -24,12 +22,10 @@ final class FTModalBottomView: UIView {
         return view
     }()
     
-    private var viewModel: FTOPViewModel
-    
     init(viewModel: FTOPViewModel) {
-        self.viewModel = viewModel
         super.init(frame: CGRect.zero)
         setUp()
+        bind(viewModel: viewModel)
     }
     
     required init?(coder: NSCoder) {
@@ -38,6 +34,12 @@ final class FTModalBottomView: UIView {
 }
 
 private extension FTModalBottomView {
+    // MARK: - bind
+    func bind(viewModel: FTOPViewModel) {
+        startButton.text = viewModel.startBTTitle
+        startButton.image = viewModel.startBTImage
+    }
+
     
     // MARK: - SetUp
 
