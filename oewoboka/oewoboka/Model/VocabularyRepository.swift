@@ -35,7 +35,7 @@ class VocabularyRepository {
     
     private let type: CoreDataType
         
-    var context: NSManagedObjectContext {
+    private var context: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
     

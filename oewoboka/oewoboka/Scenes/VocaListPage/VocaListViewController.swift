@@ -125,7 +125,7 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
         if searchText.isEmpty {
             filteredVocaLists = coreDataManager.allFetch()
         } else {
-            let filterAry = coreDataManager.allFetch().filter{$0.title!.contains(searchText)}
+            let filterAry = coreDataManager.allFetch().filter{$0.title.contains(searchText)}
             filteredVocaLists = filterAry
         }
         

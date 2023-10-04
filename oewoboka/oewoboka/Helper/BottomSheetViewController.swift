@@ -64,7 +64,7 @@ extension BottomSheetViewController {
         let previousLocation = touch.previousLocation(in: window)
         let location = touch.location(in: window)
         
-        let dismissY = originY + 200
+        let dismissY = originY + 200.0
         let isFasterDown = (location.y - previousLocation.y) >= 7
         
         if location.y >= dismissY { dismiss(animated: true) }
@@ -72,7 +72,7 @@ extension BottomSheetViewController {
         else {
             isDismissDragging = false
             UIView.animate(withDuration: 0.1) {
-                self.view.frame.origin.y = self.originY
+                self.view.frame.origin.y = 0
             }
         }
     }

@@ -56,6 +56,8 @@
 		18ED60F82ACD4A6D0089FC42 /* BottomSheetSelectVocabularyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED60F72ACD4A6D0089FC42 /* BottomSheetSelectVocabularyViewController.swift */; };
 		18ED60FB2ACD4AF90089FC42 /* VocabularyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED60FA2ACD4AF90089FC42 /* VocabularyTableViewCell.swift */; };
 		18ED60FD2ACD5FFA0089FC42 /* WordSaveNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED60FC2ACD5FFA0089FC42 /* WordSaveNotificationView.swift */; };
+		18ED61042ACDCBB10089FC42 /* VocabularyEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED61022ACDCBB10089FC42 /* VocabularyEntity+CoreDataClass.swift */; };
+		18ED61052ACDCBB10089FC42 /* VocabularyEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED61032ACDCBB10089FC42 /* VocabularyEntity+CoreDataProperties.swift */; };
 		7EC2C0022ACD33EE005F1407 /* VocabularyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC2C0012ACD33EE005F1407 /* VocabularyViewController.swift */; };
 		9B865E032AC2D72E00E562FA /* VocaListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B865E022AC2D72E00E562FA /* VocaListTableViewCell.swift */; };
 		9B865E052AC2E07900E562FA /* VocaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B865E042AC2E07900E562FA /* VocaViewController.swift */; };
@@ -114,6 +116,8 @@
 		18ED60F72ACD4A6D0089FC42 /* BottomSheetSelectVocabularyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetSelectVocabularyViewController.swift; sourceTree = "<group>"; };
 		18ED60FA2ACD4AF90089FC42 /* VocabularyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyTableViewCell.swift; sourceTree = "<group>"; };
 		18ED60FC2ACD5FFA0089FC42 /* WordSaveNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordSaveNotificationView.swift; sourceTree = "<group>"; };
+		18ED61022ACDCBB10089FC42 /* VocabularyEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		18ED61032ACDCBB10089FC42 /* VocabularyEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabularyEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7EC2C0012ACD33EE005F1407 /* VocabularyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyViewController.swift; sourceTree = "<group>"; };
 		9B865E022AC2D72E00E562FA /* VocaListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaListTableViewCell.swift; sourceTree = "<group>"; };
 		9B865E042AC2E07900E562FA /* VocaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaViewController.swift; sourceTree = "<group>"; };
@@ -326,6 +330,8 @@
 			isa = PBXGroup;
 			children = (
 				18ED60EC2ACCE3580089FC42 /* Model.xcdatamodeld */,
+				18ED61022ACDCBB10089FC42 /* VocabularyEntity+CoreDataClass.swift */,
+				18ED61032ACDCBB10089FC42 /* VocabularyEntity+CoreDataProperties.swift */,
 				18ED60EF2ACCE8190089FC42 /* VocabularyRepository.swift */,
 			);
 			path = Model;
@@ -531,6 +537,7 @@
 				18C345862ACA8CFC0072995F /* BottomSheetViewController.swift in Sources */,
 				08AEE5F12ACAF3EA00FBE770 /* FeatureViewModel.swift in Sources */,
 				18ED60F82ACD4A6D0089FC42 /* BottomSheetSelectVocabularyViewController.swift in Sources */,
+				18ED61052ACDCBB10089FC42 /* VocabularyEntity+CoreDataProperties.swift in Sources */,
 				18BF668A2AC208B300C53C07 /* Typography.swift in Sources */,
 				18E0D2132AC13388005DDA6F /* QuizViewController.swift in Sources */,
 				18E0D22B2AC19344005DDA6F /* CircleProgressBar.swift in Sources */,
@@ -542,6 +549,7 @@
 				08AEE5F82ACAF45000FBE770 /* FeatureCollectionViewCell.swift in Sources */,
 				18E0D1F52AC1305D005DDA6F /* TabBarController.swift in Sources */,
 				9B865E072AC2E14400E562FA /* VocaTableViewCell.swift in Sources */,
+				18ED61042ACDCBB10089FC42 /* VocabularyEntity+CoreDataClass.swift in Sources */,
 				08AEE5E92ACAF2D300FBE770 /* PresentationController.swift in Sources */,
 				08AEE6062ACAF54000FBE770 /* FTSettingTypeCell.swift in Sources */,
 				08AEE6002ACAF51400FBE770 /* QuizSettingView.swift in Sources */,
