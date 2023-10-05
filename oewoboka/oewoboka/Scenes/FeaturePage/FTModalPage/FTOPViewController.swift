@@ -140,14 +140,21 @@ extension FTOPViewController: ViewHasButton {
         case middleView.countView.minusButton:
             if viewModel.count.value > 0 { viewModel.count.value -= 1 }
         case bottomView.startButton:
-            let data = QuizSettingData(featureType: self.type, selectedVocabulary: viewModel.vocaList.value, quizType: viewModel.quizType, quizCount: viewModel.count.value)
-            let vc = UINavigationController(rootViewController: QuizViewController(quizData: data))  
-            vc.modalPresentationStyle = .fullScreen
-            guard let pvc = self.presentingViewController else { return }
-            self.dismiss(animated: true) {
-              pvc.present(vc, animated: true, completion: nil)
+            
+            if viewModel.vocaList.value.count == 0 {
+                let alert  = UIAlertController(title: "경고", message: "하나 이상의 단어장을 선택해 주세요.", preferredStyle: .alert)
+                let yes = UIAlertAction(title: "확인", style: .destructive)
+                alert.addAction(yes)
+                self.present(alert, animated: true)
+            } else {
+                let data = QuizSettingData(featureType: self.type, selectedVocabulary: viewModel.vocaList.value, quizType: viewModel.quizType, quizCount: viewModel.count.value)
+                let vc = UINavigationController(rootViewController: QuizViewController(quizData: data))
+                vc.modalPresentationStyle = .fullScreen
+                guard let pvc = self.presentingViewController else { return }
+                self.dismiss(animated: true) {
+                  pvc.present(vc, animated: true, completion: nil)
+                }
             }
-
         default:
             print("Button not registered")
         }
