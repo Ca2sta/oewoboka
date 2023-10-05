@@ -29,11 +29,12 @@ final class VocaListViewController: UIViewController, UISearchResultsUpdating {
         vocaListTableView.register(VocaListTableViewCell.self, forCellReuseIdentifier: "ListCell")
         coreDataManager.create(title: "hihihi")
         coreDataManager.create(title: "byebye")
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        print("asd")
         vocaListTableView.reloadData()
     }
     func setUpUI() {
@@ -122,7 +123,7 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
         if searchText.isEmpty {
             filteredVocaLists = coreDataManager.allFetch()
         } else {
-            let filterAry = coreDataManager.allFetch().filter{$0.title!.contains(searchText)}
+            let filterAry = coreDataManager.allFetch().filter{$0.title.contains(searchText)}
             filteredVocaLists = filterAry
         }
         vocaListTableView.reloadData()

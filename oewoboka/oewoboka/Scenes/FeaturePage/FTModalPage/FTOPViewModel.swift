@@ -11,7 +11,7 @@ import UIKit
 final class FTOPViewModel {
     
     init() {
-        print("viewModel init")
+        print("$$$viewModel init")
     }
     // MARK: - RangeView
     let rangeViewTitle = "문제 범위"
@@ -26,9 +26,9 @@ final class FTOPViewModel {
     ]
     
     // MARK: - QuizSettingView
-    let rangeBTLeftImage = UIImage(systemName: "person.fill")
-    let rangeBTtitle = "단어장 선택"
-    let rangeBTRightImage = UIImage(systemName: "person")
+    let rangeBTLeftImage = UIImage(systemName: "book.closed")
+    var rangeBTtitle: Observable<String> = Observable("단어장 선택")
+    let rangeBTRightImage = UIImage(systemName: "chevron.right")
     var quizType: QuizType = .wordDictation
 
     // MARK: - QuizCountView
@@ -44,7 +44,10 @@ final class FTOPViewModel {
     
     // MARK: - BottomView
     let startBTTitle = "퀴즈 시작"
-    let startBTImage = UIImage(systemName: "person")
+    let startBTImage = UIImage(systemName: "arrowtriangle.right.fill")
+
+    // MARK: - Selected VocaList
+    var vocaList: Observable<[VocabularyEntity]> = Observable([])
 
     
 }
