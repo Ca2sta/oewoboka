@@ -72,7 +72,7 @@ extension BottomSheetViewController {
         else {
             isDismissDragging = false
             UIView.animate(withDuration: 0.1) {
-                self.view.frame.origin.y = 0
+                self.view.frame.origin.y = self.originY
             }
         }
     }
