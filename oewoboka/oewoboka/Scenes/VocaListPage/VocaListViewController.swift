@@ -122,6 +122,17 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
         } else {
             targetAry = coreDataManager.allFetch()
         }
+        cell.oneVocabluaryRemoveHandler = { [weak self] in
+            guard let self else { return }
+            let alert  = UIAlertController(title: "경고", message: "단어장이 한개 뿐이므로 삭제할 수 없습니다.", preferredStyle: .alert)
+            let yes = UIAlertAction(title: "확인", style: .destructive)
+            alert.addAction(yes)
+            self.present(alert, animated: true)
+        }
+        cell.tableviewReload = { [weak self] in
+            guard let self else { return }
+            self.vocaListTableView.reloadData()
+        }
         cell.bind(data: targetAry[indexPath.row])
         return cell
     }

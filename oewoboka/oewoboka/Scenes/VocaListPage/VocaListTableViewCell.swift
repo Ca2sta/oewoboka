@@ -45,6 +45,9 @@ class VocaListTableViewCell: UITableViewCell {
         view.lineColor = .systemRed
         return view
     }()
+    var oneVocabluaryRemoveHandler: () -> Void = {}
+    var tableviewReload: () -> Void = {}
+    private var vocabulary: VocabularyEntity? = nil
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -62,6 +65,7 @@ class VocaListTableViewCell: UITableViewCell {
     }
     
     func bind(data: VocabularyEntity) {
+        self.vocabulary = data
         let word = data.words?.array as! [WordEntity]
         let cmpCount = word.filter{$0.isMemorize == true}.count
         let unCmpCount = word.count - cmpCount
@@ -152,19 +156,20 @@ class VocaListTableViewCell: UITableViewCell {
             print("수정을 선택했습니다.")
         }
 
-        let copyAction = UIAlertAction(title: "복사", style: .default) { _ in
-            print("복사를 선택했습니다.")
-        }
-
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
-
-            print("삭제를 선택했습니다.")
+            guard let vocabulary = self.vocabulary else { return }
+            let coredataManager = VocabularyRepository.shared
+            if coredataManager.allFetch().count == 1 {
+                self.oneVocabluaryRemoveHandler()
+            } else {
+                VocabularyRepository.shared.removeVocabulary(vocabulary: vocabulary)
+                self.tableviewReload()
+            }
         }
 
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
 
         alertController.addAction(editAction)
-        alertController.addAction(copyAction)
         alertController.addAction(deleteAction)
         alertController.addAction(cancelAction)
 
