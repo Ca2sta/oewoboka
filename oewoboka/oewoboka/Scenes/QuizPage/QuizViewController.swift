@@ -70,6 +70,7 @@ final class QuizViewController: UIViewController {
         self.viewModel.featureType = quizData.featureType
         self.viewModel.quizType = quizData.quizType
         super.init(nibName: nil, bundle: nil)
+        view.backgroundColor = .white
         quizTypeSetup()
         view.backgroundColor = .white
     }
@@ -125,7 +126,6 @@ private extension QuizViewController {
     }
     
     func navigationSetup() {
-        tabBarController?.hidesBottomBarWhenPushed = true
         let leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .done, target: self, action: #selector(popViewController))
         leftBarButtonItem.tintColor = .black
         navigationItem.leftBarButtonItem = leftBarButtonItem
