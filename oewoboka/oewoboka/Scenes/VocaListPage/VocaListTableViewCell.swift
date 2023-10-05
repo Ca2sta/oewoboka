@@ -13,6 +13,7 @@ class VocaListTableViewCell: UITableViewCell {
     static let identifier = "ListCell"
     let setButton: UIButton = {
         let button = UIButton(type: .system)
+        button.tintColor = .systemPink
         return button
     }()
     let vocaListLabel: UILabel = {
@@ -20,23 +21,27 @@ class VocaListTableViewCell: UITableViewCell {
         label.font = Typography.title1.font
         return label
     }()
+    
     let vocaNumbersLabel: UILabel = {
          let label = UILabel()
          return label
      }()
     let completeNumbersLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .systemPink
         return label
     }()
     let uncompleteNumbersLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .systemPink
         return label
     }()
     let inProgressRateLabel: CircleProgressBar = {
         let view = CircleProgressBar(correctRate: 0, type: .percent)
-        view.resultViewLineWidth = 0.5
-        view.progressBarLineWidth = 1
+        view.resultViewLineWidth = 1
+        view.progressBarLineWidth = 3
         view.correctRateLabel.font = Typography.body3.font
+//        view.backgroundColor = .black
         view.lineColor = .systemRed
         return view
     }()
@@ -50,6 +55,7 @@ class VocaListTableViewCell: UITableViewCell {
 
 
     }
+
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -60,9 +66,28 @@ class VocaListTableViewCell: UITableViewCell {
         let cmpCount = word.filter{$0.isMemorize == true}.count
         let unCmpCount = word.count - cmpCount
         vocaListLabel.text = data.title
-        vocaNumbersLabel.text = "V: \(word.count)"
-        completeNumbersLabel.text = "✅: \(cmpCount)"
-        uncompleteNumbersLabel.text = "❎: \(unCmpCount)"
+        
+        // MARK: - total
+        let attributedString1 = NSMutableAttributedString(string: "")
+        let imageAttachment1 = NSTextAttachment()
+        imageAttachment1.image = UIImage(systemName: "info.square")
+        attributedString1.append(NSAttributedString(attachment: imageAttachment1))
+        attributedString1.append(NSAttributedString(string: "\(word.count)"))
+        vocaNumbersLabel.attributedText = attributedString1
+        // MARK: - cmp
+        let attributedString2 = NSMutableAttributedString(string: "")
+        let imageAttachment2 = NSTextAttachment()
+        imageAttachment2.image = UIImage(systemName: "checkmark.square")?.withTintColor(.systemPink)
+        attributedString2.append(NSAttributedString(attachment: imageAttachment2))
+        attributedString2.append(NSAttributedString(string: "\(cmpCount)"))
+        completeNumbersLabel.attributedText = attributedString2
+        // MARK: - unCmp
+        let attributedString3 = NSMutableAttributedString(string: "")
+        let imageAttachment3 = NSTextAttachment()
+        imageAttachment3.image = UIImage(systemName: "square")?.withTintColor(.systemPink)
+        attributedString3.append(NSAttributedString(attachment: imageAttachment3))
+        attributedString3.append(NSAttributedString(string: "\(unCmpCount)"))
+        uncompleteNumbersLabel.attributedText = attributedString3
         
         let num1 = Double(word.count)
         let num2 = Double(cmpCount)
@@ -79,52 +104,44 @@ class VocaListTableViewCell: UITableViewCell {
     
     func setUpUI() {
         
-        contentView.addSubview(setButton)
         contentView.addSubview(vocaListLabel)
+        contentView.addSubview(setButton)
+        contentView.addSubview(inProgressRateLabel)
         contentView.addSubview(vocaNumbersLabel)
         contentView.addSubview(uncompleteNumbersLabel)
         contentView.addSubview(completeNumbersLabel)
-        contentView.addSubview(inProgressRateLabel)
+  
         
-        inProgressRateLabel.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-15)
-            make.bottom.equalToSuperview().offset(-8)
-            make.width.height.equalTo(Constant.screenWidth * 0.1)
+
+        vocaListLabel.snp.makeConstraints { make in
+            make.top.left.equalToSuperview().inset(Constant.defalutPadding)
         }
         
         setButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
-            make.right.equalToSuperview().offset(-10)
-            make.width.equalTo(30)
-            make.height.equalTo(30)
+            make.top.right.equalToSuperview().inset(Constant.defalutPadding)
+            make.width.equalTo(Constant.screenHeight * 0.05)
+            make.height.equalTo(Constant.screenHeight * 0.05)
         }
 
+        inProgressRateLabel.snp.makeConstraints { make in
+            make.top.equalTo(setButton.snp.bottom).offset(Constant.defalutPadding)
+            make.centerX.equalTo(setButton.snp.centerX)
+            make.height.width.equalTo(Constant.screenHeight * 0.05)
+            make.bottom.equalToSuperview().inset(Constant.defalutPadding)
+        }
         vocaNumbersLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(10)
-            make.bottom.equalToSuperview().offset(-8)
-            make.width.equalTo(70)
-            make.height.equalTo(20)
+            make.bottom.equalTo(inProgressRateLabel.snp.bottom)
+            make.left.equalToSuperview().inset(Constant.defalutPadding)
         }
         completeNumbersLabel.snp.makeConstraints { make in
-            make.left.equalTo(vocaNumbersLabel.snp.right).offset(25)
-            make.bottom.equalToSuperview().offset(-8)
-            make.width.equalTo(70)
-            make.height.equalTo(20)
+            make.bottom.equalTo(inProgressRateLabel.snp.bottom)
+            make.left.equalTo(vocaNumbersLabel.snp.right).offset(Constant.defalutPadding)
         }
-
+//
         uncompleteNumbersLabel.snp.makeConstraints { make in
-            make.left.equalTo(completeNumbersLabel.snp.right).offset(25)
-            make.bottom.equalToSuperview().offset(-8)
-            make.width.equalTo(70)
-            make.height.equalTo(20)
+            make.bottom.equalTo(inProgressRateLabel.snp.bottom)
+            make.left.equalTo(completeNumbersLabel.snp.right).offset(Constant.defalutPadding)
         }
-
-        vocaListLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
-            make.left.equalToSuperview().offset(10)
-            make.bottom.equalTo(vocaNumbersLabel.snp.top).offset(-10)
-        }
-
         
     }
     
