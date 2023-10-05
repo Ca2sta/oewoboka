@@ -140,9 +140,9 @@ extension FTOPViewController: ViewHasButton {
         case middleView.countView.minusButton:
             if viewModel.count.value > 0 { viewModel.count.value -= 1 }
         case bottomView.startButton:
-            
-            if viewModel.vocaList.value.count == 0 {
-                let alert  = UIAlertController(title: "경고", message: "하나 이상의 단어장을 선택해 주세요.", preferredStyle: .alert)
+            print(viewModel.vocaList.value.compactMap({ $0.words?.array as? [Word] }).flatMap({ $0 }))
+            if viewModel.vocaList.value.compactMap({ $0.words?.array as? [Word] }).flatMap({ $0 }).count == 0 {
+                let alert  = UIAlertController(title: "경고", message: "단어장에 단어가 존재하지 않습니다.", preferredStyle: .alert)
                 let yes = UIAlertAction(title: "확인", style: .destructive)
                 alert.addAction(yes)
                 self.present(alert, animated: true)
