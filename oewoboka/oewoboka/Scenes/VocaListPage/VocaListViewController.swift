@@ -29,10 +29,13 @@ final class VocaListViewController: UIViewController, UISearchResultsUpdating {
         vocaListTableView.register(VocaListTableViewCell.self, forCellReuseIdentifier: "ListCell")
         coreDataManager.create(title: "hihihi")
         coreDataManager.create(title: "byebye")
-        vocaListTableView.reloadData()
     }
 
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        vocaListTableView.reloadData()
+    }
     func setUpUI() {
         self.view.addSubview(vocaListTableView)
         navigationItem.titleView = vocaSearchController.searchBar
@@ -64,8 +67,11 @@ final class VocaListViewController: UIViewController, UISearchResultsUpdating {
     @objc func addButtonTapped() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        let addAction = UIAlertAction(title: "단어장 추가", style: .default) { _ in
+        let addAction = UIAlertAction(title: "단어장 추가", style: .default) { [weak self] (_) in
             print("단어장 추가를 선택했습니다.")
+            
+            let vocabularyVC = VocabularyViewController()
+            self?.navigationController?.pushViewController(vocabularyVC, animated: true)
         }
 
         let sortAction = UIAlertAction(title: "정렬 순서", style: .default) { _ in
@@ -90,6 +96,7 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
         } else {
             return coreDataManager.allFetch().count
         }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -104,6 +111,7 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
         cell.bind(data: targetAry[indexPath.row])
         return cell
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
@@ -117,7 +125,7 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
             let filterAry = coreDataManager.allFetch().filter{$0.title!.contains(searchText)}
             filteredVocaLists = filterAry
         }
-        
+        vocaListTableView.reloadData()
         
     }
     

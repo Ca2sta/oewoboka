@@ -45,6 +45,7 @@ final class VocabularyViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         
         view.addSubview(wordTextField)
         view.addSubview(descriptionTextField)
@@ -93,8 +94,10 @@ final class VocabularyViewController: UIViewController {
         guard let title = wordTextField.text else { return }
         vocabularyRepository.create(title: title)
         initTextFleid()
-        tabBarController?.selectedIndex = 0
-    }
+        
+        self.navigationController?.popViewController(animated: true)
+        
+        }
     
     private func initTextFleid() {
         wordTextField.text = ""

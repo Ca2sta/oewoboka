@@ -109,16 +109,17 @@ class VocaTableViewCell: UITableViewCell {
         
         switch buttonState {
         case 1:
-            let image = UIImage(systemName: "checkmark.square.fill", withConfiguration: imageConfig)
+            let image = UIImage(systemName: "xmark.square.fill", withConfiguration: imageConfig)
             isCompleteButton.setImage(image, for: .normal)
-            data.isMemorize = true
+            data.isMemorize = false
+
             print(data.isMemorize)
 
             buttonState = 2
         case 2:
-            let image = UIImage(systemName: "xmark.square.fill", withConfiguration: imageConfig)
+            let image = UIImage(systemName: "checkmark.square.fill", withConfiguration: imageConfig)
             isCompleteButton.setImage(image, for: .normal)
-            data.isMemorize = false
+            data.isMemorize = true
             print(data.isMemorize)
             buttonState = 1
         default:

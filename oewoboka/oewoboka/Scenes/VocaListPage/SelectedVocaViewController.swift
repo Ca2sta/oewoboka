@@ -12,6 +12,8 @@ import CoreData
 class SelectedVocaViewController: UIViewController {
     var buttonState = 2
     var data: WordEntity?
+    var currentWordIndex: Int = 0
+    var words: [WordEntity] = []
     let vocaLabel: UILabel = {
         let label = UILabel()
         label.text = "development"
@@ -63,12 +65,15 @@ class SelectedVocaViewController: UIViewController {
         firstButton.setImage(UIImage(systemName: "chevron.left.2"), for: .normal)
         
         isCompleteButton.addTarget(self, action: #selector(isCompleteButtonTapped), for: .touchUpInside)
-        
+        firstButton.addTarget(self, action: #selector(firstButtonTapped), for: .touchUpInside)
+        leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
+        rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+
     }
     
     func bind(data: WordEntity) {
         self.data = data
-
+        
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: .light)
         let image: UIImage?
         if data.isMemorize {
@@ -127,6 +132,15 @@ class SelectedVocaViewController: UIViewController {
             make.right.equalToSuperview().offset(-30)
             make.centerY.equalToSuperview()
         }
+    }
+    @objc func firstButtonTapped() {
+        print("first")
+    }
+    @objc func leftButtonTapped() {
+        print("left")
+    }
+    @objc func rightButtonTapped() {
+        print("right")
     }
     
     @objc func hideButtonTapped() {
