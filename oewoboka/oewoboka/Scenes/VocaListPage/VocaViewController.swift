@@ -60,6 +60,10 @@ class VocaViewController: UIViewController {
         navigationItem.titleView = vocaSearchBar
         vocaSearchBar.delegate = self
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        vocaTableView.reloadData()
+    }
     func setUpUI() {
         view.addSubview(vocaTableView)
         view.addSubview(allLabel)
@@ -82,7 +86,10 @@ class VocaViewController: UIViewController {
     @objc func addButtonTapped() {
         totalWordCount += 1
         allLabel.text = "전체 단어수: \(totalWordCount)"
-        print("testPlusButton")
+        if let vocabulary = coreDataManager.fetch(id: vocabularyID) {
+              let addWordVC = AddWordViewController(vocabulary: vocabulary)
+              self.navigationController?.pushViewController(addWordVC, animated: true)
+          }
         vocaTableView.reloadData()
     }
     

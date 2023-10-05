@@ -141,7 +141,7 @@ extension FTOPViewController: ViewHasButton {
             if viewModel.count.value > 0 { viewModel.count.value -= 1 }
         case bottomView.startButton:
             let data = QuizSettingData(featureType: self.type, selectedVocabulary: viewModel.vocaList.value, quizType: viewModel.quizType, quizCount: viewModel.count.value)
-            let vc = QuizViewController(quizData: data)
+            let vc = UINavigationController(rootViewController: QuizViewController(quizData: data))  
             vc.modalPresentationStyle = .fullScreen
             guard let pvc = self.presentingViewController else { return }
             self.dismiss(animated: true) {

@@ -49,7 +49,7 @@ final class DefaultButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         imageViewSetup()
-        setTitle()
+        setupTitle()
         makeRound()
         makeBorder()
     }
@@ -71,7 +71,7 @@ extension DefaultButton {
     private func imageViewSetup() {
         imageView?.contentMode = .scaleAspectFill
     }
-    private func setTitle() {
+    private func setupTitle() {
         titleLabel?.font = Typography.body1.font
         setTitleColor(UIColor.black, for: .normal)
         setTitleColor(UIColor.systemRed, for: .highlighted)
