@@ -93,6 +93,7 @@ private extension QuizCompleteViewController {
         backBarButton.tintColor = .black
         navigationItem.hidesBackButton = true
         navigationItem.leftBarButtonItem = backBarButton
+        navigationItem.title = "결과화면"
     }
     
     @objc func backButtonClick() {

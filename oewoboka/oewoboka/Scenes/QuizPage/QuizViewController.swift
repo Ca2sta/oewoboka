@@ -39,14 +39,18 @@ final class QuizViewController: UIViewController {
     private var bottomConstraint: Constraint?
     
     let vocabularyList: [VocabularyEntity]
+    
+    private var isQuizHidden: Bool = false
     private let quizType: QuizType
+    private let featureType: Feature
     private var quizResultWords: [WordEntity] = []
     private var words: [WordEntity] = []
     private let repository = VocabularyRepository.shared
     
     init(quizData: QuizSettingData) {
         self.quizType = quizData.quizType
-        self.vocabularyList = quizData.selectedVocabulary
+        self.featureType = quizData.featureType
+        self.vocabularyList = quizData.selectedVocabulary.isEmpty ? repository.allFetch() : quizData.selectedVocabulary
         super.init(nibName: nil, bundle: nil)
         quizTypeSetup()
     }
@@ -85,7 +89,7 @@ private extension QuizViewController {
     func addViews() {
         view.addSubview(backgroundCardView)
         view.addSubview(frontCardView)
-        if quizType == .training {
+        if featureType == .wordCard {
             view.addSubview(quizControlView)
         } else {
             view.addSubview(dictationStackView)
@@ -134,11 +138,19 @@ private extension QuizViewController {
         frontCardView.englishLabel.text = word.english
         frontCardView.koreaLabel.text = word.korea
         frontCardView.wordCountLabel.text = countText
-        
-        if quizType == .meanDictation {
-            frontCardView.koreaLabel.text = ""
-        } else if quizType == .wordDictation {
-            frontCardView.englishLabel.text = ""
+
+        if featureType == .dictation {
+            if quizType == .meanDictation {
+                frontCardView.koreaLabel.text = ""
+            } else if quizType == .wordDictation {
+                frontCardView.englishLabel.text = ""
+            }
+        } else if featureType == .wordCard {
+            if quizType == .meanDictation {
+                frontCardView.koreaLabel.isHidden = isQuizHidden
+            } else if quizType == .wordDictation {
+                frontCardView.englishLabel.isHidden = isQuizHidden
+            }
         }
         
         let nextIndex = index + 1
@@ -153,10 +165,18 @@ private extension QuizViewController {
         backgroundCardView.englishLabel.text = nextWord.english
         backgroundCardView.koreaLabel.text = nextWord.korea
         
-        if quizType == .meanDictation {
-            backgroundCardView.koreaLabel.text = ""
-        } else if quizType == .wordDictation {
-            backgroundCardView.englishLabel.text = ""
+        if featureType == .dictation {
+            if quizType == .meanDictation {
+                backgroundCardView.koreaLabel.text = ""
+            } else if quizType == .wordDictation {
+                backgroundCardView.englishLabel.text = ""
+            }
+        } else if featureType == .wordCard {
+            if quizType == .meanDictation {
+                backgroundCardView.koreaLabel.isHidden = isQuizHidden
+            } else if quizType == .wordDictation {
+                backgroundCardView.englishLabel.isHidden = isQuizHidden
+            }
         }
     }
     
@@ -173,7 +193,7 @@ private extension QuizViewController {
             make.edges.equalTo(frontCardView)
         }
         
-        if quizType == .training {
+        if featureType == .wordCard {
             quizControlView.snp.makeConstraints { make in
                 make.top.equalTo(frontCardView.snp.bottom).offset(margin)
                 make.height.equalTo(52)

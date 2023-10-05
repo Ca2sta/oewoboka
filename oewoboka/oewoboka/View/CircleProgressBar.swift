@@ -32,6 +32,7 @@ final class CircleProgressBar: UIView {
     private let quizRate: CGFloat
     private var displayLink: CADisplayLink?
     private var animationStartDate: Date? = nil
+    private var animationLayer: CAShapeLayer? = nil
     
     // 애니메이션 시간
     var duration: CGFloat = 1
@@ -104,6 +105,9 @@ private extension CircleProgressBar {
 extension CircleProgressBar {
     
     func progressBarSetupAnimation() {
+        if let animationLayer {
+            animationLayer.removeFromSuperlayer()
+        }
         layoutIfNeeded()
         
         let bezierPathTest = UIBezierPath(ovalIn: bounds)
@@ -134,6 +138,8 @@ extension CircleProgressBar {
         calayer.add(caAnimation, forKey: nil)
         
         startDisplayLink()
+        
+        self.animationLayer = calayer
         
         layer.addSublayer(calayer)
     }
