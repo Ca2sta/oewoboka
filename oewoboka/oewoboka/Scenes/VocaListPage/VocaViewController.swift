@@ -23,7 +23,9 @@ class VocaViewController: UIViewController {
     }()
     let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: VocaViewController.self, action: #selector(addButtonTapped))
     
-    var totalWordCount = 0
+    var totalWordCount: Int {
+        return coreDataManager.fetch(id: vocabularyID)?.words?.count ?? 0
+    }
     
     var coreDataManager = VocabularyRepository.shared
     let vocabularyID: NSManagedObjectID
@@ -34,9 +36,6 @@ class VocaViewController: UIViewController {
         print("!!!init\(vocabularyID)")
         super.init(nibName: nil, bundle: nil)
         
-        if let vocabulary = coreDataManager.fetch(id: vocabularyID) {
-            totalWordCount = vocabulary.words?.count ?? 0
-        }
         allLabel.text = "전체 단어수: \(totalWordCount)"
     }
     
@@ -56,6 +55,9 @@ class VocaViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        allLabel.text = "전체 단어수: \(totalWordCount)"
+        
         vocaTableView.reloadData()
     }
     func setUpUI() {
@@ -78,8 +80,6 @@ class VocaViewController: UIViewController {
     }
     
     @objc func addButtonTapped() {
-        totalWordCount += 1
-        allLabel.text = "전체 단어수: \(totalWordCount)"
         if let vocabulary = coreDataManager.fetch(id: vocabularyID) {
               let addWordVC = AddWordViewController(vocabulary: vocabulary)
               self.navigationController?.pushViewController(addWordVC, animated: true)
@@ -100,6 +100,10 @@ class VocaViewController: UIViewController {
         }
         
         vocaTableView.reloadData()
+    }
+    
+    private func allWordCount() -> Int {
+        return coreDataManager.fetch(id: vocabularyID)?.words?.count ?? 0
     }
     
 }
