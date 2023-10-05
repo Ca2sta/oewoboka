@@ -34,6 +34,25 @@ final class QuizViewController: UIViewController {
         textField.borderStyle = .roundedRect
         return textField
     }()
+    private let countDownLabel: UILabel = {
+        let label = UILabel()
+        label.font = Typography.title3.font
+        label.textColor = .black
+        label.text = "00시00분00초"
+        return label
+    }()
+    private lazy var timerSettingView: TimerSettingView = TimerSettingView(viewModel: viewModel)
+    private var timer = Timer()
+    private var countDownTime: Int = 0 {
+        didSet {
+            timerSettingView.isHidden = true
+            let minute = 60
+            if countDownTime <= minute {
+                countDownLabel.textColor = .systemRed
+            }
+            countDownLabel.text = countDownTime.stringFromTime()
+        }
+    }
     private let margin: CGFloat = 24
     private var currentIndex: Int = 0
     private var bottomConstraint: Constraint?
@@ -46,6 +65,7 @@ final class QuizViewController: UIViewController {
     private var quizResultWords: [WordEntity] = []
     private var words: [WordEntity] = []
     private let repository = VocabularyRepository.shared
+    private let viewModel: QuizViewModel = QuizViewModel()
     
     init(quizData: QuizSettingData) {
         self.quizType = quizData.quizType
@@ -84,6 +104,7 @@ private extension QuizViewController {
         cardViewSetup(index: currentIndex)
         textFieldSetup()
         autoLayoutSetup()
+        bind()
     }
     
     func addViews() {
@@ -93,10 +114,19 @@ private extension QuizViewController {
             view.addSubview(quizControlView)
         } else {
             view.addSubview(dictationStackView)
+            if featureType == .test {
+                view.addSubview(timerSettingView)
+                view.addSubview(countDownLabel)
+                timerSettingView.backgroundColor = .white
+                timerSettingView.snp.makeConstraints { make in
+                    make.center.equalToSuperview()
+                }
+            }
         }
     }
     
     func navigationSetup() {
+        tabBarController?.hidesBottomBarWhenPushed = true
         let leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .done, target: self, action: #selector(popViewController))
         leftBarButtonItem.tintColor = .black
         navigationItem.leftBarButtonItem = leftBarButtonItem
@@ -205,8 +235,19 @@ private extension QuizViewController {
         var bottomViewHeight = 0.0
         var cardViewBottomConstraint: Constraint? = nil
         
+        if featureType == .test {
+            countDownLabel.snp.makeConstraints { make in
+                make.top.left.equalTo(safeArea).inset(margin)
+            }
+        }
+        
         frontCardView.snp.makeConstraints { make in
-            make.top.left.right.equalTo(safeArea).inset(margin)
+            if featureType == .test {
+                make.top.equalTo(countDownLabel.snp.bottom).offset(12)
+            } else {
+                make.top.equalTo(safeArea).inset(margin)
+            }
+            make.left.right.equalTo(safeArea).inset(margin)
             cardViewBottomConstraint = make.bottom.equalTo(safeArea).constraint
         }
         backgroundCardView.snp.makeConstraints { make in
@@ -320,6 +361,44 @@ private extension QuizViewController {
 
     @objc func keyBoardWillHide(notification: NSNotification) {
         self.bottomConstraint?.update(inset: margin)
+    }
+    
+    func bind() {
+        viewModel.dateObservable.bind { [weak self] countDownDuration in
+            guard let self else { return }
+            if countDownDuration > 0 {
+                self.setTimer(with: countDownDuration)
+            }
+        }
+        viewModel.dismissHandler = { [weak self] in
+            self?.dismiss(animated: true)
+        }
+    }
+    
+    private func setTimer(with countDownSeconds: Double) {
+        let startTime = Date()
+        timer.invalidate()
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] timer in
+            let elapsedTimeSeconds = Int(Date().timeIntervalSince(startTime))
+            let remainSeconds = Int(countDownSeconds) - elapsedTimeSeconds
+            guard remainSeconds >= 0 else {
+                timer.invalidate()
+                self?.failedWordSetup()
+                return
+            }
+            
+            self?.countDownTime = remainSeconds
+        })
+    }
+    
+    private func failedWordSetup() {
+        for index in currentIndex..<words.count {
+            let word = words[index]
+            word.isMemorize = false
+            quizResultWords.append(word)
+        }
+        navigationPushQuizCompletePage()
     }
 }
 
