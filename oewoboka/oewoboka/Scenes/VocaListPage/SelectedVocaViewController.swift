@@ -138,9 +138,21 @@ class SelectedVocaViewController: UIViewController {
     }
     @objc func leftButtonTapped() {
         print("left")
+//        if currentWordIndex > 0 {
+//            currentWordIndex -= 1
+//            if currentWordIndex < words.count, let word = words[currentWordIndex] {
+//                bind(data: word)
+//            }
+//        }
     }
     @objc func rightButtonTapped() {
         print("right")
+//        if currentWordIndex < words.count - 1 {
+//            currentWordIndex += 1
+//            if currentWordIndex >= 0, let word = words[currentWordIndex] {
+//                bind(data: word)
+//            }
+//        }
     }
     
     @objc func hideButtonTapped() {

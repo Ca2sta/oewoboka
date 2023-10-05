@@ -34,9 +34,9 @@ final class VocaListViewController: UIViewController, UISearchResultsUpdating {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("asd")
         vocaListTableView.reloadData()
     }
+    
     func setUpUI() {
         self.view.addSubview(vocaListTableView)
         navigationItem.titleView = vocaSearchController.searchBar
