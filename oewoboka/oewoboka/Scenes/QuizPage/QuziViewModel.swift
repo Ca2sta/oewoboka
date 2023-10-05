@@ -38,7 +38,7 @@ final class QuizViewModel {
         self.featureType = quizData.featureType
         self.quizType = quizData.quizType
         self.quizCount = quizData.quizCount
-        self.words = vocabularyList.compactMap({ $0.words?.array as? [WordEntity] }).flatMap({ $0 })
+        self.words = vocabularyList.compactMap({ $0.words?.array as? [WordEntity] }).flatMap({ $0 }).prefix(quizCount).map({ $0 })
     }
 }
 
