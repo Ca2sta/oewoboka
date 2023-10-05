@@ -70,6 +70,7 @@ class AddWordViewController: UIViewController {
     private let repository: VocabularyRepository = VocabularyRepository.shared
     private let selectVocabularyView = SelectVocabularyButton()
     private var vocabulary: VocabularyEntity?
+    let transLateManager = NaverDictionaryManager()
     
     init(vocabulary: VocabularyEntity) {
         self.vocabulary = vocabulary
@@ -138,6 +139,7 @@ class AddWordViewController: UIViewController {
             make.left.right.equalToSuperview().inset(Constant.defalutPadding)
             make.height.equalTo(Constant.screenHeight * 0.05)
         }
+        transLateButton.addTarget(self, action: #selector(didtappedTransLatedButton), for: .touchUpInside)
         
         view.addSubview(addButton)
         addButton.snp.makeConstraints { make in
@@ -206,6 +208,29 @@ class AddWordViewController: UIViewController {
             self.wordSaveNotificationView.isHidden = true
             self.wordSaveNotificationView.saveWordLabel.text = ""
         }
+    }
+    
+    @objc private func didtappedTransLatedButton() {
+        print(#function)
+        if koreanMeaningSearchField.text!.isEmpty {
+            transLateManager.getTranslateData(searchKeyWord: englishWordSearchField.text, from: .en, target: .ko) { [weak self] result in
+                DispatchQueue.main.async {
+                    self?.koreanMeaningSearchField.text = result.translatedText
+                    
+                }
+            }
+        } else {
+            transLateManager.getTranslateData(searchKeyWord: koreanMeaningSearchField.text, from: .ko, target: .en) { [weak self] result in
+                DispatchQueue.main.async {
+                    self?.englishWordSearchField.text = result.translatedText
+                }
+            }
+        }
+        addButton.isHidden = false
+        buttonHiddenMotion(toggle: addButton.isHidden, button: addButton)
+        transLateButton.isHidden = true
+        buttonHiddenMotion(toggle: transLateButton.isHidden, button: transLateButton)
+        
     }
     
     private func initTextField() {

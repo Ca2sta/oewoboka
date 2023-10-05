@@ -14,7 +14,7 @@ final class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if manager.allFetch().isEmpty {
-            manager.create(title: "Defalut")
+            manager.create(title: "Default")
         }
         viewControllerSetting()
         
