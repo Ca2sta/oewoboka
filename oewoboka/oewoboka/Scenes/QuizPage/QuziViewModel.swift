@@ -8,10 +8,13 @@
 import Foundation
 
 final class QuizViewModel {
-    var dismissHandler: () -> Void = {}
     var featureType: Feature
     var quizType: QuizType
-    var isQuizHidden: Bool = false
+    var isQuizHidden: Bool = false {
+        didSet {
+            hiddenQuizObservable.value = isQuizHidden
+        }
+    }
     
     let repository: VocabularyRepository = VocabularyRepository.shared
     private let vocabularyList: [VocabularyEntity]
@@ -26,6 +29,9 @@ final class QuizViewModel {
     var dateObservable: Observable<TimeInterval> = Observable(0)
     var hiddenQuizObservable: Observable<Bool> = Observable(false)
     var bookMarkUpdateObservable: Observable<Bool> = Observable(false)
+    var dismissHandler: () -> Void = {}
+    var nextHandler: ((Bool) -> Void)?
+    var reQuizHandler: () -> Void = {}
     
     init(quizData: QuizSettingData) {
         self.vocabularyList = quizData.selectedVocabulary
@@ -45,8 +51,8 @@ extension QuizViewModel {
     var isMeanDictation: Bool { quizType == .meanDictation }
     var isWordDictation: Bool { quizType == .wordDictation }
     var isComplete: Bool { currentIndex >= wordCount }
-    var isWordLabelHidden: Bool { isWordCard && isWordDictation }
-    var isMeanLabelHidden: Bool { isWordCard && isMeanDictation }
+    var isWordLabelHidden: Bool { isWordCard && isWordDictation && isQuizHidden }
+    var isMeanLabelHidden: Bool { isWordCard && isMeanDictation && isQuizHidden }
     var isMatch: Bool {
         if isMeanDictation {
             return dictationText == currentWord.korea
@@ -112,6 +118,11 @@ extension QuizViewModel {
     
     func next() {
         currentIndex += 1
+    }
+    
+    func previous() {
+        if currentIndex == 0 { return }
+        currentIndex -= 1
     }
     
     func restWordsFailure() {
