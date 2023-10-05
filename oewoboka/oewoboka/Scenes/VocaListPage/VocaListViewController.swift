@@ -32,12 +32,20 @@ final class VocaListViewController: UIViewController, UISearchResultsUpdating {
         vocaListTableView.register(VocaListTableViewCell.self, forCellReuseIdentifier: VocaListTableViewCell.identifier)
 
            self.vocaListTableView.rowHeight = UITableView.automaticDimension
-
+        NotificationCenter.default.addObserver(
+             self,
+             selector: #selector(self.didDismissDetailNotification(_:)),
+             name: NSNotification.Name("DismissDetailView"),
+             object: nil
+         )
     }
-
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         vocaListTableView.reloadData()
+    }
+    @objc func didDismissDetailNotification(_ notification: Notification) {
+        DispatchQueue.main.async {
+            self.vocaListTableView.reloadData()
+        }
     }
     
     func setUpUI() {
@@ -73,9 +81,11 @@ final class VocaListViewController: UIViewController, UISearchResultsUpdating {
 
         let addAction = UIAlertAction(title: "단어장 추가", style: .default) { [weak self] (_) in
             print("단어장 추가를 선택했습니다.")
+            let vc = VocabularyViewController()
+            vc.modalPresentationStyle = .custom
+            vc.transitioningDelegate = self
+            self?.present(vc, animated: true, completion: nil)
             
-            let vocabularyVC = VocabularyViewController()
-            self?.navigationController?.pushViewController(vocabularyVC, animated: true)
         }
 
         let sortAction = UIAlertAction(title: "정렬 순서", style: .default) { _ in
@@ -144,3 +154,9 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
     }
 }
     
+extension VocaListViewController: UIViewControllerTransitioningDelegate {
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        PresentationController(presentedViewController: presented, presenting: presenting, size: 0.5)
+    }
+}

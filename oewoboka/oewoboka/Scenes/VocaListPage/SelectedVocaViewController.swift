@@ -98,27 +98,32 @@ class SelectedVocaViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
         }
+        
         isCompleteButton.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-20)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.top.right.equalTo(view.safeAreaLayoutGuide).inset(Constant.defalutPadding)
         }
+        
         bottomSheetView.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide)
             make.left.right.equalToSuperview()
             make.height.equalTo(50)
         }
+        
         firstButton.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(30)
             make.centerY.equalToSuperview()
         }
+        
         leftButton.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(130)
             make.centerY.equalToSuperview()
         }
+        
         rightButton.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-130)
             make.centerY.equalToSuperview()
         }
+        
         hideButton.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-30)
             make.centerY.equalToSuperview()
