@@ -4,11 +4,20 @@
 //
 import UIKit
 import SnapKit
+import CoreData
 
 class VocaTableViewCell: UITableViewCell {
+    
     static let identifier = "VocaCell"
+    
     var buttonState = 2
+    
     var data: WordEntity?
+    
+    let mananger = VocabularyRepository.shared
+    
+    var vocabularyID: NSManagedObjectID?
+    
     let dateLabel : UILabel = {
         let label = UILabel()
         label.font = Typography.body2.font
@@ -18,7 +27,7 @@ class VocaTableViewCell: UITableViewCell {
         let button = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 300, weight: .light)
         let image = UIImage(systemName: "xmark.square.fill", withConfiguration: imageConfig)
-
+        button.tintColor = .systemPink
         button.setImage(image, for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
 
@@ -26,19 +35,16 @@ class VocaTableViewCell: UITableViewCell {
     }()
     let vocaLabel : UILabel = {
         let label = UILabel()
-        label.text = "development"
         label.font = Typography.title1.font
         return label
     }()
     let partLabel : UILabel = {
         let label = UILabel()
-        label.text = "명사"
         label.font = Typography.body1.font
         return label
     }()
     let koreanLabel : UILabel = {
         let label = UILabel()
-        label.text = "발달,성장,개발"
         label.font = Typography.body1.font
         return label
     }()
@@ -55,19 +61,24 @@ class VocaTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
     
-    func bind(data: WordEntity) {
-        self.data = data
-        vocaLabel.text = data.english
-        koreanLabel.text = data.korea
+    func bind(vocabularyID: NSManagedObjectID, index: Int) {
         
+        guard let data = mananger.fetch(id: vocabularyID)?.words?.array as? [WordEntity] else { return }
+        self.data = data[index]
+
+        vocaLabel.text = data[index].english
+        koreanLabel.text = data[index].korea
+
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 300, weight: .light)
         let image: UIImage?
-        if data.isMemorize {
-            print("isMemorize's status:\(data.isMemorize)")
+        print("bind")
+        print(data[index].isMemorize)
+        if data[index].isMemorize {
             image = UIImage(systemName: "checkmark.square.fill", withConfiguration: imageConfig)
+            mananger.update()
         } else {
-            print("isMemorize's status:\(data.isMemorize)")
             image = UIImage(systemName: "xmark.square.fill", withConfiguration: imageConfig)
+            mananger.update()
         }
         isCompleteButton.setImage(image, for: .normal)
     }
@@ -106,24 +117,14 @@ class VocaTableViewCell: UITableViewCell {
     @objc func isCompleteButtonTapped() {
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 300, weight: .light)
         guard let data = data else { return }
-        
-        switch buttonState {
-        case 1:
-            let image = UIImage(systemName: "xmark.square.fill", withConfiguration: imageConfig)
-            isCompleteButton.setImage(image, for: .normal)
-            data.isMemorize = false
-
-            print(data.isMemorize)
-
-            buttonState = 2
-        case 2:
-            let image = UIImage(systemName: "checkmark.square.fill", withConfiguration: imageConfig)
-            isCompleteButton.setImage(image, for: .normal)
-            data.isMemorize = true
-            print(data.isMemorize)
-            buttonState = 1
-        default:
-            break
+        data.isMemorize.toggle()
+        var image: UIImage?
+        if data.isMemorize {
+            image = UIImage(systemName: "checkmark.square.fill", withConfiguration: imageConfig)
+        } else {
+            image = UIImage(systemName: "xmark.square.fill", withConfiguration: imageConfig)
         }
+        isCompleteButton.setImage(image, for: .normal)
+        mananger.update()
     }
 }

@@ -11,7 +11,10 @@ import CoreData
 
 final class VocaListViewController: UIViewController, UISearchResultsUpdating {
     
-    let vocaListTableView = UITableView()
+    let vocaListTableView: UITableView = {
+        let view = UITableView(frame: CGRect.zero, style: .plain)
+        return view
+    }()
     let vocaSearchController = UISearchController(searchResultsController: nil)
     let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: VocaListViewController.self, action: #selector(addButtonTapped))
 
@@ -26,9 +29,9 @@ final class VocaListViewController: UIViewController, UISearchResultsUpdating {
         setUpSearchController()
         vocaListTableView.delegate = self
         vocaListTableView.dataSource = self
-        vocaListTableView.register(VocaListTableViewCell.self, forCellReuseIdentifier: "ListCell")
-        coreDataManager.create(title: "hihihi")
-        coreDataManager.create(title: "byebye")
+        vocaListTableView.register(VocaListTableViewCell.self, forCellReuseIdentifier: VocaListTableViewCell.identifier)
+
+           self.vocaListTableView.rowHeight = UITableView.automaticDimension
 
     }
 
@@ -41,7 +44,7 @@ final class VocaListViewController: UIViewController, UISearchResultsUpdating {
         self.view.addSubview(vocaListTableView)
         navigationItem.titleView = vocaSearchController.searchBar
         navigationItem.rightBarButtonItem = addButton
-        
+        self.navigationController?.navigationBar.tintColor = .systemPink
         addButton.target = self
         addButton.action = #selector(addButtonTapped)
         
@@ -111,10 +114,6 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
         }
         cell.bind(data: targetAry[indexPath.row])
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
     }
     
     func updateSearchResults(for searchController: UISearchController) {
