@@ -105,6 +105,9 @@ extension VocaListSelectedController: UITableViewDelegate, UITableViewDataSource
             viewModel.vocaList.value.append(data[indexPath.row])
             cell.setButton.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
         }
+        if viewModel.vocaList.value.count == 0 {
+            viewModel.vocaList.value = manager.allFetch()
+        }
         print(viewModel.vocaList)
         
     }

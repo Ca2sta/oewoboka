@@ -47,7 +47,7 @@ final class FTOPViewModel {
     let startBTImage = UIImage(systemName: "arrowtriangle.right.fill")
 
     // MARK: - Selected VocaList
-    var vocaList: Observable<[VocabularyEntity]> = Observable([])
+    var vocaList: Observable<[VocabularyEntity]> = Observable(VocabularyRepository.shared.allFetch())
 
     
 }
