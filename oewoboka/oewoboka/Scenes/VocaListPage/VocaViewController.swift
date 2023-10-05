@@ -127,13 +127,11 @@ extension VocaViewController: UITableViewDelegate,UITableViewDataSource,UISearch
         cell.bind(vocabularyID: vocabularyID, index: indexPath.row)
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
+
     func updateSearchResults(for searchController: UISearchController) {
         print("text")
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedVocaViewController = SelectedVocaViewController()
         guard let voca = coreDataManager.fetch(id: vocabularyID)?.words?.array as? [WordEntity] else {return}

@@ -84,7 +84,7 @@ class VocaListTableViewCell: UITableViewCell {
         // MARK: - unCmp
         let attributedString3 = NSMutableAttributedString(string: "")
         let imageAttachment3 = NSTextAttachment()
-        imageAttachment3.image = UIImage(systemName: "xmark.square")?.withTintColor(.systemPink)
+        imageAttachment3.image = UIImage(systemName: "square")?.withTintColor(.systemPink)
         attributedString3.append(NSAttributedString(attachment: imageAttachment3))
         attributedString3.append(NSAttributedString(string: "\(unCmpCount)"))
         uncompleteNumbersLabel.attributedText = attributedString3
