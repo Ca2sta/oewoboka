@@ -32,6 +32,8 @@ final class CircleProgressBar: UIView {
     private var quizRate: CGFloat = 0
     private var displayLink: CADisplayLink?
     private var animationStartDate: Date? = nil
+    private var progressBarLayer: CAShapeLayer? = nil
+    private var animationLayer: CAShapeLayer? = nil
     
     private var correctRate: CGFloat = 0 {
         didSet {
@@ -115,17 +117,27 @@ private extension CircleProgressBar {
 extension CircleProgressBar {
     
     func progressBarSetupAnimation(rate: CGFloat) {
+        
+        if let animationLayer {
+            animationLayer.removeFromSuperlayer()
+        }
+        
         layoutIfNeeded()
         
         correctRate = rate
         
-        let bezierPathTest = UIBezierPath(ovalIn: bounds)
-        let progressBar = CAShapeLayer()
-        progressBar.path = bezierPathTest.cgPath
-        progressBar.fillColor = fillColor
-        progressBar.strokeColor = lineColor.withAlphaComponent(0.3).cgColor
-        progressBar.lineWidth = resultViewLineWidth
-        layer.addSublayer(progressBar)
+        if progressBarLayer == nil {
+            let rect = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.width)
+            let bezierPathTest = UIBezierPath(ovalIn: rect)
+            let progressBar = CAShapeLayer()
+            progressBar.path = bezierPathTest.cgPath
+            progressBar.fillColor = fillColor
+            progressBar.strokeColor = lineColor.withAlphaComponent(0.3).cgColor
+            progressBar.lineWidth = resultViewLineWidth
+            layer.addSublayer(progressBar)
+            
+            self.progressBarLayer = progressBar
+        }
         
         let arcCenter = CGPoint(x: bounds.width/2, y: bounds.height/2)
         let radius = bounds.width/2
@@ -147,6 +159,8 @@ extension CircleProgressBar {
         calayer.add(caAnimation, forKey: nil)
         
         startDisplayLink()
+        
+        self.animationLayer = calayer
         
         layer.addSublayer(calayer)
     }

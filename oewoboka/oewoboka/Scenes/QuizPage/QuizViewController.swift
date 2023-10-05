@@ -28,35 +28,50 @@ final class QuizViewController: UIViewController {
     }()
     private lazy var dictationTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = quizType == .meanDictation ? "의미를 작성한 뒤 엔터를 눌러주세요" : "단어를 작성한 뒤 엔터를 눌러주세요"
+        textField.placeholder = viewModel.isMeanDictation ? "의미를 작성한 뒤 엔터를 눌러주세요" : "단어를 작성한 뒤 엔터를 눌러주세요"
         textField.font = Typography.title3.font
         textField.textColor = .black
         textField.borderStyle = .roundedRect
         return textField
     }()
+    private let countDownLabel: UILabel = {
+        let label = UILabel()
+        label.font = Typography.title3.font
+        label.textColor = .black
+        label.text = "00시00분00초"
+        return label
+    }()
+    private lazy var timerSettingView: TimerSettingView = TimerSettingView(viewModel: viewModel)
+    private var timer = Timer()
+    private var countDownTime: Int = 0 {
+        didSet {
+            timerSettingView.isHidden = true
+            let minute = 60
+            if countDownTime <= minute {
+                countDownLabel.textColor = .systemRed
+            }
+            countDownLabel.text = countDownTime.stringFromTime()
+        }
+    }
     private let margin: CGFloat = 24
     private var currentIndex: Int = 0
     private var bottomConstraint: Constraint?
     
     let vocabularyList: [VocabularyEntity]
-    private let quizType: QuizType
-    private let featureType: Feature
+    
+    private var isQuizHidden: Bool = false
     private var quizResultWords: [WordEntity] = []
     private var words: [WordEntity] = []
     private let repository = VocabularyRepository.shared
+    private let viewModel: QuizViewModel = QuizViewModel()
     
     init(quizData: QuizSettingData) {
-        if quizData.featureType == .wordCard {
-            self.quizType = .training
-        } else if quizData.featureType == .dictation {
-            self.quizType = quizData.quizType
-        } else {
-            self.quizType = .test
-        }
-        self.featureType = quizData.featureType
         self.vocabularyList = quizData.selectedVocabulary.isEmpty ? repository.allFetch() : quizData.selectedVocabulary
+        self.viewModel.featureType = quizData.featureType
+        self.viewModel.quizType = quizData.quizType
         super.init(nibName: nil, bundle: nil)
         quizTypeSetup()
+        view.backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {
@@ -88,19 +103,29 @@ private extension QuizViewController {
         cardViewSetup(index: currentIndex)
         textFieldSetup()
         autoLayoutSetup()
+        bind()
     }
     
     func addViews() {
         view.addSubview(backgroundCardView)
         view.addSubview(frontCardView)
-        if quizType == .training {
+        if viewModel.isWordCard {
             view.addSubview(quizControlView)
         } else {
             view.addSubview(dictationStackView)
+            if viewModel.isTestType {
+                view.addSubview(timerSettingView)
+                view.addSubview(countDownLabel)
+                timerSettingView.backgroundColor = .white
+                timerSettingView.snp.makeConstraints { make in
+                    make.center.equalToSuperview()
+                }
+            }
         }
     }
     
     func navigationSetup() {
+        tabBarController?.hidesBottomBarWhenPushed = true
         let leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .done, target: self, action: #selector(popViewController))
         leftBarButtonItem.tintColor = .black
         navigationItem.leftBarButtonItem = leftBarButtonItem
@@ -112,11 +137,6 @@ private extension QuizViewController {
     }
     
     func initCardView() {
-        
-        //MARK: 더미이므로 지워야함
-        let word = Word(english: "영어", korea: "한글", isMemorize: false, isBookmark: false)
-        vocabularyList.map{ repository.addWord(vocabularyEntityId: $0.objectID, word: word) }
-        
         
         let vocabularyWords = vocabularyList
                                 .compactMap({ $0.words?.array as? [WordEntity] })
@@ -155,20 +175,25 @@ private extension QuizViewController {
         frontCardView.englishLabel.text = word.english
         frontCardView.koreaLabel.text = word.korea
         frontCardView.wordCountLabel.text = countText
+
         frontCardView.bookMarkButton.isSelected = word.isBookmark
         frontCardView.updateBookmarkHandler = { [weak self] isBookmark in
             guard let self else { return }
             self.words[index].isBookmark = isBookmark
         }
         
-        if featureType == .dictation {
-            if quizType == .meanDictation {
+        if viewModel.isDictation || viewModel.isTestType {
+            if viewModel.isMeanDictation {
                 frontCardView.koreaLabel.text = ""
-            } else if quizType == .wordDictation {
+            } else if viewModel.isWordDictation {
                 frontCardView.englishLabel.text = ""
             }
-        } else if featureType == .wordCard {
-            
+        } else if viewModel.isWordCard{
+            if viewModel.isMeanDictation {
+                frontCardView.koreaLabel.isHidden = isQuizHidden
+            } else if viewModel.isWordDictation {
+                frontCardView.englishLabel.isHidden = isQuizHidden
+            }
         }
         
         let nextIndex = index + 1
@@ -184,10 +209,18 @@ private extension QuizViewController {
         backgroundCardView.koreaLabel.text = nextWord.korea
         backgroundCardView.bookMarkButton.isSelected = nextWord.isBookmark
         
-        if quizType == .meanDictation {
-            backgroundCardView.koreaLabel.text = ""
-        } else if quizType == .wordDictation {
-            backgroundCardView.englishLabel.text = ""
+        if viewModel.isDictation || viewModel.isTestType {
+            if viewModel.isMeanDictation {
+                backgroundCardView.koreaLabel.text = ""
+            } else if viewModel.isWordDictation {
+                backgroundCardView.englishLabel.text = ""
+            }
+        } else if viewModel.isWordCard {
+            if viewModel.isMeanDictation {
+                backgroundCardView.koreaLabel.isHidden = isQuizHidden
+            } else if viewModel.isWordDictation {
+                backgroundCardView.englishLabel.isHidden = isQuizHidden
+            }
         }
     }
     
@@ -196,15 +229,26 @@ private extension QuizViewController {
         var bottomViewHeight = 0.0
         var cardViewBottomConstraint: Constraint? = nil
         
+        if viewModel.isTestType {
+            countDownLabel.snp.makeConstraints { make in
+                make.top.left.equalTo(safeArea).inset(margin)
+            }
+        }
+        
         frontCardView.snp.makeConstraints { make in
-            make.top.left.right.equalTo(safeArea).inset(margin)
+            if viewModel.isTestType {
+                make.top.equalTo(countDownLabel.snp.bottom).offset(12)
+            } else {
+                make.top.equalTo(safeArea).inset(margin)
+            }
+            make.left.right.equalTo(safeArea).inset(margin)
             cardViewBottomConstraint = make.bottom.equalTo(safeArea).constraint
         }
         backgroundCardView.snp.makeConstraints { make in
             make.edges.equalTo(frontCardView)
         }
         
-        if quizType == .training {
+        if viewModel.isWordCard {
             quizControlView.snp.makeConstraints { make in
                 make.top.equalTo(frontCardView.snp.bottom).offset(margin)
                 make.height.equalTo(52)
@@ -225,8 +269,8 @@ private extension QuizViewController {
     }
     
     func quizTypeSetup() {
-        frontCardView.quizType = quizType
-        backgroundCardView.quizType = quizType
+        frontCardView.quizType = viewModel.quizType
+        backgroundCardView.quizType = viewModel.quizType
     }
     
     func textFieldSetup() {
@@ -235,7 +279,7 @@ private extension QuizViewController {
     }
     
     func keyboardReturn() {
-        switch quizType {
+        switch viewModel.quizType {
         case .meanDictation:
             if words[currentIndex].korea == dictationTextField.text {
                 cardMoveAnimation(moveView: frontCardView, isMemorize: true)
@@ -250,7 +294,7 @@ private extension QuizViewController {
     }
     
     func navigationPushQuizCompletePage() {
-        let vc = QuizCompleteViewController(words: quizResultWords)
+        let vc = QuizCompleteViewController(viewModel: viewModel, words: quizResultWords)
         vc.popCompletion = { [weak self] words in
             guard let self else { return }
             if let words {
@@ -260,6 +304,9 @@ private extension QuizViewController {
             self.quizResultWords = []
             self.currentIndex = 0
             self.cardViewSetup(index: currentIndex)
+            if self.viewModel.isTestType {
+                timerReset()
+            }
         }
         navigationController?.pushViewController(vc, animated: false)
     }
@@ -284,6 +331,13 @@ private extension QuizViewController {
     
     private func textFieldInit() {
         dictationTextField.text = ""
+    }
+    
+    private func timerReset() {
+        timer.invalidate()
+        timerSettingView.isHidden = false
+        countDownLabel.text = "00시00분00초"
+        countDownLabel.textColor = .black
     }
     
     private func cardMoveAnimation(moveView: UIView, isMemorize: Bool) {
@@ -312,11 +366,49 @@ private extension QuizViewController {
     @objc func keyBoardWillHide(notification: NSNotification) {
         self.bottomConstraint?.update(inset: margin)
     }
+    
+    func bind() {
+        viewModel.dateObservable.bind { [weak self] countDownDuration in
+            guard let self else { return }
+            if countDownDuration > 0 {
+                self.setTimer(with: countDownDuration)
+            }
+        }
+        viewModel.dismissHandler = { [weak self] in
+            self?.dismiss(animated: true)
+        }
+    }
+    
+    private func setTimer(with countDownSeconds: Double) {
+        let startTime = Date()
+        timer.invalidate()
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] timer in
+            let elapsedTimeSeconds = Int(Date().timeIntervalSince(startTime))
+            let remainSeconds = Int(countDownSeconds) - elapsedTimeSeconds
+            guard remainSeconds >= 0 else {
+                timer.invalidate()
+                self?.failedWordSetup()
+                return
+            }
+            
+            self?.countDownTime = remainSeconds
+        })
+    }
+    
+    private func failedWordSetup() {
+        for index in currentIndex..<words.count {
+            let word = words[index]
+            word.isMemorize = false
+            quizResultWords.append(word)
+        }
+        navigationPushQuizCompletePage()
+    }
 }
 
 extension QuizViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        switch quizType {
+        switch viewModel.quizType {
         case .meanDictation:
             frontCardView.koreaLabel.text = textField.text
         case .wordDictation:

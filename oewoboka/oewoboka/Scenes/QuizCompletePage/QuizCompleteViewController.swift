@@ -11,12 +11,14 @@ final class QuizCompleteViewController: UIViewController {
     
     private let middleView: UIView = UIView()
     private let resultView: CircleProgressBar
-    private let quizFeedbackStackView: FeedBackStackView = FeedBackStackView()
+    private lazy var quizFeedbackStackView: FeedBackStackView = FeedBackStackView(viewModel: viewModel)
     private let quizResultWords: [WordEntity]
+    private let viewModel: QuizViewModel
     var popCompletion: (([WordEntity]?) -> Void)?
     
-    init(words: [WordEntity]) {
+    init(viewModel: QuizViewModel, words: [WordEntity]) {
         quizResultWords = words
+        self.viewModel = viewModel
         let memorizeWords = quizResultWords.filter { $0.isMemorize }
         resultView = CircleProgressBar(correctRate: 0, type: .number, allWordCount: quizResultWords.count, isMemorizeCount: memorizeWords.count)
         super.init(nibName: nil, bundle: nil)
@@ -93,6 +95,7 @@ private extension QuizCompleteViewController {
         backBarButton.tintColor = .black
         navigationItem.hidesBackButton = true
         navigationItem.leftBarButtonItem = backBarButton
+        navigationItem.title = "결과화면"
     }
     
     @objc func backButtonClick() {

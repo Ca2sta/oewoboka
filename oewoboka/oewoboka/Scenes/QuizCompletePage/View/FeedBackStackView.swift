@@ -28,15 +28,17 @@ final class FeedBackStackView: UIStackView {
         return button
     }()
     var popHandler: ((QuizResultType) -> Void)?
+    private let viewModel: QuizViewModel
     var unMemorizeCount: Int = 0 {
         didSet {
             let isUnMemorizeWordZero = unMemorizeCount == 0
-            unMemorizeWordReQuizButton.isHidden = isUnMemorizeWordZero
+            unMemorizeWordReQuizButton.isHidden = isUnMemorizeWordZero || viewModel.isTestType
             unMemorizeWordReQuizButton.text = "모르는 \(unMemorizeCount)문제 다시 풀기"
         }
     }
 
-    init() {
+    init(viewModel: QuizViewModel) {
+        self.viewModel = viewModel
         super.init(frame: .zero)
         setup()
     }
