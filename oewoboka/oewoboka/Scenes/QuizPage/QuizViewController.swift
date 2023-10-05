@@ -40,13 +40,21 @@ final class QuizViewController: UIViewController {
     
     let vocabularyList: [VocabularyEntity]
     private let quizType: QuizType
+    private let featureType: Feature
     private var quizResultWords: [WordEntity] = []
     private var words: [WordEntity] = []
     private let repository = VocabularyRepository.shared
     
     init(quizData: QuizSettingData) {
-        self.quizType = quizData.quizType
-        self.vocabularyList = quizData.selectedVocabulary
+        if quizData.featureType == .wordCard {
+            self.quizType = .training
+        } else if quizData.featureType == .dictation {
+            self.quizType = quizData.quizType
+        } else {
+            self.quizType = .test
+        }
+        self.featureType = quizData.featureType
+        self.vocabularyList = quizData.selectedVocabulary.isEmpty ? repository.allFetch() : quizData.selectedVocabulary
         super.init(nibName: nil, bundle: nil)
         quizTypeSetup()
     }
@@ -93,10 +101,23 @@ private extension QuizViewController {
     }
     
     func navigationSetup() {
+        let leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .done, target: self, action: #selector(popViewController))
+        leftBarButtonItem.tintColor = .black
+        navigationItem.leftBarButtonItem = leftBarButtonItem
         navigationItem.title = "단어보기"
     }
     
+    @objc private func popViewController() {
+        dismiss(animated: true)
+    }
+    
     func initCardView() {
+        
+        //MARK: 더미이므로 지워야함
+        let word = Word(english: "영어", korea: "한글", isMemorize: false, isBookmark: false)
+        vocabularyList.map{ repository.addWord(vocabularyEntityId: $0.objectID, word: word) }
+        
+        
         let vocabularyWords = vocabularyList
                                 .compactMap({ $0.words?.array as? [WordEntity] })
                                 .flatMap({ $0 })
@@ -134,11 +155,20 @@ private extension QuizViewController {
         frontCardView.englishLabel.text = word.english
         frontCardView.koreaLabel.text = word.korea
         frontCardView.wordCountLabel.text = countText
+        frontCardView.bookMarkButton.isSelected = word.isBookmark
+        frontCardView.updateBookmarkHandler = { [weak self] isBookmark in
+            guard let self else { return }
+            self.words[index].isBookmark = isBookmark
+        }
         
-        if quizType == .meanDictation {
-            frontCardView.koreaLabel.text = ""
-        } else if quizType == .wordDictation {
-            frontCardView.englishLabel.text = ""
+        if featureType == .dictation {
+            if quizType == .meanDictation {
+                frontCardView.koreaLabel.text = ""
+            } else if quizType == .wordDictation {
+                frontCardView.englishLabel.text = ""
+            }
+        } else if featureType == .wordCard {
+            
         }
         
         let nextIndex = index + 1
@@ -152,6 +182,7 @@ private extension QuizViewController {
         backgroundCardView.wordCountLabel.text = nextCountText
         backgroundCardView.englishLabel.text = nextWord.english
         backgroundCardView.koreaLabel.text = nextWord.korea
+        backgroundCardView.bookMarkButton.isSelected = nextWord.isBookmark
         
         if quizType == .meanDictation {
             backgroundCardView.koreaLabel.text = ""
