@@ -9,13 +9,68 @@ import UIKit
 
 class AddWordViewController: UIViewController {
 
-    private let englishWordSearchField = UITextField()
-    private let koreanMeaningSearchField = UITextField()
+    private let topDivider: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray
+        return view
+    }()
+    
+    private let englishLabel: UILabel = {
+        let label = UILabel()
+        label.text = "English"
+        return label
+    }()
+    
+    private let englishWordSearchField: UITextField = {
+        let view = UITextField()
+        view.borderStyle = .roundedRect
+        view.placeholder = "단어를 입력해주세요(필수)"
+        return view
+    }()
+    
+    private let koreanLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Korean"
+        return label
+    }()
+    
+    private let koreanMeaningSearchField: UITextField = {
+        let view = UITextField()
+        view.borderStyle = .roundedRect
+        view.placeholder = "의미를 입력해주세요(필수)"
+        return view
+    }()
+    
+    private let bottomDivider: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray
+        return view
+    }()
+    
+    private let transLateButton: DefaultButton = {
+        let button = DefaultButton()
+        button.setTitle("Translate", for: .normal)
+        button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        button.tintColor = .black
+        button.isHidden = true
+        return button
+    }()
+    
+    private let addButton: DefaultButton = {
+        let button = DefaultButton()
+        button.setTitle("추가하기", for: .normal)
+        button.setImage(UIImage(systemName: "plus.square.on.square"), for: .normal)
+        button.tintColor = .black
+        button.isHidden = true
+        return button
+    }()
+    
     private let wordSaveNotificationView = WordSaveNotificationView()
     
     private let repository: VocabularyRepository = VocabularyRepository.shared
     private let selectVocabularyView = SelectVocabularyButton()
     private var vocabulary: VocabularyEntity?
+    let transLateManager = NaverDictionaryManager()
     
     init(vocabulary: VocabularyEntity) {
         self.vocabulary = vocabulary
@@ -34,53 +89,78 @@ class AddWordViewController: UIViewController {
         navigationSetup()
         textFieldSetup()
     }
-
+    
     private func setupUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
 
-        let englishLabel = UILabel()
-        englishLabel.text = "English"
+        view.addSubview(topDivider)
+        topDivider.snp.makeConstraints { make in
+            make.top.left.right.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(1)
+        }
+
         view.addSubview(englishLabel)
+        englishLabel.snp.makeConstraints { make in
+            make.top.equalTo(topDivider.snp.bottom).offset(Constant.defalutPadding)
+            make.leading.equalTo(view).offset(Constant.defalutPadding)
+        }
 
-        englishWordSearchField.borderStyle = .roundedRect
-        englishWordSearchField.placeholder = "단어를 입력해주세요(필수)"
         view.addSubview(englishWordSearchField)
+        englishWordSearchField.snp.makeConstraints { make in
+            make.top.equalTo(englishLabel.snp.bottom).offset(Constant.defalutPadding / 2)
+            make.left.right.equalTo(view).inset(Constant.defalutPadding)
+            make.height.equalTo(Constant.screenHeight * 0.05)
+        }
         
-        let koreanLabel = UILabel()
-        koreanLabel.text = "Korean"
-        view.addSubview(koreanLabel)
 
-        koreanMeaningSearchField.borderStyle = .roundedRect
-        koreanMeaningSearchField.placeholder = "의미를 입력해주세요(필수)"
+        view.addSubview(koreanLabel)
+        koreanLabel.snp.makeConstraints { make in
+            make.top.equalTo(englishWordSearchField.snp.bottom).offset(Constant.defalutPadding)
+            make.leading.equalTo(view).offset(Constant.defalutPadding)
+        }
+        
         view.addSubview(koreanMeaningSearchField)
+        koreanMeaningSearchField.snp.makeConstraints { make in
+            make.top.equalTo(koreanLabel.snp.bottom).offset(Constant.defalutPadding / 2)
+            make.left.right.equalTo(view).inset(Constant.defalutPadding)
+            make.height.equalTo(Constant.screenHeight * 0.05)
+        }
+        
+        view.addSubview(bottomDivider)
+        bottomDivider.snp.makeConstraints { make in
+            make.top.equalTo(koreanMeaningSearchField.snp.bottom).offset(Constant.defalutPadding)
+            make.left.right.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(1)
+        }
+        
+        view.addSubview(transLateButton)
+        transLateButton.snp.makeConstraints { make in
+            make.top.equalTo(bottomDivider.snp.bottom).offset(Constant.defalutPadding)
+            make.left.right.equalToSuperview().inset(Constant.defalutPadding)
+            make.height.equalTo(Constant.screenHeight * 0.05)
+        }
+        transLateButton.addTarget(self, action: #selector(didtappedTransLatedButton), for: .touchUpInside)
+        
+        view.addSubview(addButton)
+        addButton.snp.makeConstraints { make in
+            make.top.equalTo(bottomDivider.snp.bottom).offset(Constant.defalutPadding)
+            make.left.right.equalToSuperview().inset(Constant.defalutPadding)
+            make.height.equalTo(Constant.screenHeight * 0.05)
+        }
+        addButton.addTarget(self, action: #selector(addWord), for: .touchUpInside)
+        
         
         view.addSubview(wordSaveNotificationView)
         wordSaveNotificationView.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             make.left.right.equalToSuperview()
         }
-        
-        englishLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
-            make.leading.equalTo(view).offset(20)
-        }
 
-        englishWordSearchField.snp.makeConstraints { make in
-            make.top.equalTo(englishLabel.snp.bottom).offset(10)
-            make.leading.equalTo(view).offset(20)
-            make.trailing.equalTo(view).offset(-20)
-        }
 
-        koreanLabel.snp.makeConstraints { make in
-            make.top.equalTo(englishWordSearchField.snp.bottom).offset(20)
-            make.leading.equalTo(view).offset(20)
-        }
 
-        koreanMeaningSearchField.snp.makeConstraints { make in
-            make.top.equalTo(koreanLabel.snp.bottom).offset(10)
-            make.leading.equalTo(view).offset(20)
-            make.trailing.equalTo(view).offset(-20)
-        }
+
+
+
     }
     
     private func textFieldSetup() {
@@ -93,12 +173,6 @@ class AddWordViewController: UIViewController {
     }
     
     private func navigationSetup() {
-        let rightButton = UIBarButtonItem(title: "추가", style: .done, target: self, action: #selector(addWord))
-        rightButton.tintColor = .systemRed
-        navigationItem.rightBarButtonItem = rightButton
-        navigationItem.rightBarButtonItem?.isEnabled = false
-        navigationItem.hidesBackButton = true
-        
         guard let vocabulary = repository.allFetch().first else { return }
         selectVocabularyView.vocabularyLabel.text = vocabulary.title
         navigationItem.titleView = selectVocabularyView
@@ -136,9 +210,41 @@ class AddWordViewController: UIViewController {
         }
     }
     
+    @objc private func didtappedTransLatedButton() {
+        print(#function)
+        if koreanMeaningSearchField.text!.isEmpty {
+            transLateManager.getTranslateData(searchKeyWord: englishWordSearchField.text, from: .en, target: .ko) { [weak self] result in
+                DispatchQueue.main.async {
+                    self?.koreanMeaningSearchField.text = result.translatedText
+                    
+                }
+            }
+        } else {
+            transLateManager.getTranslateData(searchKeyWord: koreanMeaningSearchField.text, from: .ko, target: .en) { [weak self] result in
+                DispatchQueue.main.async {
+                    self?.englishWordSearchField.text = result.translatedText
+                }
+            }
+        }
+        addButton.isHidden = false
+        buttonHiddenMotion(toggle: addButton.isHidden, button: addButton)
+        transLateButton.isHidden = true
+        buttonHiddenMotion(toggle: transLateButton.isHidden, button: transLateButton)
+        
+    }
+    
     private func initTextField() {
         englishWordSearchField.text = ""
         koreanMeaningSearchField.text = ""
+    }
+    func buttonHiddenMotion(toggle:Bool, button: UIButton) {
+        UIView.transition(with: button, duration: 0.5, options: .transitionFlipFromTop, animations: { [weak self] in
+            if toggle{
+                button.alpha = 0
+            } else {
+                button.alpha = 1
+            }
+        })
     }
 }
 
@@ -146,12 +252,30 @@ extension AddWordViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         guard let englishText = englishWordSearchField.text,
               let koreaText = koreanMeaningSearchField.text else { return }
-        if false == englishText.isEmpty && false == koreaText.isEmpty {
-            navigationItem.rightBarButtonItem?.isEnabled = true
-        } else {
-            navigationItem.rightBarButtonItem?.isEnabled = false
-        }
         
+        
+        if (englishText.isEmpty && !koreaText.isEmpty) || (!englishText.isEmpty && koreaText.isEmpty) {
+            if transLateButton.isHidden {
+                transLateButton.isHidden = false
+                buttonHiddenMotion(toggle: transLateButton.isHidden, button: transLateButton)
+            }
+            addButton.isHidden = true
+            buttonHiddenMotion(toggle: transLateButton.isHidden, button: addButton)
+        } else if (!englishText.isEmpty && !koreaText.isEmpty) {
+            if addButton.isHidden {
+                addButton.isHidden = false
+                buttonHiddenMotion(toggle: addButton.isHidden, button: addButton)
+            }
+
+            transLateButton.isHidden = true
+            buttonHiddenMotion(toggle: transLateButton.isHidden, button: transLateButton)
+            
+        } else {
+            addButton.isHidden = true
+            buttonHiddenMotion(toggle: addButton.isHidden, button: addButton)
+            transLateButton.isHidden = true
+            buttonHiddenMotion(toggle: transLateButton.isHidden, button: transLateButton)
+        }
     }
 }
 
