@@ -10,7 +10,7 @@ import SnapKit
 
 final class FTOPViewController: BottomSheetViewController {
     
-    lazy var topView = FTModalTopView(viewModel: viewModel)
+    lazy var topView = PageTopView(title: "")
     
     lazy var middleView = FTModalMiddleView(viewModel: viewModel)
     
@@ -140,7 +140,7 @@ extension FTOPViewController: ViewHasButton {
         case middleView.countView.minusButton:
             if viewModel.count.value > 0 { viewModel.count.value -= 1 }
         case bottomView.startButton:
-            let data = QuizSettingData(featureType: self.type, selectedVocabulary: [], quizType: viewModel.quizType, quizCount: viewModel.count.value)
+            let data = QuizSettingData(featureType: self.type, selectedVocabulary: viewModel.vocaList.value, quizType: viewModel.quizType, quizCount: viewModel.count.value)
             let vc = QuizViewController(quizData: data)
             vc.modalPresentationStyle = .fullScreen
             guard let pvc = self.presentingViewController else { return }

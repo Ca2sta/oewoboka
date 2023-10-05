@@ -37,7 +37,6 @@ extension FeatureViewController {
     // MARK: - LifeCycle
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.titleTextAttributes = viewModel.titleLabelFont
         navigationItem.title = viewModel.titleLabelText
     }
 

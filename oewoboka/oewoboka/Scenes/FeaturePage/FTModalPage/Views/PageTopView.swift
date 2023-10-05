@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class FTModalTopView: UIView {
+final class PageTopView: UIView {
 
     let titleLabel: UILabel = {
         let view = UILabel()
@@ -32,8 +32,9 @@ final class FTModalTopView: UIView {
     
     weak var buttonDelegate: ViewHasButton?
     
-    init(viewModel: FTOPViewModel) {
+    init(title: String) {
         super.init(frame: CGRect.zero)
+        titleLabel.text = title
         setUp()
     }
     
@@ -42,7 +43,7 @@ final class FTModalTopView: UIView {
     }
 }
 
-private extension FTModalTopView {
+private extension PageTopView {
     
     func setUp() {
         setUpTitleLabel()
@@ -79,7 +80,7 @@ private extension FTModalTopView {
     }
 }
 
-private extension FTModalTopView {
+private extension PageTopView {
     // MARK: - ButtonTappedMethod
     @objc func didTappedBackButton(_ button: UIButton) {
         buttonDelegate?.didTappedButton(button: button)
