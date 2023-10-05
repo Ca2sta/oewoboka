@@ -96,7 +96,7 @@ private extension QuizCompleteViewController {
     }
     
     @objc func backButtonClick() {
-        navigationController?.popToRootViewController(animated: true)
+        dismiss(animated: true)
     }
 }
 
