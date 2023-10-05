@@ -29,13 +29,6 @@ final class FeedBackStackView: UIStackView {
     }()
     var popHandler: ((QuizResultType) -> Void)?
     private let viewModel: QuizViewModel
-    var unMemorizeCount: Int = 0 {
-        didSet {
-            let isUnMemorizeWordZero = unMemorizeCount == 0
-            unMemorizeWordReQuizButton.isHidden = isUnMemorizeWordZero || viewModel.isTestType
-            unMemorizeWordReQuizButton.text = "모르는 \(unMemorizeCount)문제 다시 풀기"
-        }
-    }
 
     init(viewModel: QuizViewModel) {
         self.viewModel = viewModel
@@ -74,6 +67,9 @@ private extension FeedBackStackView {
         quizAnswerButton.addTarget(self, action: #selector(quizAnswerButtonClick), for: .touchUpInside)
         reQuizButton.addTarget(self, action: #selector(reQuizeButtonClik), for: .touchUpInside)
         unMemorizeWordReQuizButton.addTarget(self, action: #selector(unMemorizeReQuizButtonClick), for: .touchUpInside)
+        
+        unMemorizeWordReQuizButton.isHidden = viewModel.isUnMemorizeReQuizButtonHidden
+        unMemorizeWordReQuizButton.text = viewModel.unMemorizeReQuizButtonText
     }
     
     @objc private func quizAnswerButtonClick() {
