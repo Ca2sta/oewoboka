@@ -8,7 +8,9 @@
 import UIKit
 import SnapKit
 
-final class VocabularyViewController: UIViewController {
+final class VocabularyViewController: BottomSheetViewController {
+    
+    private let topView = PageTopView(title: "단어장 추가하기")
     
     private let topDivider: UIView = {
         let view = UIView()
@@ -67,6 +69,8 @@ final class VocabularyViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
+        view.addSubview(topView)
+        topView.buttonDelegate = self
         view.addSubview(topDivider)
         view.addSubview(wordTitleLabel)
         view.addSubview(wordTextField)
@@ -80,11 +84,20 @@ final class VocabularyViewController: UIViewController {
         setupTextField()
     }
     
-    // TextField 란 설정
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.post(name: NSNotification.Name("DismissDetailView"), object: nil, userInfo: nil)
+    }
+    
     private func setupConstraints() {
         
-        topDivider.snp.makeConstraints { make in
+        topView.snp.makeConstraints { make in
             make.top.left.right.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        topDivider.snp.makeConstraints { make in
+            make.top.equalTo(topView.snp.bottom)
+            make.left.right.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(1)
             
         }
@@ -135,9 +148,7 @@ final class VocabularyViewController: UIViewController {
         guard let title = wordTextField.text else { return }
         vocabularyRepository.create(title: title)
         initTextFleid()
-        
-        self.navigationController?.popViewController(animated: true)
-        
+        self.dismiss(animated: true)
     
     }
     
@@ -176,4 +187,12 @@ extension VocabularyViewController: UITextFieldDelegate {
         }
         
     }
+}
+
+extension VocabularyViewController: ViewHasButton {
+    func didTappedButton(button: UIButton) {
+        self.dismiss(animated: true)
+    }
+    
+    
 }

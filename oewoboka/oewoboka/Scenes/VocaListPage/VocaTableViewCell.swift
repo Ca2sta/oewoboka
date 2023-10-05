@@ -4,21 +4,27 @@
 //
 import UIKit
 import SnapKit
+import CoreData
 
 class VocaTableViewCell: UITableViewCell {
+    
     static let identifier = "VocaCell"
+    
     var buttonState = 2
+    
     var data: WordEntity?
-    let dateLabel : UILabel = {
-        let label = UILabel()
-        label.font = Typography.body2.font
-        return label
-    }()
+    
+    let mananger = VocabularyRepository.shared
+    
+    var vocabularyID: NSManagedObjectID?
+    
+    let imageConfig = UIImage.SymbolConfiguration(pointSize: Constant.screenHeight * 0.05, weight: .light)
+    
     let isCompleteButton: UIButton = {
         let button = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 300, weight: .light)
-        let image = UIImage(systemName: "xmark.square.fill", withConfiguration: imageConfig)
-
+        let image = UIImage(systemName: "square", withConfiguration: imageConfig)
+        button.tintColor = .systemPink
         button.setImage(image, for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
 
@@ -26,19 +32,11 @@ class VocaTableViewCell: UITableViewCell {
     }()
     let vocaLabel : UILabel = {
         let label = UILabel()
-        label.text = "development"
-        label.font = Typography.title1.font
-        return label
-    }()
-    let partLabel : UILabel = {
-        let label = UILabel()
-        label.text = "명사"
         label.font = Typography.body1.font
         return label
     }()
     let koreanLabel : UILabel = {
         let label = UILabel()
-        label.text = "발달,성장,개발"
         label.font = Typography.body1.font
         return label
     }()
@@ -55,75 +53,69 @@ class VocaTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
     
-    func bind(data: WordEntity) {
-        self.data = data
-        vocaLabel.text = data.english
-        koreanLabel.text = data.korea
+    func bind(vocabularyID: NSManagedObjectID, index: Int) {
         
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 300, weight: .light)
+        guard let data = mananger.fetch(id: vocabularyID)?.words?.array as? [WordEntity] else { return }
+        self.data = data[index]
+        
+        
+        let attributedString1 = NSMutableAttributedString(string: "")
+        let imageAttachment1 = NSTextAttachment()
+        imageAttachment1.image = UIImage(systemName: "e.square")?.withTintColor(.systemPink)
+        attributedString1.append(NSAttributedString(attachment: imageAttachment1))
+        attributedString1.append(NSAttributedString(string: " " + data[index].english!))
+        vocaLabel.attributedText = attributedString1
+        
+        let attributedString2 = NSMutableAttributedString(string: "")
+        let imageAttachment2 = NSTextAttachment()
+        imageAttachment2.image = UIImage(systemName: "k.square")?.withTintColor(.systemPink)
+        attributedString2.append(NSAttributedString(attachment: imageAttachment2))
+        attributedString2.append(NSAttributedString(string: " " + data[index].korea!))
+        koreanLabel.attributedText = attributedString2
+
         let image: UIImage?
-        if data.isMemorize {
-            print("isMemorize's status:\(data.isMemorize)")
-            image = UIImage(systemName: "checkmark.square.fill", withConfiguration: imageConfig)
+        print("bind")
+        print(data[index].isMemorize)
+        if data[index].isMemorize {
+            image = UIImage(systemName: "checkmark.square", withConfiguration: imageConfig)
+            mananger.update()
         } else {
-            print("isMemorize's status:\(data.isMemorize)")
-            image = UIImage(systemName: "xmark.square.fill", withConfiguration: imageConfig)
+            image = UIImage(systemName: "square", withConfiguration: imageConfig)
+            mananger.update()
         }
         isCompleteButton.setImage(image, for: .normal)
     }
     
     func setUpUI() {
-        addSubview(dateLabel)
+        contentView.addSubview(vocaLabel)
+        contentView.addSubview(koreanLabel)
         contentView.addSubview(isCompleteButton)
-        addSubview(vocaLabel)
-        addSubview(partLabel)
-        addSubview(koreanLabel)
-        
-        
-        dateLabel.snp.makeConstraints { make in
-            make.left.top.equalToSuperview().offset(10)
-            make.right.equalTo(isCompleteButton.snp.left)
-            make.height.equalTo(15)
-        }
-        isCompleteButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
-            make.right.equalToSuperview().inset(10)
-            make.height.width.equalTo(45)
-        }
+
         vocaLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview().offset(-15)
-            make.left.equalToSuperview().offset(10)
-            make.height.equalTo(30)
+            make.top.left.equalToSuperview().inset(Constant.defalutPadding)
         }
         koreanLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(15)
-            make.bottom.equalToSuperview().offset(-10)
-            make.top.equalTo(vocaLabel.snp.bottom).offset(10)
-            make.height.equalTo(30)
+            make.top.equalTo(vocaLabel.snp.bottom).offset(Constant.defalutPadding)
+            make.left.equalTo(vocaLabel.snp.left)
+            make.bottom.equalToSuperview().inset(Constant.defalutPadding)
+        }
+        isCompleteButton.snp.makeConstraints { make in
+            make.right.equalToSuperview().inset(Constant.defalutPadding)
+            make.centerY.equalToSuperview()
+            make.height.width.equalTo(Constant.screenHeight * 0.05)
         }
     }
     
     @objc func isCompleteButtonTapped() {
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 300, weight: .light)
         guard let data = data else { return }
-        
-        switch buttonState {
-        case 1:
-            let image = UIImage(systemName: "xmark.square.fill", withConfiguration: imageConfig)
-            isCompleteButton.setImage(image, for: .normal)
-            data.isMemorize = false
-
-            print(data.isMemorize)
-
-            buttonState = 2
-        case 2:
-            let image = UIImage(systemName: "checkmark.square.fill", withConfiguration: imageConfig)
-            isCompleteButton.setImage(image, for: .normal)
-            data.isMemorize = true
-            print(data.isMemorize)
-            buttonState = 1
-        default:
-            break
+        data.isMemorize.toggle()
+        var image: UIImage?
+        if data.isMemorize {
+            image = UIImage(systemName: "checkmark.square", withConfiguration: imageConfig)
+        } else {
+            image = UIImage(systemName: "square", withConfiguration: imageConfig)
         }
+        isCompleteButton.setImage(image, for: .normal)
+        mananger.update()
     }
 }

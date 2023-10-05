@@ -22,12 +22,9 @@ class VocaViewController: UIViewController {
         return label
     }()
     let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: VocaViewController.self, action: #selector(addButtonTapped))
+    
     var totalWordCount = 0
-    let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy년 MM월 dd일 HH:mm"
-        return formatter
-    }()
+    
     var coreDataManager = VocabularyRepository.shared
     let vocabularyID: NSManagedObjectID
     var filteredWord: [WordEntity] = []
@@ -35,9 +32,6 @@ class VocaViewController: UIViewController {
     init(vocabularyID: NSManagedObjectID) {
         self.vocabularyID = vocabularyID
         print("!!!init\(vocabularyID)")
-        coreDataManager.addWord(vocabularyEntityId: vocabularyID, word: Word(english: "hi", korea: "안녕", isMemorize: false, isBookmark: false))
-        coreDataManager.addWord(vocabularyEntityId: vocabularyID, word: Word(english: "bye", korea: "ㅂㅇ", isMemorize: false, isBookmark: false))
-        coreDataManager.addWord(vocabularyEntityId: vocabularyID, word: Word(english: "happy", korea: "^^", isMemorize: false, isBookmark: false))
         super.init(nibName: nil, bundle: nil)
         
         if let vocabulary = coreDataManager.fetch(id: vocabularyID) {
@@ -74,7 +68,7 @@ class VocaViewController: UIViewController {
         
         allLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.left.right.equalToSuperview()
+            make.left.equalToSuperview().inset(Constant.defalutPadding)
             make.bottom.equalTo(vocaTableView.snp.top)
         }
         vocaTableView.snp.makeConstraints { make in
@@ -121,28 +115,27 @@ extension VocaViewController: UITableViewDelegate,UITableViewDataSource,UISearch
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: VocaTableViewCell.identifier, for: indexPath) as! VocaTableViewCell
+        // TODO: - 작업해야함
+//        let wordsToDisplay: [WordEntity]
+//        if vocaSearchBar.text?.isEmpty == false {
+//            wordsToDisplay = filteredWord
+//        } else {
+//            wordsToDisplay = coreDataManager.fetch(id: vocabularyID)?.words?.array as? [WordEntity] ?? []
+//        }
+//
 
-        let wordsToDisplay: [WordEntity]
-        if vocaSearchBar.text?.isEmpty == false {
-            wordsToDisplay = filteredWord
-        } else {
-            wordsToDisplay = coreDataManager.fetch(id: vocabularyID)?.words?.array as? [WordEntity] ?? []
-        }
-
-        cell.bind(data: wordsToDisplay[indexPath.row])
+        cell.bind(vocabularyID: vocabularyID, index: indexPath.row)
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
+
     func updateSearchResults(for searchController: UISearchController) {
         print("text")
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedVocaViewController = SelectedVocaViewController()
         guard let voca = coreDataManager.fetch(id: vocabularyID)?.words?.array as? [WordEntity] else {return}
-        selectedVocaViewController.bind(data: voca[indexPath.row])
+        selectedVocaViewController.bind(data: voca, index: indexPath.row)
         
         self.navigationController?.pushViewController(selectedVocaViewController, animated: true)
     }

@@ -11,7 +11,10 @@ import CoreData
 
 final class VocaListViewController: UIViewController, UISearchResultsUpdating {
     
-    let vocaListTableView = UITableView()
+    let vocaListTableView: UITableView = {
+        let view = UITableView(frame: CGRect.zero, style: .plain)
+        return view
+    }()
     let vocaSearchController = UISearchController(searchResultsController: nil)
     let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: VocaListViewController.self, action: #selector(addButtonTapped))
 
@@ -26,22 +29,30 @@ final class VocaListViewController: UIViewController, UISearchResultsUpdating {
         setUpSearchController()
         vocaListTableView.delegate = self
         vocaListTableView.dataSource = self
-        vocaListTableView.register(VocaListTableViewCell.self, forCellReuseIdentifier: "ListCell")
-        coreDataManager.create(title: "hihihi")
-        coreDataManager.create(title: "byebye")
+        vocaListTableView.register(VocaListTableViewCell.self, forCellReuseIdentifier: VocaListTableViewCell.identifier)
 
+           self.vocaListTableView.rowHeight = UITableView.automaticDimension
+        NotificationCenter.default.addObserver(
+             self,
+             selector: #selector(self.didDismissDetailNotification(_:)),
+             name: NSNotification.Name("DismissDetailView"),
+             object: nil
+         )
     }
-
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         vocaListTableView.reloadData()
+    }
+    @objc func didDismissDetailNotification(_ notification: Notification) {
+        DispatchQueue.main.async {
+            self.vocaListTableView.reloadData()
+        }
     }
     
     func setUpUI() {
         self.view.addSubview(vocaListTableView)
         navigationItem.titleView = vocaSearchController.searchBar
         navigationItem.rightBarButtonItem = addButton
-        
+        self.navigationController?.navigationBar.tintColor = .systemPink
         addButton.target = self
         addButton.action = #selector(addButtonTapped)
         
@@ -70,9 +81,11 @@ final class VocaListViewController: UIViewController, UISearchResultsUpdating {
 
         let addAction = UIAlertAction(title: "단어장 추가", style: .default) { [weak self] (_) in
             print("단어장 추가를 선택했습니다.")
+            let vc = VocabularyViewController()
+            vc.modalPresentationStyle = .custom
+            vc.transitioningDelegate = self
+            self?.present(vc, animated: true, completion: nil)
             
-            let vocabularyVC = VocabularyViewController()
-            self?.navigationController?.pushViewController(vocabularyVC, animated: true)
         }
 
         let sortAction = UIAlertAction(title: "정렬 순서", style: .default) { _ in
@@ -113,10 +126,6 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
-    }
-    
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
         
@@ -145,3 +154,9 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
     }
 }
     
+extension VocaListViewController: UIViewControllerTransitioningDelegate {
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        PresentationController(presentedViewController: presented, presenting: presenting, size: 0.5)
+    }
+}

@@ -328,10 +328,10 @@
 			isa = PBXGroup;
 			children = (
 				18E0D2182AC133AD005DDA6F /* VocaListViewController.swift */,
-				9B865E022AC2D72E00E562FA /* VocaListTableViewCell.swift */,
 				9B865E042AC2E07900E562FA /* VocaViewController.swift */,
-				9B865E062AC2E14400E562FA /* VocaTableViewCell.swift */,
 				9B865E082AC3C2AD00E562FA /* SelectedVocaViewController.swift */,
+				9B865E022AC2D72E00E562FA /* VocaListTableViewCell.swift */,
+				9B865E062AC2E14400E562FA /* VocaTableViewCell.swift */,
 			);
 			path = VocaListPage;
 			sourceTree = "<group>";
