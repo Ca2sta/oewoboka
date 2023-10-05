@@ -31,7 +31,7 @@ final class CardView: UIView {
         stackView.spacing = 12
         return stackView
     }()
-    private let bookMarkButton: UIButton = {
+    let bookMarkButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
         button.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .selected)
@@ -58,7 +58,7 @@ final class CardView: UIView {
     }()
     let englishLabel: UILabel = {
         let label = UILabel()
-        label.font = Typography.title3.font
+        label.font = Typography.title2.font
         label.textAlignment = .center
         label.textColor = .black
         return label
@@ -70,6 +70,7 @@ final class CardView: UIView {
         label.textColor = .black
         return label
     }()
+    var updateBookmarkHandler: ((Bool)->Void)?
     
     private let inset: CGFloat = 24
     var quizType: QuizType = .training {
@@ -137,19 +138,6 @@ private extension CardView {
         }
     }
     
-//    func quizTypeSetup() {
-//        switch quizType {
-//        case .training:
-//            break
-//        case .wordDictation:
-//            englishLabel.isHidden = true
-//        case .meanDictation:
-//            koreaLabel.isHidden = true
-//        case .test:
-//            print("test")
-//        }
-//    }
-    
     func buttonSetup() {
         bookMarkButton.addTarget(self, action: #selector(bookMarkClick), for: .touchUpInside)
         stateButton.addTarget(self, action: #selector(stateButtonClick), for: .touchUpInside)
@@ -157,6 +145,7 @@ private extension CardView {
     
     @objc func bookMarkClick() {
         bookMarkButton.isSelected.toggle()
+        updateBookmarkHandler?(bookMarkButton.isSelected)
     }
     
     @objc func stateButtonClick() {
