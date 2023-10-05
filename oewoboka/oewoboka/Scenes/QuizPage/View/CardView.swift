@@ -38,16 +38,6 @@ final class CardView: UIView {
         button.tintColor = .lightGray
         return button
     }()
-    private let stateButton: UIButton = {
-        let button = UIButton()
-        let contentVerticalInset: CGFloat = 3
-        let contentHorzontalInset: CGFloat = contentVerticalInset * 2
-        button.contentEdgeInsets = UIEdgeInsets(top: contentVerticalInset, left: contentHorzontalInset, bottom: contentVerticalInset, right: contentHorzontalInset)
-        button.setImage(UIImage(systemName: "questionmark"), for: .normal)
-        button.setImage(UIImage(systemName: "exclamationmark"), for: .selected)
-        button.tintColor = .black
-        return button
-    }()
     private let wordStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -74,12 +64,6 @@ final class CardView: UIView {
     private let viewModel: QuizViewModel
     
     private let inset: CGFloat = 24
-//    var quizType: QuizType = .training {
-//        didSet {
-//            addViews()
-//            autoLayoutSetup()
-//        }
-//    }
 
     init(viewModel: QuizViewModel) {
         self.viewModel = viewModel
@@ -106,7 +90,6 @@ private extension CardView {
         topLineStackView.addArrangedSubview(wordCountLabel)
         topLineStackView.addArrangedSubview(cardStateStackView)
         cardStateStackView.addArrangedSubview(bookMarkButton)
-        cardStateStackView.addArrangedSubview(stateButton)
         addSubview(wordStackView)
         switch viewModel.quizType {
         case .training:
@@ -130,12 +113,6 @@ private extension CardView {
         topLineStackView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview().inset(inset)
         }
-        
-        let stateButtonWidthSize = 26
-        
-        stateButton.snp.makeConstraints { make in
-            make.width.equalTo(stateButtonWidthSize)
-        }
 
         wordStackView.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -144,18 +121,10 @@ private extension CardView {
     
     func buttonSetup() {
         bookMarkButton.addTarget(self, action: #selector(bookMarkClick), for: .touchUpInside)
-        stateButton.addTarget(self, action: #selector(stateButtonClick), for: .touchUpInside)
     }
     
     @objc func bookMarkClick() {
         bookMarkButton.isSelected.toggle()
-//        updateBookmarkHandler?(bookMarkButton.isSelected)
         viewModel.currentWord.isBookmark = bookMarkButton.isSelected
-    }
-    
-    @objc func stateButtonClick() {
-        stateButton.isSelected.toggle()
-//        viewModel.hiddenQuizObservable.value = stateButton.isSelected
-//        viewModel.currentWord.isBookmark = stateButton.isSelected
     }
 }

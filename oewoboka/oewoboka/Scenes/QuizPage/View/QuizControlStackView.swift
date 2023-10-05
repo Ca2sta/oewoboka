@@ -10,7 +10,6 @@ import UIKit
 final class QuizControlStackView: UIStackView {
     private let reloadButton: UIButton = {
         let button = UIButton()
-//        button.setBackgroundImage(UIImage(systemName: "arrow.counterclockwise"), for: .normal)
         button.setImage(UIImage(systemName: "arrow.counterclockwise"), for: .normal)
         button.tintColor = .black
         button.layer.borderColor = UIColor.black.cgColor
@@ -21,7 +20,6 @@ final class QuizControlStackView: UIStackView {
     }()
     private let xButton: UIButton = {
         let button = UIButton()
-//        button.setBackgroundImage(UIImage(systemName: "xmark"), for: .normal)
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         button.tintColor = .red
         button.layer.borderColor = UIColor.systemRed.cgColor
@@ -40,7 +38,7 @@ final class QuizControlStackView: UIStackView {
         button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         return button
     }()
-    private let showButton: UIButton = {
+    private let hideButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "eye"), for: .normal)
         button.setImage(UIImage(systemName: "eye.slash"), for: .selected)
@@ -51,10 +49,13 @@ final class QuizControlStackView: UIStackView {
         return button
     }()
     private let mainButtonSize: CGSize
+    
+    private let viewModel: QuizViewModel
 
 
-    init(buttonSize: CGSize) {
+    init(buttonSize: CGSize, viewModel: QuizViewModel) {
         self.mainButtonSize = buttonSize
+        self.viewModel = viewModel
         super.init(frame: .zero)
         setup()
     }
@@ -69,6 +70,7 @@ private extension QuizControlStackView {
         initSetup()
         addViews()
         autoLayoutSetup()
+        buttonSetup()
     }
     
     func initSetup() {
@@ -81,7 +83,7 @@ private extension QuizControlStackView {
         addArrangedSubview(reloadButton)
         addArrangedSubview(xButton)
         addArrangedSubview(oButton)
-        addArrangedSubview(showButton)
+        addArrangedSubview(hideButton)
     }
     
     func autoLayoutSetup() {
@@ -95,8 +97,32 @@ private extension QuizControlStackView {
         reloadButton.snp.makeConstraints { make in
             make.height.width.equalTo(xButton).dividedBy(1.5)
         }
-        showButton.snp.makeConstraints { make in
+        hideButton.snp.makeConstraints { make in
             make.height.width.equalTo(xButton).dividedBy(1.5)
         }
+    }
+    
+    func buttonSetup() {
+        reloadButton.addTarget(self, action: #selector(reload), for: .touchUpInside)
+        oButton.addTarget(self, action: #selector(memorize), for: .touchUpInside)
+        xButton.addTarget(self, action: #selector(unMemorize), for: .touchUpInside)
+        hideButton.addTarget(self, action: #selector(hide), for: .touchUpInside)
+    }
+    
+    @objc func reload() {
+        viewModel.reQuizHandler()
+    }
+    
+    @objc func memorize() {
+        viewModel.nextHandler?(true)
+    }
+    
+    @objc func unMemorize() {
+        viewModel.nextHandler?(false)
+    }
+    
+    @objc func hide() {
+        hideButton.isSelected.toggle()
+        viewModel.isQuizHidden = hideButton.isSelected
     }
 }

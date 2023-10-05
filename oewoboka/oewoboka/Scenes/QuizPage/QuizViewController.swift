@@ -13,7 +13,7 @@ final class QuizViewController: UIViewController {
     
     private lazy var frontCardView: CardView = CardView(viewModel: viewModel)
     private lazy var backgroundCardView: CardView = CardView(viewModel: viewModel)
-    private let quizControlView: QuizControlStackView = QuizControlStackView(buttonSize: CGSize(width: 52.0, height: 52.0))
+    private lazy var quizControlView: QuizControlStackView = QuizControlStackView(buttonSize: CGSize(width: 52.0, height: 52.0), viewModel: viewModel)
     private lazy var dictationStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             dictationTextField
@@ -62,7 +62,6 @@ final class QuizViewController: UIViewController {
     init(quizData: QuizSettingData) {
         self.viewModel = QuizViewModel(quizData: quizData)
         super.init(nibName: nil, bundle: nil)
-        quizTypeSetup()
         view.backgroundColor = .white
     }
     
@@ -222,11 +221,6 @@ private extension QuizViewController {
         cardViewBottomConstraint?.update(inset: bottomViewHeight)
     }
     
-    func quizTypeSetup() {
-//        frontCardView.quizType = viewModel.quizType
-//        backgroundCardView.quizType = viewModel.quizType
-    }
-    
     func textFieldSetup() {
         dictationTextField.delegate = self
         dictationTextField.becomeFirstResponder()
@@ -318,6 +312,21 @@ private extension QuizViewController {
         viewModel.bookMarkUpdateObservable.bind { [weak self] isBookmark in
             guard let self else { return }
             viewModel.currentWord.isBookmark = isBookmark
+        }
+        viewModel.hiddenQuizObservable.bind { [weak self] isHidden in
+            guard let self else { return }
+            if self.viewModel.isMeanDictation { self.frontCardView.koreaLabel.alpha = isHidden ? 0.0 : 1 }
+            else if self.viewModel.isWordDictation { self.frontCardView.englishLabel.alpha = isHidden ? 0.0 : 1 }
+        }
+        viewModel.nextHandler = { [weak self] isMemorize in
+            guard let self else { return }
+            self.cardMoveAnimation(moveView: frontCardView, isMemorize: isMemorize)
+        }
+        viewModel.reQuizHandler = { [weak self] in
+            guard let self else { return }
+            self.backgroundCardView.isHidden = false
+            self.viewModel.reQuizWordSetting()
+            self.cardViewSetup()
         }
         viewModel.dismissHandler = { [weak self] in
             self?.dismiss(animated: true)
