@@ -41,6 +41,7 @@ final class VocaListViewController: UIViewController, UISearchResultsUpdating {
         vocaListTableView.register(VocaListTableViewCell.self, forCellReuseIdentifier: "ListCell")
         coreDataManager.create(title: "hihihi")
         coreDataManager.create(title: "byebye")
+
     }
 
     
