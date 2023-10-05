@@ -142,8 +142,8 @@
 			children = (
 				084C45F42AC1A9FA002999DF /* Constant.swift */,
 				18BF66892AC208B300C53C07 /* Typography.swift */,
-				18C345852ACA8CFC0072995F /* BottomSheetViewController.swift */,
 				081E2DF52ACCE8A900A07764 /* Observable.swift */,
+				18C345852ACA8CFC0072995F /* BottomSheetViewController.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
