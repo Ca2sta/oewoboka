@@ -71,16 +71,18 @@ final class CardView: UIView {
         return label
     }()
     var updateBookmarkHandler: ((Bool)->Void)?
+    private let viewModel: QuizViewModel
     
     private let inset: CGFloat = 24
-    var quizType: QuizType = .training {
-        didSet {
-            addViews()
-            autoLayoutSetup()
-        }
-    }
+//    var quizType: QuizType = .training {
+//        didSet {
+//            addViews()
+//            autoLayoutSetup()
+//        }
+//    }
 
-    init() {
+    init(viewModel: QuizViewModel) {
+        self.viewModel = viewModel
         super.init(frame: .zero)
         setup()
     }
@@ -94,6 +96,8 @@ final class CardView: UIView {
 private extension CardView {
     func setup() {
         backgroundColor = .white
+        addViews()
+        autoLayoutSetup()
         buttonSetup()
     }
     
@@ -104,7 +108,7 @@ private extension CardView {
         cardStateStackView.addArrangedSubview(bookMarkButton)
         cardStateStackView.addArrangedSubview(stateButton)
         addSubview(wordStackView)
-        switch quizType {
+        switch viewModel.quizType {
         case .training:
             wordStackView.addArrangedSubview(englishLabel)
             wordStackView.addArrangedSubview(koreaLabel)
@@ -145,10 +149,13 @@ private extension CardView {
     
     @objc func bookMarkClick() {
         bookMarkButton.isSelected.toggle()
-        updateBookmarkHandler?(bookMarkButton.isSelected)
+//        updateBookmarkHandler?(bookMarkButton.isSelected)
+        viewModel.currentWord.isBookmark = bookMarkButton.isSelected
     }
     
     @objc func stateButtonClick() {
         stateButton.isSelected.toggle()
+//        viewModel.hiddenQuizObservable.value = stateButton.isSelected
+//        viewModel.currentWord.isBookmark = stateButton.isSelected
     }
 }

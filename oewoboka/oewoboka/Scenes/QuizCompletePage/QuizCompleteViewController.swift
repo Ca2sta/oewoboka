@@ -12,15 +12,12 @@ final class QuizCompleteViewController: UIViewController {
     private let middleView: UIView = UIView()
     private let resultView: CircleProgressBar
     private lazy var quizFeedbackStackView: FeedBackStackView = FeedBackStackView(viewModel: viewModel)
-    private let quizResultWords: [WordEntity]
     private let viewModel: QuizViewModel
-    var popCompletion: (([WordEntity]?) -> Void)?
+    var popCompletion: (() -> Void)?
     
-    init(viewModel: QuizViewModel, words: [WordEntity]) {
-        quizResultWords = words
+    init(viewModel: QuizViewModel) {
         self.viewModel = viewModel
-        let memorizeWords = quizResultWords.filter { $0.isMemorize }
-        resultView = CircleProgressBar(correctRate: 0, type: .number, allWordCount: quizResultWords.count, isMemorizeCount: memorizeWords.count)
+        resultView = CircleProgressBar(correctRate: 0, type: .number, allWordCount:  viewModel.quizResultWords.count, isMemorizeCount: viewModel.memorizeWords.count)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -50,26 +47,23 @@ private extension QuizCompleteViewController {
     }
     
     func resultViewSetup() {
-        let memorizeWords = quizResultWords.filter { $0.isMemorize }
-        let rate = CGFloat(memorizeWords.count) / CGFloat(quizResultWords.count)
-        resultView.progressBarSetupAnimation(rate: rate)
+        resultView.progressBarSetupAnimation(rate: viewModel.progressRate)
     }
     
     func quizFeedbackSetup() {
-        quizFeedbackStackView.unMemorizeCount = quizResultWords.filter{ $0.isMemorize == false }.count
         quizFeedbackStackView.popHandler = { [weak self] resultType in
             switch resultType {
             case .answer:
                 guard let self else { return }
-                let vc = AnswerViewController(words: self.quizResultWords)
+                let vc = AnswerViewController(words: self.viewModel.quizResultWords)
                 vc.modalPresentationStyle = .custom
                 vc.transitioningDelegate = self
                 self.present(vc, animated: true)
             case .allReQuiz:
-                self?.popCompletion?(self?.quizResultWords)
+                self?.popCompletion?()
             case .unMemorizeReQuiz:
-                let unMemorizeWords = self?.quizResultWords.filter { $0.isMemorize == false }
-                self?.popCompletion?(unMemorizeWords)
+                self?.viewModel.unMemorizeReQuiz()
+                self?.popCompletion?()
             }
             self?.navigationController?.popViewController(animated: true)
         }

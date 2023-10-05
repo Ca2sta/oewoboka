@@ -11,8 +11,8 @@ import SnapKit
 
 final class QuizViewController: UIViewController {
     
-    private let frontCardView: CardView = CardView()
-    private let backgroundCardView: CardView = CardView()
+    private lazy var frontCardView: CardView = CardView(viewModel: viewModel)
+    private lazy var backgroundCardView: CardView = CardView(viewModel: viewModel)
     private let quizControlView: QuizControlStackView = QuizControlStackView(buttonSize: CGSize(width: 52.0, height: 52.0))
     private lazy var dictationStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
@@ -56,21 +56,12 @@ final class QuizViewController: UIViewController {
     private let margin: CGFloat = 24
     private var currentIndex: Int = 0
     private var bottomConstraint: Constraint?
-    
-    let vocabularyList: [VocabularyEntity]
-    
-    private var isQuizHidden: Bool = false
-    private var quizResultWords: [WordEntity] = []
-    private var words: [WordEntity] = []
-    private let repository = VocabularyRepository.shared
-    private let viewModel: QuizViewModel = QuizViewModel()
+
+    private let viewModel: QuizViewModel
     
     init(quizData: QuizSettingData) {
-        self.vocabularyList = quizData.selectedVocabulary.isEmpty ? repository.allFetch() : quizData.selectedVocabulary
-        self.viewModel.featureType = quizData.featureType
-        self.viewModel.quizType = quizData.quizType
+        self.viewModel = QuizViewModel(quizData: quizData)
         super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .white
         quizTypeSetup()
         view.backgroundColor = .white
     }
@@ -101,7 +92,7 @@ private extension QuizViewController {
         addViews()
         navigationSetup()
         initCardView()
-        cardViewSetup(index: currentIndex)
+        cardViewSetup()
         textFieldSetup()
         autoLayoutSetup()
         bind()
@@ -138,15 +129,12 @@ private extension QuizViewController {
     
     func initCardView() {
         
-        let vocabularyWords = vocabularyList
-                                .compactMap({ $0.words?.array as? [WordEntity] })
-                                .flatMap({ $0 })
-        words = vocabularyWords
-        
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(cardMove(sender:)))
+        if viewModel.isWordCard {
+            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(cardMove(sender:)))
+            frontCardView.addGestureRecognizer(panGesture)
+        }
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(keyboardDismiss(sender:)))
         frontCardView.isUserInteractionEnabled = true
-        frontCardView.addGestureRecognizer(panGesture)
         frontCardView.addGestureRecognizer(tapGesture)
         
         frontCardView.layer.borderWidth = 1
@@ -164,64 +152,30 @@ private extension QuizViewController {
         view.endEditing(true)
     }
     
-    func cardViewSetup(index: Int) {
-        guard index >= 0 else { return }
-        guard index < words.count else {
+    func cardViewSetup() {
+        if viewModel.isComplete {
             navigationPushQuizCompletePage()
             return
         }
-        let word = words[index]
-        let countText = "\(index + 1) / \(words.count)"
-        frontCardView.englishLabel.text = word.english
-        frontCardView.koreaLabel.text = word.korea
-        frontCardView.wordCountLabel.text = countText
+        
+        frontCardView.englishLabel.text = viewModel.currentEnglishLabelText
+        frontCardView.koreaLabel.text = viewModel.currentKoreaLabelText
+        frontCardView.wordCountLabel.text = viewModel.progressCountText
+        
+        frontCardView.englishLabel.isHidden = viewModel.isWordLabelHidden
+        frontCardView.koreaLabel.isHidden = viewModel.isMeanLabelHidden
 
-        frontCardView.bookMarkButton.isSelected = word.isBookmark
-        frontCardView.updateBookmarkHandler = { [weak self] isBookmark in
-            guard let self else { return }
-            self.words[index].isBookmark = isBookmark
-        }
+        frontCardView.bookMarkButton.isSelected = viewModel.currentWord.isBookmark
         
-        if viewModel.isDictation || viewModel.isTestType {
-            if viewModel.isMeanDictation {
-                frontCardView.koreaLabel.text = ""
-            } else if viewModel.isWordDictation {
-                frontCardView.englishLabel.text = ""
-            }
-        } else if viewModel.isWordCard{
-            if viewModel.isMeanDictation {
-                frontCardView.koreaLabel.isHidden = isQuizHidden
-            } else if viewModel.isWordDictation {
-                frontCardView.englishLabel.isHidden = isQuizHidden
-            }
-        }
-        
-        let nextIndex = index + 1
-        guard nextIndex < words.count else {
+        guard let nextWord = viewModel.nextWord else {
             backgroundCardView.isHidden = true
             return
         }
         
-        let nextWord = words[nextIndex]
-        let nextCountText = "\(nextIndex + 1) / \(words.count)"
-        backgroundCardView.wordCountLabel.text = nextCountText
-        backgroundCardView.englishLabel.text = nextWord.english
-        backgroundCardView.koreaLabel.text = nextWord.korea
+        backgroundCardView.wordCountLabel.text = viewModel.nextProgressCountText
+        backgroundCardView.englishLabel.text = viewModel.nextEnglishText
+        backgroundCardView.koreaLabel.text = viewModel.nextKoreaText
         backgroundCardView.bookMarkButton.isSelected = nextWord.isBookmark
-        
-        if viewModel.isDictation || viewModel.isTestType {
-            if viewModel.isMeanDictation {
-                backgroundCardView.koreaLabel.text = ""
-            } else if viewModel.isWordDictation {
-                backgroundCardView.englishLabel.text = ""
-            }
-        } else if viewModel.isWordCard {
-            if viewModel.isMeanDictation {
-                backgroundCardView.koreaLabel.isHidden = isQuizHidden
-            } else if viewModel.isWordDictation {
-                backgroundCardView.englishLabel.isHidden = isQuizHidden
-            }
-        }
     }
     
     func autoLayoutSetup() {
@@ -269,8 +223,8 @@ private extension QuizViewController {
     }
     
     func quizTypeSetup() {
-        frontCardView.quizType = viewModel.quizType
-        backgroundCardView.quizType = viewModel.quizType
+//        frontCardView.quizType = viewModel.quizType
+//        backgroundCardView.quizType = viewModel.quizType
     }
     
     func textFieldSetup() {
@@ -279,31 +233,18 @@ private extension QuizViewController {
     }
     
     func keyboardReturn() {
-        switch viewModel.quizType {
-        case .meanDictation:
-            if words[currentIndex].korea == dictationTextField.text {
-                cardMoveAnimation(moveView: frontCardView, isMemorize: true)
-            }
-        case .wordDictation:
-            if words[currentIndex].english == dictationTextField.text {
-                cardMoveAnimation(moveView: frontCardView, isMemorize: true)
-            }
-        default:
-            break
+        if viewModel.isMatch {
+            cardMoveAnimation(moveView: frontCardView, isMemorize: true)
         }
     }
     
     func navigationPushQuizCompletePage() {
-        let vc = QuizCompleteViewController(viewModel: viewModel, words: quizResultWords)
-        vc.popCompletion = { [weak self] words in
+        let vc = QuizCompleteViewController(viewModel: viewModel)
+        vc.popCompletion = { [weak self] in
             guard let self else { return }
-            if let words {
-                self.words = words
-            }
+            self.viewModel.reQuizWordSetting()
             self.backgroundCardView.isHidden = false
-            self.quizResultWords = []
-            self.currentIndex = 0
-            self.cardViewSetup(index: currentIndex)
+            self.cardViewSetup()
             if self.viewModel.isTestType {
                 timerReset()
             }
@@ -341,17 +282,17 @@ private extension QuizViewController {
     }
     
     private func cardMoveAnimation(moveView: UIView, isMemorize: Bool) {
-        let word = words[currentIndex]
+        let word = viewModel.currentWord
         let animationPositionX = isMemorize ? moveView.center.x + moveView.bounds.width : moveView.center.x - moveView.bounds.width
         UIView.animate(withDuration: 0.3) {
             moveView.center = CGPoint(x: animationPositionX, y: moveView.center.y)
         } completion: { _ in
             word.isMemorize = isMemorize
-            self.repository.update()
-            self.quizResultWords.append(word)
-            self.currentIndex += 1
+            self.viewModel.repository.update()
+            self.viewModel.quizResultWords.append(word)
+            self.viewModel.next()
             self.textFieldInit()
-            self.cardViewSetup(index: self.currentIndex)
+            self.cardViewSetup()
         }
     }
     
@@ -373,6 +314,10 @@ private extension QuizViewController {
             if countDownDuration > 0 {
                 self.setTimer(with: countDownDuration)
             }
+        }
+        viewModel.bookMarkUpdateObservable.bind { [weak self] isBookmark in
+            guard let self else { return }
+            viewModel.currentWord.isBookmark = isBookmark
         }
         viewModel.dismissHandler = { [weak self] in
             self?.dismiss(animated: true)
@@ -397,25 +342,17 @@ private extension QuizViewController {
     }
     
     private func failedWordSetup() {
-        for index in currentIndex..<words.count {
-            let word = words[index]
-            word.isMemorize = false
-            quizResultWords.append(word)
-        }
+        viewModel.restWordsFailure()
         navigationPushQuizCompletePage()
     }
 }
 
 extension QuizViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        switch viewModel.quizType {
-        case .meanDictation:
-            frontCardView.koreaLabel.text = textField.text
-        case .wordDictation:
-            frontCardView.englishLabel.text = textField.text
-        default:
-            break
-        }
+        viewModel.dictationText = textField.text
+        frontCardView.koreaLabel.text = viewModel.currentKoreaLabelText
+        frontCardView.englishLabel.text = viewModel.currentEnglishLabelText
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
