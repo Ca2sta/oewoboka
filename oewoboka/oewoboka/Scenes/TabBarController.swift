@@ -9,9 +9,15 @@ import UIKit
 
 final class TabBarViewController: UITabBarController {
 
+    let manager = VocabularyRepository.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if manager.allFetch().isEmpty {
+            manager.create(title: "Defalut")
+        }
         viewControllerSetting()
+        
     }
 
     private func viewControllerSetting() {
@@ -21,7 +27,7 @@ final class TabBarViewController: UITabBarController {
             image: UIImage(systemName: "book.closed"),
             selectedImage: UIImage(systemName: "book.closed.fill")
         )
-        let vc2 = UINavigationController(rootViewController: VocabularyViewController())
+        let vc2 = UINavigationController(rootViewController: AddWordViewController(vocabulary: manager.allFetch()[0]))
         vc2.tabBarItem = UITabBarItem(
             title: "추가하기",
             image: UIImage(systemName: "plus.app"),
