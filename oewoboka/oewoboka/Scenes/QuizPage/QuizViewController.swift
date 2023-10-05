@@ -139,11 +139,6 @@ private extension QuizViewController {
     
     func initCardView() {
         
-        //MARK: 더미이므로 지워야함
-        let word = Word(english: "영어", korea: "한글", isMemorize: false, isBookmark: false)
-        vocabularyList.map{ repository.addWord(vocabularyEntityId: $0.objectID, word: word) }
-        
-        
         let vocabularyWords = vocabularyList
                                 .compactMap({ $0.words?.array as? [WordEntity] })
                                 .flatMap({ $0 })
