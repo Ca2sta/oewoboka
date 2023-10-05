@@ -24,10 +24,13 @@
 		08AEE6062ACAF54000FBE770 /* FTSettingTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE6052ACAF54000FBE770 /* FTSettingTypeCell.swift */; };
 		08AEE6082ACAF55000FBE770 /* FTOPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE6072ACAF55000FBE770 /* FTOPViewController.swift */; };
 		08AEE60A2ACAF56200FBE770 /* FTOPViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE6092ACAF56200FBE770 /* FTOPViewModel.swift */; };
+		08B4A93F2ACE5F3300CB74E9 /* TanslatedManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B4A93E2ACE5F3300CB74E9 /* TanslatedManager.swift */; };
+		08B4A9412ACE5F7C00CB74E9 /* TransLateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B4A9402ACE5F7C00CB74E9 /* TransLateData.swift */; };
 		18A815BA2AC3E1D3007FE489 /* QuizType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A815B92AC3E1D3007FE489 /* QuizType.swift */; };
 		18B97AF42AC3C819006C0AAA /* QuizResultType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B97AF32AC3C819006C0AAA /* QuizResultType.swift */; };
 		18BF668A2AC208B300C53C07 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BF66892AC208B300C53C07 /* Typography.swift */; };
 		18BF668D2AC2097400C53C07 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BF668C2AC2097400C53C07 /* DefaultButton.swift */; };
+		18C2B46E2ACEA87F00C22445 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C2B46D2ACEA87F00C22445 /* Client.swift */; };
 		18C3457F2ACA638C0072995F /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C3457E2ACA638C0072995F /* TopView.swift */; };
 		18C345812ACA67F90072995F /* BottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C345802ACA67F90072995F /* BottomView.swift */; };
 		18C345842ACA6CB30072995F /* AnswerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C345832ACA6CB30072995F /* AnswerTableViewCell.swift */; };
@@ -83,10 +86,14 @@
 		08AEE6052ACAF54000FBE770 /* FTSettingTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSettingTypeCell.swift; sourceTree = "<group>"; };
 		08AEE6072ACAF55000FBE770 /* FTOPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOPViewController.swift; sourceTree = "<group>"; };
 		08AEE6092ACAF56200FBE770 /* FTOPViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOPViewModel.swift; sourceTree = "<group>"; };
+		08B4A93E2ACE5F3300CB74E9 /* TanslatedManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TanslatedManager.swift; sourceTree = "<group>"; };
+		08B4A9402ACE5F7C00CB74E9 /* TransLateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransLateData.swift; sourceTree = "<group>"; };
+		08B4A9422ACE5FCA00CB74E9 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Client.swift; path = ../../../../../../../../../Desktop/Client.swift; sourceTree = "<group>"; };
 		18A815B92AC3E1D3007FE489 /* QuizType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizType.swift; sourceTree = "<group>"; };
 		18B97AF32AC3C819006C0AAA /* QuizResultType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizResultType.swift; sourceTree = "<group>"; };
 		18BF66892AC208B300C53C07 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		18BF668C2AC2097400C53C07 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
+		18C2B46D2ACEA87F00C22445 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		18C3457E2ACA638C0072995F /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		18C345802ACA67F90072995F /* BottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomView.swift; sourceTree = "<group>"; };
 		18C345832ACA6CB30072995F /* AnswerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerTableViewCell.swift; sourceTree = "<group>"; };
@@ -144,6 +151,7 @@
 				18BF66892AC208B300C53C07 /* Typography.swift */,
 				081E2DF52ACCE8A900A07764 /* Observable.swift */,
 				18C345852ACA8CFC0072995F /* BottomSheetViewController.swift */,
+				08B4A93E2ACE5F3300CB74E9 /* TanslatedManager.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -284,6 +292,7 @@
 				18E0D20A2AC13232005DDA6F /* Model */,
 				18E0D2072AC131B9005DDA6F /* Scenes */,
 				18E0D1FB2AC13061005DDA6F /* LaunchScreen.storyboard */,
+				18C2B46D2ACEA87F00C22445 /* Client.swift */,
 				18E0D1FE2AC13061005DDA6F /* Info.plist */,
 			);
 			path = oewoboka;
@@ -308,6 +317,7 @@
 		18E0D2082AC131CF005DDA6F /* AddVocaPage */ = {
 			isa = PBXGroup;
 			children = (
+				08B4A9422ACE5FCA00CB74E9 /* Client.swift */,
 				18E0D20E2AC13269005DDA6F /* View */,
 				18E0D20C2AC13264005DDA6F /* AddVocaViewController.swift */,
 			);
@@ -333,6 +343,7 @@
 				18ED61022ACDCBB10089FC42 /* VocabularyEntity+CoreDataClass.swift */,
 				18ED61032ACDCBB10089FC42 /* VocabularyEntity+CoreDataProperties.swift */,
 				18ED60EF2ACCE8190089FC42 /* VocabularyRepository.swift */,
+				08B4A9402ACE5F7C00CB74E9 /* TransLateData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -541,13 +552,14 @@
 				18BF668A2AC208B300C53C07 /* Typography.swift in Sources */,
 				18E0D2132AC13388005DDA6F /* QuizViewController.swift in Sources */,
 				18E0D22B2AC19344005DDA6F /* CircleProgressBar.swift in Sources */,
+				08B4A9412ACE5F7C00CB74E9 /* TransLateData.swift in Sources */,
 				08AEE5F42ACAF40A00FBE770 /* Models.swift in Sources */,
 				18E0D21E2AC17E94005DDA6F /* Vocabulary.swift in Sources */,
-				18E0D21B2AC133FE005DDA6F /* AddVocabularyViewController.swift in Sources */,
+				18E0D21B2AC133FE005DDA6F /* AddWordViewController.swift in Sources */,
 				08AEE5FC2ACAF4F000FBE770 /* PageTopView.swift in Sources */,
 				18ED60F52ACD42240089FC42 /* SelectVocabularyButton.swift in Sources */,
 				18E0D21B2AC133FE005DDA6F /* AddWordViewController.swift in Sources */,
-				08AEE5FC2ACAF4F000FBE770 /* FTModalTopView.swift in Sources */,
+				08AEE5FC2ACAF4F000FBE770 /* PageTopView.swift in Sources */,
 				08AEE5F82ACAF45000FBE770 /* FeatureCollectionViewCell.swift in Sources */,
 				18E0D1F52AC1305D005DDA6F /* TabBarController.swift in Sources */,
 				9B865E072AC2E14400E562FA /* VocaTableViewCell.swift in Sources */,
@@ -560,6 +572,7 @@
 				08AEE5F62ACAF42400FBE770 /* FeatureViewController.swift in Sources */,
 				18E0D2252AC18B90005DDA6F /* QuizControlStackView.swift in Sources */,
 				08AEE6042ACAF53300FBE770 /* FTModalBottomView.swift in Sources */,
+				08B4A93F2ACE5F3300CB74E9 /* TanslatedManager.swift in Sources */,
 				08AEE6022ACAF52300FBE770 /* QuizCountView.swift in Sources */,
 				08AEE6082ACAF55000FBE770 /* FTOPViewController.swift in Sources */,
 				7EC2C0022ACD33EE005F1407 /* VocabularyViewController.swift in Sources */,
@@ -567,6 +580,7 @@
 				18CE95B42AC6DAF400CAA133 /* AnswerViewController.swift in Sources */,
 				18ED60EE2ACCE3580089FC42 /* Model.xcdatamodeld in Sources */,
 				18A815BA2AC3E1D3007FE489 /* QuizType.swift in Sources */,
+				18C2B46E2ACEA87F00C22445 /* Client.swift in Sources */,
 				18E0D1F12AC1305D005DDA6F /* AppDelegate.swift in Sources */,
 				18E0D2232AC181CB005DDA6F /* CardView.swift in Sources */,
 				08AEE60A2ACAF56200FBE770 /* FTOPViewModel.swift in Sources */,

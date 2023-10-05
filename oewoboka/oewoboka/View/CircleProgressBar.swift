@@ -27,13 +27,19 @@ final class CircleProgressBar: UIView {
     }()
     private let type: ResultType
     private var count: Int = 0
-    private let endValue: Double
+    private var endValue: Double = 0
     private let startValue: Double = 0
-    private let quizRate: CGFloat
+    private var quizRate: CGFloat = 0
     private var displayLink: CADisplayLink?
     private var animationStartDate: Date? = nil
     private var animationLayer: CAShapeLayer? = nil
     
+    private var correctRate: CGFloat = 0 {
+        didSet {
+            self.quizRate = correctRate
+            self.endValue = correctRate * 100
+        }
+    }
     // 애니메이션 시간
     var duration: CGFloat = 1
     // 테두리 굵기
@@ -43,11 +49,7 @@ final class CircleProgressBar: UIView {
     var lineColor: UIColor = UIColor.red
     var fillColor: CGColor = UIColor.clear.cgColor
 
-
-    init(correctRate: CGFloat, type: ResultType) {
-        quizRate = correctRate
-        endValue = correctRate * 100
-        
+    init(type: ResultType) {
         self.type = type
         self.correctRateLabel.text = "0"
         if type == .percent {
@@ -56,6 +58,15 @@ final class CircleProgressBar: UIView {
         }
         
         super.init(frame: .zero)
+        
+        setup()
+    }
+
+    convenience init(correctRate: CGFloat, type: ResultType) {
+        self.init(type: type)
+        
+        quizRate = correctRate
+        endValue = correctRate * 100
         
         setup()
     }
@@ -104,11 +115,14 @@ private extension CircleProgressBar {
 //MARK: Animation
 extension CircleProgressBar {
     
-    func progressBarSetupAnimation() {
+    func progressBarSetupAnimation(rate: CGFloat) {
         if let animationLayer {
             animationLayer.removeFromSuperlayer()
         }
+        
         layoutIfNeeded()
+        
+        correctRate = rate
         
         let bezierPathTest = UIBezierPath(ovalIn: bounds)
         let progressBar = CAShapeLayer()

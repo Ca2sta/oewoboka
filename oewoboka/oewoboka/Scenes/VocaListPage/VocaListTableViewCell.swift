@@ -32,7 +32,14 @@ class VocaListTableViewCell: UITableViewCell {
         let label = UILabel()
         return label
     }()
-
+    let inProgressRateLabel: CircleProgressBar = {
+        let view = CircleProgressBar(correctRate: 0, type: .percent)
+        view.resultViewLineWidth = 0.5
+        view.progressBarLineWidth = 1
+        view.correctRateLabel.font = Typography.body3.font
+        view.lineColor = .systemRed
+        return view
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -62,25 +69,12 @@ class VocaListTableViewCell: UITableViewCell {
         var persent: Double = 0
         if num1 != 0 && num2 != 0 { persent = num2 / num1 }
         setUpProgressBar(persent: persent)
+
     }
     
     func setUpProgressBar(persent: Double) {
-        
-        let inProgressRateLabel: CircleProgressBar = {
-            let view = CircleProgressBar(correctRate: persent, type: .percent)
-            view.resultViewLineWidth = 0.5
-            view.progressBarLineWidth = 1
-            view.correctRateLabel.font = Typography.body3.font
-            view.lineColor = .systemRed
-            return view
-        }()
-        contentView.addSubview(inProgressRateLabel)
-        inProgressRateLabel.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-15)
-            make.bottom.equalToSuperview().offset(-8)
-            make.width.height.equalTo(Constant.screenWidth * 0.1)
-        }
-        inProgressRateLabel.progressBarSetupAnimation()
+
+        inProgressRateLabel.progressBarSetupAnimation(rate: persent)
     }
     
     func setUpUI() {
@@ -90,7 +84,13 @@ class VocaListTableViewCell: UITableViewCell {
         contentView.addSubview(vocaNumbersLabel)
         contentView.addSubview(uncompleteNumbersLabel)
         contentView.addSubview(completeNumbersLabel)
-
+        contentView.addSubview(inProgressRateLabel)
+        
+        inProgressRateLabel.snp.makeConstraints { make in
+            make.right.equalToSuperview().offset(-15)
+            make.bottom.equalToSuperview().offset(-8)
+            make.width.height.equalTo(Constant.screenWidth * 0.1)
+        }
         
         setButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
