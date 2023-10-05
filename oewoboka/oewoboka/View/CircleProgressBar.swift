@@ -125,7 +125,7 @@ extension CircleProgressBar {
         layoutIfNeeded()
         
         correctRate = rate
-        print(bounds)
+        
         if progressBarLayer == nil {
             let rect = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.width)
             let bezierPathTest = UIBezierPath(ovalIn: rect)
