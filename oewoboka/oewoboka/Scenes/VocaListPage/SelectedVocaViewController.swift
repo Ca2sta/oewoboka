@@ -7,9 +7,13 @@
 
 import UIKit
 import SnapKit
+import CoreData
+
 class SelectedVocaViewController: UIViewController {
+    var buttonState = 2
     var data: WordEntity?
-    var buttonState = 1
+    var currentWordIndex: Int = 0
+    var words: [WordEntity] = []
     let vocaLabel: UILabel = {
         let label = UILabel()
         label.text = "development"
@@ -52,17 +56,23 @@ class SelectedVocaViewController: UIViewController {
         super.viewDidLoad()
         setUpUI()
         view.backgroundColor = .systemBackground
-//        isCompleteButton.setImage(UIImage(systemName: "text.justify"), for: .normal)
+        
         hideButton.setImage(UIImage(systemName: "eye"), for: .normal)
         hideButton.addTarget(self, action: #selector(hideButtonTapped), for: .touchUpInside)
         
         leftButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         rightButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         firstButton.setImage(UIImage(systemName: "chevron.left.2"), for: .normal)
+        
         isCompleteButton.addTarget(self, action: #selector(isCompleteButtonTapped), for: .touchUpInside)
+        firstButton.addTarget(self, action: #selector(firstButtonTapped), for: .touchUpInside)
+        leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
+        rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+
     }
     
     func bind(data: WordEntity) {
+        self.data = data
         
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: .light)
         let image: UIImage?
@@ -71,6 +81,7 @@ class SelectedVocaViewController: UIViewController {
         } else {
             image = UIImage(systemName: "xmark.square.fill", withConfiguration: imageConfig)
         }
+        
         isCompleteButton.setImage(image, for: .normal)
         
         vocaLabel.text = data.english
@@ -97,8 +108,8 @@ class SelectedVocaViewController: UIViewController {
             make.centerY.equalToSuperview()
         }
         isCompleteButton.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-10)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            make.right.equalToSuperview().offset(-20)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
         }
         bottomSheetView.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide)
@@ -122,6 +133,16 @@ class SelectedVocaViewController: UIViewController {
             make.centerY.equalToSuperview()
         }
     }
+    @objc func firstButtonTapped() {
+        print("first")
+    }
+    @objc func leftButtonTapped() {
+        print("left")
+    }
+    @objc func rightButtonTapped() {
+        print("right")
+    }
+    
     @objc func hideButtonTapped() {
         vocaLabel.isHidden = !vocaLabel.isHidden
         if vocaLabel.isHidden {
@@ -131,8 +152,9 @@ class SelectedVocaViewController: UIViewController {
             hideButton.setImage(UIImage(systemName: "eye"), for: .normal)
         }
     }
+    
     @objc func isCompleteButtonTapped() {
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 300, weight: .light)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: .light)
         guard let data = data else { return }
         
         switch buttonState {
@@ -152,6 +174,5 @@ class SelectedVocaViewController: UIViewController {
         default:
             break
         }
-        
     }
 }

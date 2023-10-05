@@ -11,7 +11,11 @@ import CoreData
 
 class VocaViewController: UIViewController {
     let vocaTableView = UITableView()
-    let vocaSearchBar = UISearchBar()
+    let vocaSearchBar : UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "단어 검색"
+        return searchBar
+    }()
     let allLabel : UILabel = {
         let label = UILabel()
         label.text = "전체 단어수: 0"
@@ -26,7 +30,8 @@ class VocaViewController: UIViewController {
     }()
     var coreDataManager = VocabularyRepository.shared
     let vocabularyID: NSManagedObjectID
-    
+    var filteredWord: [WordEntity] = []
+
     init(vocabularyID: NSManagedObjectID) {
         self.vocabularyID = vocabularyID
         print("!!!init\(vocabularyID)")
@@ -81,29 +86,43 @@ class VocaViewController: UIViewController {
         vocaTableView.reloadData()
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let searchText = searchBar.text {
-
-            print("검색어: \(searchText)")
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            filteredWord = coreDataManager.fetch(id: vocabularyID)?.words?.array as? [WordEntity] ?? []
+        } else {
+            let allWords = coreDataManager.fetch(id: vocabularyID)?.words?.array as? [WordEntity] ?? []
+            filteredWord = allWords.filter { word in
+                let english = word.english ?? ""
+                let korean = word.korea ?? ""
+                return english.contains(searchText) || korean.contains(searchText)
+            }
         }
         
         vocaTableView.reloadData()
-        
     }
     
 }
 extension VocaViewController: UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return coreDataManager.fetch(id: vocabularyID)!.words!.count
-        
+        if vocaSearchBar.text?.isEmpty == false {
+            return filteredWord.count
+        } else {
+            return coreDataManager.fetch(id: vocabularyID)?.words?.count ?? 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: VocaTableViewCell.identifier, for: indexPath) as! VocaTableViewCell
-        guard let voca = coreDataManager.fetch(id: vocabularyID)?.words?.array as? [WordEntity] else {return UITableViewCell()}
-        cell.bind(data: voca[indexPath.row])
+
+        let wordsToDisplay: [WordEntity]
+        if vocaSearchBar.text?.isEmpty == false {
+            wordsToDisplay = filteredWord
+        } else {
+            wordsToDisplay = coreDataManager.fetch(id: vocabularyID)?.words?.array as? [WordEntity] ?? []
+        }
+
+        cell.bind(data: wordsToDisplay[indexPath.row])
         return cell
     }
     
