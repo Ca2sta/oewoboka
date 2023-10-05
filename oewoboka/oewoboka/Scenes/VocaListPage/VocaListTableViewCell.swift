@@ -74,7 +74,7 @@ class VocaListTableViewCell: UITableViewCell {
     
     func setUpProgressBar(persent: Double) {
 
-        inProgressRateLabel.progressBarSetupAnimation()
+        inProgressRateLabel.progressBarSetupAnimation(rate: persent)
     }
     
     func setUpUI() {

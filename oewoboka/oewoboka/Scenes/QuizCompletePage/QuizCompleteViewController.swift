@@ -18,8 +18,7 @@ final class QuizCompleteViewController: UIViewController {
     init(words: [WordEntity]) {
         quizResultWords = words
         let memorizeWords = quizResultWords.filter { $0.isMemorize }
-        let rate = CGFloat(memorizeWords.count) / CGFloat(quizResultWords.count)
-        resultView = CircleProgressBar(correctRate: rate, type: .number, allWordCount: quizResultWords.count, isMemorizeCount: memorizeWords.count)
+        resultView = CircleProgressBar(correctRate: 0, type: .number, allWordCount: quizResultWords.count, isMemorizeCount: memorizeWords.count)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -31,7 +30,6 @@ final class QuizCompleteViewController: UIViewController {
         super.viewDidLoad()
         setup()
     }
-
 }
 
 private extension QuizCompleteViewController {
@@ -50,7 +48,9 @@ private extension QuizCompleteViewController {
     }
     
     func resultViewSetup() {
-        resultView.progressBarSetupAnimation()
+        let memorizeWords = quizResultWords.filter { $0.isMemorize }
+        let rate = CGFloat(memorizeWords.count) / CGFloat(quizResultWords.count)
+        resultView.progressBarSetupAnimation(rate: rate)
     }
     
     func quizFeedbackSetup() {
