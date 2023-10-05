@@ -19,7 +19,7 @@ final class QuizCompleteViewController: UIViewController {
         quizResultWords = words
         let memorizeWords = quizResultWords.filter { $0.isMemorize }
         let rate = CGFloat(memorizeWords.count) / CGFloat(quizResultWords.count)
-        resultView = CircleProgressBar(correctRate: rate, type: .percent, allWordCount: quizResultWords.count, isMemorizeCount: memorizeWords.count)
+        resultView = CircleProgressBar(correctRate: rate, type: .number, allWordCount: quizResultWords.count, isMemorizeCount: memorizeWords.count)
         super.init(nibName: nil, bundle: nil)
     }
     
