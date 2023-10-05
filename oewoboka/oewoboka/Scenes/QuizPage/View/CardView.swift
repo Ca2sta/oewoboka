@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 
 final class CardView: UIView {
+    
     let topLineStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -50,20 +51,22 @@ final class CardView: UIView {
     private let wordStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.alignment = .center
+        stackView.alignment = .fill
         stackView.distribution = .fillEqually
         stackView.spacing = 12
         return stackView
     }()
     let englishLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.font = Typography.title3.font
+        label.textAlignment = .center
         label.textColor = .black
         return label
     }()
     let koreaLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.font = Typography.body1.font
+        label.textAlignment = .center
         label.textColor = .black
         return label
     }()
@@ -71,7 +74,8 @@ final class CardView: UIView {
     private let inset: CGFloat = 24
     var quizType: QuizType = .training {
         didSet {
-            quizTypeSetup()
+            addViews()
+            autoLayoutSetup()
         }
     }
 
@@ -89,8 +93,6 @@ final class CardView: UIView {
 private extension CardView {
     func setup() {
         backgroundColor = .white
-        addViews()
-        autoLayoutSetup()
         buttonSetup()
     }
     
@@ -101,8 +103,22 @@ private extension CardView {
         cardStateStackView.addArrangedSubview(bookMarkButton)
         cardStateStackView.addArrangedSubview(stateButton)
         addSubview(wordStackView)
-        wordStackView.addArrangedSubview(englishLabel)
-        wordStackView.addArrangedSubview(koreaLabel)
+        switch quizType {
+        case .training:
+            wordStackView.addArrangedSubview(englishLabel)
+            wordStackView.addArrangedSubview(koreaLabel)
+        case .wordDictation:
+            wordStackView.addArrangedSubview(englishLabel)
+            wordStackView.addArrangedSubview(koreaLabel)
+            englishLabel.text = ""
+        case .meanDictation:
+            wordStackView.addArrangedSubview(englishLabel)
+            wordStackView.addArrangedSubview(koreaLabel)
+            koreaLabel.text = ""
+        case .test:
+            wordStackView.addArrangedSubview(englishLabel)
+            wordStackView.addArrangedSubview(koreaLabel)
+        }
     }
     
     func autoLayoutSetup() {
@@ -121,18 +137,18 @@ private extension CardView {
         }
     }
     
-    func quizTypeSetup() {
-        switch quizType {
-        case .training:
-            break
-        case .wordDictation:
-            englishLabel.isHidden = true
-        case .meanDictation:
-            koreaLabel.isHidden = true
-        case .test:
-            print("test")
-        }
-    }
+//    func quizTypeSetup() {
+//        switch quizType {
+//        case .training:
+//            break
+//        case .wordDictation:
+//            englishLabel.isHidden = true
+//        case .meanDictation:
+//            koreaLabel.isHidden = true
+//        case .test:
+//            print("test")
+//        }
+//    }
     
     func buttonSetup() {
         bookMarkButton.addTarget(self, action: #selector(bookMarkClick), for: .touchUpInside)

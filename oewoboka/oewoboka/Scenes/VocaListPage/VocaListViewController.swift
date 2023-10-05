@@ -41,6 +41,7 @@ final class VocaListViewController: UIViewController, UISearchResultsUpdating {
         vocaListTableView.register(VocaListTableViewCell.self, forCellReuseIdentifier: "ListCell")
         coreDataManager.create(title: "hihihi")
         coreDataManager.create(title: "byebye")
+
     }
 
     
@@ -125,7 +126,7 @@ extension VocaListViewController : UITableViewDelegate, UITableViewDataSource, U
         if searchText.isEmpty {
             filteredVocaLists = coreDataManager.allFetch()
         } else {
-            let filterAry = coreDataManager.allFetch().filter{$0.title!.contains(searchText)}
+            let filterAry = coreDataManager.allFetch().filter{$0.title.contains(searchText)}
             filteredVocaLists = filterAry
         }
         

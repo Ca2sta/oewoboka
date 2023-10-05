@@ -42,6 +42,8 @@ final class QuizSettingView: UIView {
     let typeCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.minimumLineSpacing = 0
         let width = Constant.screenWidth - (Constant.defalutPadding * 2)
         flowLayout.itemSize = CGSize(width: width, height: Constant.screenHeight * 0.05)
         let view = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
@@ -52,7 +54,7 @@ final class QuizSettingView: UIView {
     
     weak var buttonDelegate: ViewHasButton?
     
-    init(type: QuizSettingType, viewModel: FTOPViewModel ) {
+    init(type: QuizSettingType, viewModel: FTOPViewModel) {
         self.type = type
         super.init(frame: CGRect.zero)
         setUp()
@@ -70,8 +72,19 @@ private extension QuizSettingView {
         titleLabel.text = type == .range ? viewModel.rangeViewTitle : viewModel.typeViewTitle
         descriptionLabel.text = type == .range ? viewModel.rangeViewDescription : viewModel.typeViewDescription
         rangeButton.image = viewModel.rangeBTLeftImage
-        rangeButton.text = viewModel.rangeBTtitle
         rangeButton.type = .rightImage(viewModel.rangeBTRightImage)
+        
+            
+        viewModel.rangeBTtitle.bind { [weak self] text in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else {return}
+                self.rangeButton.setTitle(text, for: .normal)
+            }
+            
+            print("$$$\(text)")
+        }
+        
+
     }
 
     
