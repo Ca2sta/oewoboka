@@ -33,6 +33,7 @@
 		18C2B46E2ACEA87F00C22445 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C2B46D2ACEA87F00C22445 /* Client.swift */; };
 		18C2B4702ACED97000C22445 /* TimerSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C2B46F2ACED97000C22445 /* TimerSettingView.swift */; };
 		18C2B4722ACED9DC00C22445 /* QuziViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C2B4712ACED9DC00C22445 /* QuziViewModel.swift */; };
+		18C2B4742ACF00FE00C22445 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C2B4732ACF00FE00C22445 /* Int.swift */; };
 		18C3457F2ACA638C0072995F /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C3457E2ACA638C0072995F /* TopView.swift */; };
 		18C345812ACA67F90072995F /* BottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C345802ACA67F90072995F /* BottomView.swift */; };
 		18C345842ACA6CB30072995F /* AnswerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C345832ACA6CB30072995F /* AnswerTableViewCell.swift */; };
@@ -98,6 +99,7 @@
 		18C2B46D2ACEA87F00C22445 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		18C2B46F2ACED97000C22445 /* TimerSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSettingView.swift; sourceTree = "<group>"; };
 		18C2B4712ACED9DC00C22445 /* QuziViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuziViewModel.swift; sourceTree = "<group>"; };
+		18C2B4732ACF00FE00C22445 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		18C3457E2ACA638C0072995F /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		18C345802ACA67F90072995F /* BottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomView.swift; sourceTree = "<group>"; };
 		18C345832ACA6CB30072995F /* AnswerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerTableViewCell.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 		18B97AEF2AC3C55C006C0AAA /* Extenstions */ = {
 			isa = PBXGroup;
 			children = (
+				18C2B4732ACF00FE00C22445 /* Int.swift */,
 			);
 			path = Extenstions;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				18C345862ACA8CFC0072995F /* BottomSheetViewController.swift in Sources */,
 				08AEE5F12ACAF3EA00FBE770 /* FeatureViewModel.swift in Sources */,
 				18ED60F82ACD4A6D0089FC42 /* BottomSheetSelectVocabularyViewController.swift in Sources */,
+				18C2B4742ACF00FE00C22445 /* Int.swift in Sources */,
 				18ED61052ACDCBB10089FC42 /* VocabularyEntity+CoreDataProperties.swift in Sources */,
 				18BF668A2AC208B300C53C07 /* Typography.swift in Sources */,
 				18E0D2132AC13388005DDA6F /* QuizViewController.swift in Sources */,
