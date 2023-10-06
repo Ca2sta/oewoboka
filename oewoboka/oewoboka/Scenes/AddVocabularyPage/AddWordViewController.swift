@@ -156,11 +156,6 @@ class AddWordViewController: UIViewController {
             make.left.right.equalToSuperview()
         }
 
-
-
-
-
-
     }
     
     private func textFieldSetup() {
@@ -173,8 +168,12 @@ class AddWordViewController: UIViewController {
     }
     
     private func navigationSetup() {
-        guard let vocabulary = repository.allFetch().first else { return }
-        selectVocabularyView.vocabularyLabel.text = vocabulary.title
+        if let vocabulary = vocabulary {
+            selectVocabularyView.vocabularyLabel.text = vocabulary.title
+        } else {
+            guard let vocabulary = repository.allFetch().first else { return }
+            selectVocabularyView.vocabularyLabel.text = vocabulary.title
+        }
         navigationItem.titleView = selectVocabularyView
     }
     
