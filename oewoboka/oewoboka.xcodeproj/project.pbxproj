@@ -26,6 +26,7 @@
 		08AEE60A2ACAF56200FBE770 /* FTOPViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE6092ACAF56200FBE770 /* FTOPViewModel.swift */; };
 		08B4A93F2ACE5F3300CB74E9 /* TanslatedManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B4A93E2ACE5F3300CB74E9 /* TanslatedManager.swift */; };
 		08B4A9412ACE5F7C00CB74E9 /* TransLateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B4A9402ACE5F7C00CB74E9 /* TransLateData.swift */; };
+		1824D2B32B0D19A200D52206 /* QuizMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1824D2B22B0D19A200D52206 /* QuizMainView.swift */; };
 		18A815BA2AC3E1D3007FE489 /* QuizType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A815B92AC3E1D3007FE489 /* QuizType.swift */; };
 		18B97AF42AC3C819006C0AAA /* QuizResultType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B97AF32AC3C819006C0AAA /* QuizResultType.swift */; };
 		18BF668A2AC208B300C53C07 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BF66892AC208B300C53C07 /* Typography.swift */; };
@@ -90,6 +91,7 @@
 		08AEE6092ACAF56200FBE770 /* FTOPViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOPViewModel.swift; sourceTree = "<group>"; };
 		08B4A93E2ACE5F3300CB74E9 /* TanslatedManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TanslatedManager.swift; sourceTree = "<group>"; };
 		08B4A9402ACE5F7C00CB74E9 /* TransLateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransLateData.swift; sourceTree = "<group>"; };
+		1824D2B22B0D19A200D52206 /* QuizMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizMainView.swift; sourceTree = "<group>"; };
 		18A815B92AC3E1D3007FE489 /* QuizType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizType.swift; sourceTree = "<group>"; };
 		18B97AF32AC3C819006C0AAA /* QuizResultType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizResultType.swift; sourceTree = "<group>"; };
 		18BF66892AC208B300C53C07 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 				18E0D2222AC181CB005DDA6F /* CardView.swift */,
 				18E0D2242AC18B90005DDA6F /* QuizControlStackView.swift */,
 				18C2B46F2ACED97000C22445 /* TimerSettingView.swift */,
+				1824D2B22B0D19A200D52206 /* QuizMainView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -526,6 +529,7 @@
 				18C3457F2ACA638C0072995F /* TopView.swift in Sources */,
 				18E0D2282AC1930F005DDA6F /* QuizCompleteViewController.swift in Sources */,
 				18B97AF42AC3C819006C0AAA /* QuizResultType.swift in Sources */,
+				1824D2B32B0D19A200D52206 /* QuizMainView.swift in Sources */,
 				18ED60F02ACCE8190089FC42 /* VocabularyRepository.swift in Sources */,
 				9B865E032AC2D72E00E562FA /* VocaListTableViewCell.swift in Sources */,
 				9B865E092AC3C2AD00E562FA /* SelectedVocaViewController.swift in Sources */,
