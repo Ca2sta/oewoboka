@@ -10,7 +10,7 @@ import CoreData
 
 class VocabularyRepository {
     
-    static let shared: VocabularyRepository = VocabularyRepository(type: .inMemory)
+    static let shared: VocabularyRepository = VocabularyRepository(type: .sqlite)
     
     enum CoreDataType {
         case inMemory
